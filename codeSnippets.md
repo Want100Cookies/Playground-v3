@@ -5,7 +5,7 @@ It is as simple as this:
 ```cs
 DataTable t = _conn.GetSchema("Tables");
 ```
-where _conn is a SqlConnection object that has already been connected to the correct database.<br><br>
+where _conn is a SqlConnection object that has already been connected to the correct database.
 [Sauce](http://stackoverflow.com/questions/3005095/can-i-get-name-of-all-tables-of-sql-server-database-in-c-sharp-application)
 
 ### Get all tables from an ODBC database
