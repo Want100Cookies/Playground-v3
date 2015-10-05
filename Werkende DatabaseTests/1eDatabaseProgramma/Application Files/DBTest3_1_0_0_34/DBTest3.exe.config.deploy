@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+    </configSections>
+    <connectionStrings>
+      <!--"Dsn=IP21;trusted_connection=Yes;database=mesdb"  "ODBC_Test"-->
+      <!--connectionString="Server=172.24.29.198;Data Source=TNRAS252.TNRAD.LOCAL;database=MESDB;trusted_connection=True;"-->
+      <add name="Database2"
+       connectionString="Dsn=IP21; trusted_connection=Yes;"
+       providerName="System.Data.Odbc" />
+    </connectionStrings>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.5" />
+    </startup>
+</configuration>

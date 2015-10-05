@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
+    <value>52, 4</value>
   </metadata>
   <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>132, 17</value>
+    <value>216, 10</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="toolStripButton1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAA8AAAAQCAYAAADJViUEAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAB1SURBVDhPrY4BCsAgDAP9/6edMensZq0ydlCozQUsCVVz
+        YQUAAAAJcEhZcwAAGdYAABnWARjRyu0AAAB1SURBVDhPrY4BCsAgDAP9/6edMensZq0ydlCozQUsCVVz
         hJergd1NiNQhG0E2oZj493t380BKXjawt7nR+VsZKIrxOfbeaNhD0R758bd2/FIGOp0BnzWi8xnwWRso
         yoFHfUbKGjhUY6TNIKMSYMIKZF3slHIBwrcr8U9yxa0AAAAASUVORK5CYII=
 </value>
@@ -135,7 +135,7 @@
   <data name="btnAddFormula.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAChgSURBVHhe7d15uLblvPDxu9Kc5pSQKJUQEXmLtiENSmnv
+        YQUAAAAJcEhZcwAAGdYAABnWARjRyu0AAChgSURBVHhe7d15uLblvPDxu9Kc5pSQKJUQEXmLtiENSmnv
         SputV0TIljnKnNqm1xDRK5EhM1EylpCikiGkUIg00KhRw/t+f8fiqJ7nt57nXte6h/O8zu/nOL7/dPSs
         dd/XsK61rvu8znMgSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk
         SZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk
