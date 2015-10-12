@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 
-namespace Playground_v2
+namespace Playground_v3
 {
     class Encryption
     {
@@ -22,9 +19,9 @@ namespace Playground_v2
         public static string EncryptStringAES(string plainText, string sharedSecret)
         {
             if (string.IsNullOrEmpty(plainText))
-                throw new ArgumentNullException("plainText");
+                throw new ArgumentNullException(nameof(plainText));
             if (string.IsNullOrEmpty(sharedSecret))
-                throw new ArgumentNullException("sharedSecret");
+                throw new ArgumentNullException(nameof(sharedSecret));
 
             string outStr = null;                       // Encrypted string to return
             RijndaelManaged aesAlg = null;              // RijndaelManaged object used to encrypt the data.
@@ -75,12 +72,12 @@ namespace Playground_v2
         /// </summary>
         /// <param name="cipherText">The text to decrypt.</param>
         /// <param name="sharedSecret">A password used to generate a key for decryption.</param>
-        public static string DecryptStringAES(string cipherText, string sharedSecret)
+        public static string DecryptStringAes(string cipherText, string sharedSecret)
         {
             if (string.IsNullOrEmpty(cipherText))
-                throw new ArgumentNullException("cipherText");
+                throw new ArgumentNullException(nameof(cipherText));
             if (string.IsNullOrEmpty(sharedSecret))
-                throw new ArgumentNullException("sharedSecret");
+                throw new ArgumentNullException(nameof(sharedSecret));
 
             // Declare the RijndaelManaged object
             // used to decrypt the data.
