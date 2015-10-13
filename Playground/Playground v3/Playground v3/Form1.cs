@@ -46,20 +46,21 @@ namespace Playground_v3
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            _databaseOptionsThread = new Thread(new ThreadStart(openForm));
+            String dbName = lstBoxDatabases.SelectedItem.ToString();
+            _databaseOptionsThread = new Thread(() => openForm(dbName));
             _databaseOptionsThread.Start();
         }
 
-        private void openForm()
+        private void openForm(String dbName)
         {
-            DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath, lstBoxDatabases.SelectedItem.ToString());
+            DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath, dbName);
             Application.Run(databaseOptions);
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath);
-            Application.Run(databaseOptions);
+            _databaseOptionsThread = new Thread(() => openForm(null));
+            _databaseOptionsThread.Start();
         }
     }
 }
