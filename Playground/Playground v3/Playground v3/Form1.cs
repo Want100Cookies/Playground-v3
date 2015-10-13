@@ -15,8 +15,6 @@ namespace Playground_v3
     public partial class Form1 : Form
     {
 
-        private Thread _databaseOptionsThread;
-
         private readonly string _xmlConfigPath;
 
         public Form1()
@@ -24,10 +22,10 @@ namespace Playground_v3
             InitializeComponent();
             _xmlConfigPath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
 
-            populateListBox();
+            PopulateListBox();
         }
 
-        private void populateListBox()
+        private void PopulateListBox()
         {
             // open the xml document with temp config path
             XmlDocument document = new XmlDocument();
@@ -47,20 +45,19 @@ namespace Playground_v3
         private void btnEdit_Click(object sender, EventArgs e)
         {
             String dbName = lstBoxDatabases.SelectedItem.ToString();
-            _databaseOptionsThread = new Thread(() => openForm(dbName));
-            _databaseOptionsThread.Start();
+            OpenForm(dbName);
+
         }
 
-        private void openForm(String dbName)
+        private void OpenForm(String dbName)
         {
             DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath, dbName);
-            Application.Run(databaseOptions);
+            databaseOptions.Show();
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            _databaseOptionsThread = new Thread(() => openForm(null));
-            _databaseOptionsThread.Start();
+            OpenForm(null);
         }
     }
 }

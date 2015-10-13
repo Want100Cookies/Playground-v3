@@ -797,6 +797,7 @@
             this.MinimumSize = new System.Drawing.Size(1309, 703);
             this.Name = "DatabaseOptions";
             this.Text = "NewDatabase";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DatabaseOptions_FormClosing);
             this.Load += new System.EventHandler(this.NewDatabase_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

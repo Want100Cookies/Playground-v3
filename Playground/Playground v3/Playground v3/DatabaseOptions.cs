@@ -280,5 +280,11 @@ namespace Playground_v3
             // Close the configuration form
             this.Close();
         }
+
+        private void DatabaseOptions_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+            
+        }
     }
 }
