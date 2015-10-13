@@ -1,6 +1,6 @@
 ﻿namespace Playground_v3
 {
-    partial class Form1
+    partial class SelectDatabase
     {
         /// <summary>
         /// Required designer variable.

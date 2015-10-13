@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,12 +13,12 @@ using System.Xml;
 
 namespace Playground_v3
 {
-    public partial class Form1 : Form
+    public partial class SelectDatabase : Form
     {
 
         private readonly string _xmlConfigPath;
 
-        public Form1()
+        public SelectDatabase()
         {
             InitializeComponent();
             _xmlConfigPath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
