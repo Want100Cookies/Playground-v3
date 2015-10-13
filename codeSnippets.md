@@ -20,3 +20,17 @@ using(DataTable tableschema = conn.GetSchema("TABLES"))
 }
 ```
 [Sauce](http://stackoverflow.com/a/8695383)
+
+### Get the current logged in user
+```cs
+var windowsIdentity = WindowsIdentity.GetCurrent();
+if (windowsIdentity != null)
+{
+    MessageBox.Show("Gebruikersnaam: " + windowsIdentity.Name);
+}
+else
+{
+    MessageBox.Show("Couldn't get the current username.\nBruh....\nSomething's wrong...");
+}
+```
+[Sauce](http://stackoverflow.com/a/1240379)
