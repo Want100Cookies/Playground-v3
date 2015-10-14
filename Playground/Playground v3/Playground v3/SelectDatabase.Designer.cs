@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SelectDatabase));
             this.btnEdit = new System.Windows.Forms.Button();
             this.lstBoxDatabases = new System.Windows.Forms.ListBox();
             this.btnNew = new System.Windows.Forms.Button();
@@ -65,7 +66,7 @@
             this.btnNew.UseVisualStyleBackColor = true;
             this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
-            // Form1
+            // SelectDatabase
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -73,9 +74,13 @@
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.lstBoxDatabases);
             this.Controls.Add(this.btnEdit);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(674, 481);
+            this.MinimumSize = new System.Drawing.Size(674, 481);
+            this.Name = "SelectDatabase";
+            this.Text = "Edit database connections";
             this.ResumeLayout(false);
 
         }

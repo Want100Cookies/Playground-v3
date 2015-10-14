@@ -43,8 +43,12 @@ namespace Playground_v3
                 control.DropDownStyle = ComboBoxStyle.DropDownList;
             }
 
+            this.Text = "New database connection";
+
             if (_databaseName == null) return;
-            
+
+            this.Text = "Edit " + _databaseName + " database connection";
+
             String providerName = "", connectionString = "";
 
             // Load the xml file and set the provider name and connection string

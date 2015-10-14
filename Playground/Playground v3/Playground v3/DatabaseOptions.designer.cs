@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseOptions));
             this.key1 = new System.Windows.Forms.Label();
             this.key2 = new System.Windows.Forms.Label();
             this.value1 = new System.Windows.Forms.TextBox();
@@ -792,11 +793,12 @@
             this.Controls.Add(this.value1);
             this.Controls.Add(this.key2);
             this.Controls.Add(this.key1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.MaximumSize = new System.Drawing.Size(1309, 900);
             this.MinimumSize = new System.Drawing.Size(1309, 703);
             this.Name = "DatabaseOptions";
-            this.Text = "NewDatabase";
+            this.Text = "Edit/New connection";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DatabaseOptions_FormClosing);
             this.Load += new System.EventHandler(this.NewDatabase_Load);
             this.ResumeLayout(false);
