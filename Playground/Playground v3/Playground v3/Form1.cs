@@ -16,5 +16,11 @@ namespace Playground_v3
         {
             InitializeComponent();
         }
+
+        private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectDatabase selectDatabase= new SelectDatabase();
+            selectDatabase.Show();
+        }
     }
 }
