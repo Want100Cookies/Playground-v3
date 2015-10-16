@@ -10,55 +10,87 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Configuration;
+
 
 namespace Playground_v3
 {
     public partial class SelectDatabase : Form
     {
 
-        private readonly string _xmlConfigPath;
 
         public SelectDatabase()
         {
             InitializeComponent();
-            _xmlConfigPath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
-
+            setConfigFile(ConfigurationManager.AppSettings["settingsFile"]);
             PopulateListBox();
         }
 
         private void PopulateListBox()
         {
-            // open the xml document with temp config path
-            XmlDocument document = new XmlDocument();
-            document.Load(_xmlConfigPath);
-
-            // select the connectionstrings node
-            XmlNode node = document.SelectSingleNode("configuration/connectionStrings");
-
             lstBoxDatabases.Items.Clear();
 
-            foreach (XmlNode childNode in node)
+            foreach (ConnectionStringSettings connectionString in ConfigurationManager.ConnectionStrings)
             {
-                if (childNode.Attributes != null) lstBoxDatabases.Items.Add(childNode.Attributes["name"].Value);
+                lstBoxDatabases.Items.Add(connectionString.Name);
             }
+
+
+            //foreach (XmlNode childNode in node)
+            //{
+            //    if (childNode.Attributes != null) lstBoxDatabases.Items.Add(childNode.Attributes["name"].Value);
+            //}
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            String dbName = lstBoxDatabases.SelectedItem.ToString();
+            string dbName = lstBoxDatabases.SelectedItem.ToString();
             OpenForm(dbName);
 
         }
 
-        private void OpenForm(String dbName)
+        private void OpenForm(string dbName)
         {
-            DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath, dbName);
-            databaseOptions.Show();
+            //DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath, dbName);
+            //databaseOptions.Show();
         }
 
         private void btnNew_Click(object sender, EventArgs e)
         {
             OpenForm(null);
+        }
+
+                    
+
+        private static void setConfigFile(string configFilePath)
+        {
+            if (configFilePath.Length == 0)
+            {
+                MessageBox.Show("Nope");
+                return;
+            }
+
+            var runtimeconfigfile = configFilePath;
+
+            ExeConfigurationFileMap configurationFileMap = new ExeConfigurationFileMap
+            {
+                ExeConfigFilename = runtimeconfigfile
+            };
+
+            // Specify config settings at runtime.
+            Configuration config = ConfigurationManager.OpenMappedExeConfiguration(configurationFileMap, ConfigurationUserLevel.None);
+
+            //Similarly you can apply for other sections like SMTP/System.Net/System.Web etc..
+            //But you have to set the File Path for each of these 
+            //config.AppSettings.File = runtimeconfigfile;
+
+            //This doesn't actually going to overwrite you Exe App.Config file.
+            //Just refreshing the content in the memory.
+            config.Save(ConfigurationSaveMode.Modified);
+
+            //Refreshing Config Section
+            ConfigurationManager.RefreshSection("appSettings");
+            ConfigurationManager.RefreshSection("connectionStrings");
         }
     }
 }

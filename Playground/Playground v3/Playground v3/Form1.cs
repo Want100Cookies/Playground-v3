@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace Playground_v3
 {
@@ -15,6 +16,7 @@ namespace Playground_v3
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
