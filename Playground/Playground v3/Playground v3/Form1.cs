@@ -19,8 +19,14 @@ namespace Playground_v3
 
         private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SelectDatabase selectDatabase= new SelectDatabase();
-            selectDatabase.Show();
+            SelectDatabase selectDatabase = new SelectDatabase();
+            selectDatabase.Show(this);
+        }
+
+        private void userManagementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UserManagement userManagement = new UserManagement();
+            userManagement.Show(this);
         }
     }
 }
