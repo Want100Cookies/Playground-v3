@@ -18,10 +18,10 @@ namespace Playground_v3
 
         private readonly string _xmlConfigPath;
 
-        public SelectDatabase()
+        public SelectDatabase(string xmlFile)
         {
             InitializeComponent();
-            _xmlConfigPath = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile;
+            _xmlConfigPath = xmlFile;
 
             PopulateListBox();
         }
@@ -45,12 +45,12 @@ namespace Playground_v3
 
         private void btnEdit_Click(object sender, EventArgs e)
         {
-            String dbName = lstBoxDatabases.SelectedItem.ToString();
+            string dbName = lstBoxDatabases.SelectedItem.ToString();
             OpenForm(dbName);
 
         }
 
-        private void OpenForm(String dbName)
+        private void OpenForm(string dbName)
         {
             DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath, dbName);
             databaseOptions.Show();
