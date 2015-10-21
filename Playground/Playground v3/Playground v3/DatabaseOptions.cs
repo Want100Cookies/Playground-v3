@@ -43,6 +43,7 @@ namespace Playground_v3
             if (_databaseName == null) return;
 
             this.Text = "Edit " + _databaseName + " database connection";
+            this.value32.ReadOnly = true;
 
             string providerName = "", connectionString = "";
 
@@ -136,7 +137,6 @@ namespace Playground_v3
                 // get the value of the tabname and the provider name
                 string tabName = keyValues["Databasename (Tab name)"];
                 string providerName = keyValues["Provider name"];
-
                 // check if tabname and providername are empty
                 if (string.IsNullOrEmpty(tabName) || string.IsNullOrEmpty(providerName))
                 {
@@ -147,9 +147,9 @@ namespace Playground_v3
                 // Check keyvalues
                 LoopKeyValuePairs(keyValues, tabName, providerName);
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("You need to enter a TabName and Providername");
+                MessageBox.Show("Error: \n" + ex);
                 return;
             }
         }
@@ -176,7 +176,7 @@ namespace Playground_v3
             string encryptedString = connectionString.ToString();
 
             // edit the current xml file
-            editXmlConfigFile(tabName, providerName, encryptedString);
+            EditXmlConfigFile(tabName, providerName, encryptedString);
         }
 
         /// <summary>
@@ -185,54 +185,29 @@ namespace Playground_v3
         /// <param name="dbName">Name of the database.</param>
         /// <param name="providerName">Name of the provider.</param>
         /// <param name="connectionString">The connection string.</param>
-        private void editXmlConfigFile(string dbName, string providerName, string connectionString)
+        private void EditXmlConfigFile(string dbName, string providerName, string connectionString)
         {
-            // open the xml document with temp config path
-            XmlDocument document = new XmlDocument();
-            document.Load(Settings.GetConfigFile());
+            ConnectionStringStruct connStruct = Settings.GetConnectionString(dbName);
 
-            // select the connectionstrings node
-            XmlNode node = document.SelectSingleNode("configuration/connectionStrings");
-
-            XmlNode connectionNode = document.SelectSingleNode("//add[@name='" + dbName + "']");
-
-            if (connectionNode == null)
+            if (connStruct.Equals(new ConnectionStringStruct()))
             {
-                // add a new node
-                XmlNode newNode = document.CreateNode(XmlNodeType.Element, "add", "");
+                connStruct.name = dbName;
+                connStruct.connectionString = connectionString;
+                connStruct.providerName = providerName;
 
-                // Create attribute name
-                XmlAttribute nameAttr = document.CreateAttribute("name");
-                nameAttr.Value = dbName;
-                newNode.Attributes.Append(nameAttr);
-
-                // Create attribute connectionString
-                XmlAttribute connectionStringAttr = document.CreateAttribute("connectionString");
-                connectionStringAttr.Value = connectionString;
-                newNode.Attributes.Append(connectionStringAttr);
-
-                // Create attribute providerName
-                XmlAttribute providerNameAttr = document.CreateAttribute("providerName");
-                providerNameAttr.Value = providerName;
-                newNode.Attributes.Append(providerNameAttr);
-
-                // append the new child node to the root node
-                node.AppendChild(newNode.Clone());
+                Settings.AddConnectionString(connStruct);
             }
             else
             {
-                if (connectionNode.Attributes != null)
-                {
-                    connectionNode.Attributes["connectionString"].Value = connectionString;
-                    connectionNode.Attributes["providerName"].Value = providerName;
-                }
+                connStruct.connectionString = connectionString;
+                connStruct.providerName = providerName;
+
+                Settings.RemoveConnectionString(dbName);
+                Settings.AddConnectionString(connStruct);
             }
 
-            // save xml config file
-            document.Save(Settings.GetConfigFile());
-
             // Close the configuration form
-            this.Close();
+            Close();
         }
 
         private void DatabaseOptions_FormClosing(object sender, FormClosingEventArgs e)

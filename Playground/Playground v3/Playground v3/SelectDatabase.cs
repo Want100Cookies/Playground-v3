@@ -24,10 +24,18 @@ namespace Playground_v3
 
         private void PopulateListBox()
         {
+            lstBoxDatabases.Items.Clear();
+
             foreach (ConnectionStringStruct connStruct in Settings.GetConnectionstringList())
             {
                 lstBoxDatabases.Items.Add(connStruct.name);
             }
+        }
+
+        private static void OpenForm(string dbName)
+        {
+            DatabaseOptions databaseOptions = new DatabaseOptions(dbName);
+            databaseOptions.Show();
         }
 
         private void btnEdit_Click(object sender, EventArgs e)
@@ -37,15 +45,15 @@ namespace Playground_v3
 
         }
 
-        private void OpenForm(string dbName)
-        {
-            DatabaseOptions databaseOptions = new DatabaseOptions(dbName);
-            databaseOptions.Show();
-        }
-
         private void btnNew_Click(object sender, EventArgs e)
         {
             OpenForm(null);
+        }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            Settings.RemoveConnectionString(lstBoxDatabases.SelectedItem.ToString());
+            PopulateListBox();
         }
     }
 }
