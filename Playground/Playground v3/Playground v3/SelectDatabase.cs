@@ -16,30 +16,17 @@ namespace Playground_v3
     public partial class SelectDatabase : Form
     {
 
-        private readonly string _xmlConfigPath;
-
-        public SelectDatabase(string xmlFile)
+        public SelectDatabase()
         {
             InitializeComponent();
-            _xmlConfigPath = xmlFile;
-
             PopulateListBox();
         }
 
         private void PopulateListBox()
         {
-            // open the xml document with temp config path
-            XmlDocument document = new XmlDocument();
-            document.Load(_xmlConfigPath);
-
-            // select the connectionstrings node
-            XmlNode node = document.SelectSingleNode("configuration/connectionStrings");
-
-            lstBoxDatabases.Items.Clear();
-
-            foreach (XmlNode childNode in node)
+            foreach (ConnectionStringStruct connStruct in Settings.GetConnectionstringList())
             {
-                if (childNode.Attributes != null) lstBoxDatabases.Items.Add(childNode.Attributes["name"].Value);
+                lstBoxDatabases.Items.Add(connStruct.name);
             }
         }
 
@@ -52,7 +39,7 @@ namespace Playground_v3
 
         private void OpenForm(string dbName)
         {
-            DatabaseOptions databaseOptions = new DatabaseOptions(_xmlConfigPath, dbName);
+            DatabaseOptions databaseOptions = new DatabaseOptions(dbName);
             databaseOptions.Show();
         }
 

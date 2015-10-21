@@ -10,30 +10,25 @@ namespace Playground_v3
 {
     public partial class DatabaseOptions : Form
     {
-        // temp config path
-        private readonly string _xmlConfigPath;
         private readonly string _databaseName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DatabaseOptions"/> class.
         /// </summary>
-        /// <param name="xmlConfigPath">The XML config path.</param>
         /// <param name="DBname">The database name that has to be edited. Null if new connection string has to be added.</param>
-        public DatabaseOptions(string xmlConfigPath, string DBname = null)
+        public DatabaseOptions(string DBname = null)
         {
-            _xmlConfigPath = xmlConfigPath;
             _databaseName = DBname;
-
 
             InitializeComponent();
         }
 
         /// <summary>
-        /// Handles the Load event of the NewDatabase control.
+        /// Handles the Load event of the DatabaseOptions control.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void NewDatabase_Load(object sender, EventArgs e)
+        private void DatabaseOptions_Load(object sender, EventArgs e)
         {
             // set dropdownlist style for all dropdown elements
             // set the selected index on 0
@@ -49,10 +44,13 @@ namespace Playground_v3
 
             this.Text = "Edit " + _databaseName + " database connection";
 
-            String providerName = "", connectionString = "";
+            string providerName = "", connectionString = "";
 
-            // Load the xml file and set the provider name and connection string
-            LoadDataFromXml(ref providerName, ref connectionString);
+            foreach (ConnectionStringStruct connStruct in Settings.GetConnectionstringList().Where(connStruct => connStruct.name == _databaseName))
+            {
+                providerName = connStruct.providerName;
+                connectionString = connStruct.connectionString;
+            }
 
             // Convert the connectionstring to a Dictionary<string, string> with linq (http://stackoverflow.com/a/8529543)
             var keyValuePairs = connectionString.Split(';')
@@ -74,25 +72,20 @@ namespace Playground_v3
         {
             foreach (Label label in Controls.OfType<Label>())
             {
-                if (connectionDictionary.ContainsKey(label.Text.TrimEnd(':')))
-                {
-                    String index = label.Name.Substring(3);
-                    Control textBoxControl = Controls["value" + index];
-                    textBoxControl.Text = connectionDictionary[label.Text.TrimEnd(':')];
-                }
+                if (!connectionDictionary.ContainsKey(label.Text.TrimEnd(':'))) continue;
+                string index = label.Name.Substring(3);
+                Control textBoxControl = Controls["value" + index];
+                textBoxControl.Text = connectionDictionary[label.Text.TrimEnd(':')];
             }
 
             foreach (ComboBox comboBox in Controls.OfType<ComboBox>())
             {
-                foreach (var item in comboBox.Items)
+                foreach (var item in comboBox.Items.Cast<object>().Where(item => connectionDictionary.ContainsKey(item.ToString())))
                 {
-                    if (connectionDictionary.ContainsKey(item.ToString()))
-                    {
-                        comboBox.SelectedItem = item;
-                        String index = comboBox.Name.Substring(3);
-                        Control textBoxControl = this.Controls["value" + index];
-                        textBoxControl.Text = connectionDictionary[item.ToString()];
-                    }
+                    comboBox.SelectedItem = item;
+                    string index = comboBox.Name.Substring(3);
+                    Control textBoxControl = this.Controls["value" + index];
+                    textBoxControl.Text = connectionDictionary[item.ToString()];
                 }
             }
 
@@ -100,44 +93,6 @@ namespace Playground_v3
             Controls["value31"].Text = providerName;
         }
 
-
-        /// <summary>
-        /// Load all data from the XML file.
-        /// 
-        /// The parameters are pass by reference so they can be returned to the calling funtion.
-        /// </summary>
-        /// <param name="providerName">Pass by reference provider name</param>
-        /// <param name="connectionString">Pass by reference connection string</param>
-        private void LoadDataFromXml(ref string providerName, ref string connectionString)
-        {
-            try
-            {
-                // open the xml document with temp config path
-                XmlDocument document = new XmlDocument();
-                document.Load(_xmlConfigPath);
-
-                // select the connectionstrings node
-                XmlNode node = document.SelectSingleNode("configuration/connectionStrings");
-
-                XmlNode currentNode = node.SelectSingleNode("//add[@name='" + _databaseName + "']");
-
-                providerName = currentNode.Attributes["providerName"].Value;
-                connectionString = currentNode.Attributes["connectionString"].Value;
-            }
-            catch (FileNotFoundException)
-            {
-                MessageBox.Show("Configuratie bestand niet gevonde...");
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("Database niet gevonden in het configuratie bestand.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
 
         /// <summary>
         /// Handles the Click event of the button1 control.
@@ -183,7 +138,7 @@ namespace Playground_v3
                 string providerName = keyValues["Provider name"];
 
                 // check if tabname and providername are empty
-                if (String.IsNullOrEmpty(tabName) || String.IsNullOrEmpty(providerName))
+                if (string.IsNullOrEmpty(tabName) || string.IsNullOrEmpty(providerName))
                 {
                     MessageBox.Show("You need to enter a TabName and Providername");
                     return; // don't move on
@@ -210,11 +165,6 @@ namespace Playground_v3
             // the string for connectionString
             StringBuilder connectionString = new StringBuilder();
 
-            foreach (var VARIABLE in keyValues)
-            {
-                Console.WriteLine(VARIABLE.Key + " -- " + VARIABLE.Value);
-            }
-
             // loop through all keyvalues
             foreach (KeyValuePair<string, string> keyValuePair in keyValues.Where(keyValuePair => keyValuePair.Key != "Databasename (Tab name)" && keyValuePair.Key != "Provider name"))
             {
@@ -222,8 +172,8 @@ namespace Playground_v3
             }
 
             //encrypt string
-            //String encryptedString = Encryption.EncryptStringAES(connectionString.ToString(), Encryption.Secret);
-            String encryptedString = connectionString.ToString();
+            //string encryptedString = Encryption.EncryptStringAES(connectionString.ToString(), Encryption.Secret);
+            string encryptedString = connectionString.ToString();
 
             // edit the current xml file
             editXmlConfigFile(tabName, providerName, encryptedString);
@@ -239,7 +189,7 @@ namespace Playground_v3
         {
             // open the xml document with temp config path
             XmlDocument document = new XmlDocument();
-            document.Load(_xmlConfigPath);
+            document.Load(Settings.GetConfigFile());
 
             // select the connectionstrings node
             XmlNode node = document.SelectSingleNode("configuration/connectionStrings");
@@ -279,7 +229,7 @@ namespace Playground_v3
             }
 
             // save xml config file
-            document.Save(_xmlConfigPath);
+            document.Save(Settings.GetConfigFile());
 
             // Close the configuration form
             this.Close();

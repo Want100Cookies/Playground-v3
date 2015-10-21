@@ -150,7 +150,10 @@ namespace Playground_v3
             if (parentNode?.ChildNodes == null) return;
 
             // Using linq loop over all settings and search for the specified key
-            foreach (XmlNode childNode in parentNode.ChildNodes.Cast<XmlNode>().Where(childNode => childNode.Attributes != null && childNode.Attributes["key"].Value == key))
+            foreach (XmlNode childNode in parentNode
+                .ChildNodes
+                .Cast<XmlNode>()
+                .Where(childNode => childNode.Attributes != null && childNode.Attributes["key"].Value == key))
             {
                 // Remove the node
                 childNode.RemoveAll();
@@ -160,7 +163,51 @@ namespace Playground_v3
             document.Save(GetConfigFile());
         }
 
+        public static List<ConnectionStringStruct> GetConnectionstringList()
+        {
+            // Get the document
+            XmlDocument document = GetXmlDocument(GetConfigFile());
 
+            // Get the node wich contains all the connection strings
+            XmlNode parentNode = document.SelectSingleNode("configuration/connectionStrings");
+
+            /*  
+                LinQ expression to generate List with ConnectionStringStructs
+                This is how it works:
+                - For each XmlNode in parenNode.ChildNodes
+                - Only get XmlNodeType.Elements
+                - Make new ConnectionStringStruct
+                - Add the values if they exist (hence the ? operator)            
+            */
+
+            if (parentNode == null) return null;
+
+            List<ConnectionStringStruct> connectionStrings = new List<ConnectionStringStruct>(parentNode.ChildNodes.Count);
+
+            connectionStrings.AddRange(
+                from XmlNode childNode in parentNode.ChildNodes
+                where childNode.NodeType == XmlNodeType.Element
+                select new ConnectionStringStruct()
+                {
+                    name = childNode.Attributes?["name"].Value,
+                    connectionString = childNode.Attributes?["connectionString"].Value,
+                    providerName = childNode.Attributes?["providerName"].Value
+                });
+
+            return connectionStrings;
+
+            /*
+                OLD CODE:
+                return parentNode
+                    ?.ChildNodes
+                    .Cast<XmlNode>()
+                    .Where(childNode => childNode.NodeType != XmlNodeType.Comment)
+                    .ToDictionary(
+                        childNode => childNode.Attributes?["name"].ToString(), 
+                        childNode => childNode.Attributes?["connectionString"].ToString()
+                        );
+            */
+        }
 
         /// <summary>
         /// Get the SqLite connection wich is needed for Auth

@@ -20,7 +20,7 @@ namespace Playground_v3
 
         private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SelectDatabase selectDatabase = new SelectDatabase(Settings.GetConfigFile());
+            SelectDatabase selectDatabase = new SelectDatabase();
             selectDatabase.Show(this);
         }
 
