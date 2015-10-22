@@ -72,9 +72,9 @@
             // btnLeaveGroup
             // 
             this.btnLeaveGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLeaveGroup.Location = new System.Drawing.Point(212, 226);
+            this.btnLeaveGroup.Location = new System.Drawing.Point(212, 189);
             this.btnLeaveGroup.Name = "btnLeaveGroup";
-            this.btnLeaveGroup.Size = new System.Drawing.Size(75, 117);
+            this.btnLeaveGroup.Size = new System.Drawing.Size(75, 151);
             this.btnLeaveGroup.TabIndex = 3;
             this.btnLeaveGroup.Text = "←";
             this.btnLeaveGroup.UseVisualStyleBackColor = true;
@@ -83,9 +83,9 @@
             // btnJoinGroup
             // 
             this.btnJoinGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnJoinGroup.Location = new System.Drawing.Point(212, 103);
+            this.btnJoinGroup.Location = new System.Drawing.Point(212, 32);
             this.btnJoinGroup.Name = "btnJoinGroup";
-            this.btnJoinGroup.Size = new System.Drawing.Size(75, 117);
+            this.btnJoinGroup.Size = new System.Drawing.Size(75, 151);
             this.btnJoinGroup.TabIndex = 4;
             this.btnJoinGroup.Text = "→";
             this.btnJoinGroup.UseVisualStyleBackColor = true;
@@ -120,9 +120,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(574, 442);
+            this.btnSave.Location = new System.Drawing.Point(212, 346);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(113, 36);
+            this.btnSave.Size = new System.Drawing.Size(75, 90);
             this.btnSave.TabIndex = 7;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -130,9 +130,9 @@
             // 
             // btnCreateGroup
             // 
-            this.btnCreateGroup.Location = new System.Drawing.Point(394, 442);
+            this.btnCreateGroup.Location = new System.Drawing.Point(493, 442);
             this.btnCreateGroup.Name = "btnCreateGroup";
-            this.btnCreateGroup.Size = new System.Drawing.Size(174, 36);
+            this.btnCreateGroup.Size = new System.Drawing.Size(194, 36);
             this.btnCreateGroup.TabIndex = 7;
             this.btnCreateGroup.Text = "Create new group";
             this.btnCreateGroup.UseVisualStyleBackColor = true;
