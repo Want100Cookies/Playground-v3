@@ -44,12 +44,14 @@
             // 
             // lstBoxUsers
             // 
+            this.lstBoxUsers.DisplayMember = "Value";
             this.lstBoxUsers.FormattingEnabled = true;
             this.lstBoxUsers.ItemHeight = 20;
             this.lstBoxUsers.Location = new System.Drawing.Point(12, 32);
             this.lstBoxUsers.Name = "lstBoxUsers";
             this.lstBoxUsers.Size = new System.Drawing.Size(194, 404);
             this.lstBoxUsers.TabIndex = 0;
+            this.lstBoxUsers.ValueMember = "Key";
             // 
             // lstBoxGroups
             // 
@@ -59,15 +61,18 @@
             this.lstBoxGroups.Name = "lstBoxGroups";
             this.lstBoxGroups.Size = new System.Drawing.Size(194, 404);
             this.lstBoxGroups.TabIndex = 1;
+            this.lstBoxGroups.SelectedValueChanged += new System.EventHandler(this.lstBoxGroups_SelectedValueChanged);
             // 
             // lstBoxUserGroup
             // 
+            this.lstBoxUserGroup.DisplayMember = "Value";
             this.lstBoxUserGroup.FormattingEnabled = true;
             this.lstBoxUserGroup.ItemHeight = 20;
             this.lstBoxUserGroup.Location = new System.Drawing.Point(293, 32);
             this.lstBoxUserGroup.Name = "lstBoxUserGroup";
             this.lstBoxUserGroup.Size = new System.Drawing.Size(194, 404);
             this.lstBoxUserGroup.TabIndex = 2;
+            this.lstBoxUserGroup.ValueMember = "Key";
             // 
             // btnLeaveGroup
             // 
@@ -136,7 +141,7 @@
             this.btnCreateGroup.TabIndex = 7;
             this.btnCreateGroup.Text = "Create new group";
             this.btnCreateGroup.UseVisualStyleBackColor = true;
-            this.btnCreateGroup.Click += new System.EventHandler(this.button3_Click);
+            this.btnCreateGroup.Click += new System.EventHandler(this.btnCreateGroup_Click);
             // 
             // btnAddUser
             // 
@@ -146,7 +151,7 @@
             this.btnAddUser.TabIndex = 7;
             this.btnAddUser.Text = "Add new user";
             this.btnAddUser.UseVisualStyleBackColor = true;
-            this.btnAddUser.Click += new System.EventHandler(this.button4_Click);
+            this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
             // 
             // UserManagement
             // 

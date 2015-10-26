@@ -294,31 +294,5 @@ namespace Playground_v3
             document.Save(GetConfigFile());
         }
 
-        /// <summary>
-        /// Get the SqLite connection wich is needed for Auth
-        /// </summary>
-        /// <returns></returns>
-        public static SQLiteConnection GetSqLiteConnection()
-        {
-            if (!File.Exists(GetSetting("userDatabaseFile")))
-            {
-                OpenFileDialog openFileDialog = new OpenFileDialog
-                {
-                    Filter = @"Database file (*.db)|*.db|All files (*.*)|*.*",
-                    FilterIndex = 0,
-                    RestoreDirectory = true,
-                    CheckFileExists = true,
-                    InitialDirectory = AppDomain.CurrentDomain.BaseDirectory
-                };
-
-                if (openFileDialog.ShowDialog() != DialogResult.OK) return null;
-
-                RemoveSetting("userDatabaseFile");
-                AddSetting("userDatabaseFile", openFileDialog.FileName);
-            }
-
-            return new SQLiteConnection("Data Source=" + GetSetting("userDatabaseFile"));
-        }
-
     }
 }
