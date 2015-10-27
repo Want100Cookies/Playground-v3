@@ -53,6 +53,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="searchBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="searchBox.Designer.cs">
+      <DependentUpon>searchBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="SelectDatabase.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,6 +79,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="searchBox.resx">
+      <DependentUpon>searchBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SelectDatabase.resx">
       <DependentUpon>SelectDatabase.cs</DependentUpon>
