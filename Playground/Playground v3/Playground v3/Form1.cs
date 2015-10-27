@@ -12,6 +12,11 @@ namespace Playground_v3
 {
     public partial class Form1 : Form
     {
+        /*
+         * variabele waarin de huidige rij is opgeslagen. Dit wordt gebruikt bij het genereren van rijen, en de zoekfunctie.
+         */
+        public int row;
+
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +33,8 @@ namespace Playground_v3
             labelColumnname2.Visible = false;
             labelOperator2.Visible = false;
             labelAmountRecords2.Visible = false;
+
+            row = 1;
         }
 
         private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -102,7 +109,15 @@ namespace Playground_v3
             }
             else if (form.DialogResult == DialogResult.OK)
             {
-                //  form.getResults();
+                foreach (var str in form.getRusultString())
+                {
+                    //add formule rij
+                    if (true) //links
+                    {
+                        String name = textBoxColumnname + row.ToString();
+                        textBoxColumnname.Text = str;
+                    }
+                }
             }
         }
     }
