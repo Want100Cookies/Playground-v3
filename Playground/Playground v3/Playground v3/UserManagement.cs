@@ -42,7 +42,7 @@ namespace Playground_v3
 
         private void RefreshTables()
         {
-            _groupDictionary = Auth.GetGroupList();
+            _groupDictionary = Auth.GetGroupDictionary();
             _userDictionary = Auth.GetUserList();
             _userGroupList = Auth.GetUserGroupList();
         }
@@ -80,18 +80,29 @@ namespace Playground_v3
         }
 
 
+        /// <summary>
+        /// Open a dialog prompt and add the given username to the database and local variable
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddUser_Click(object sender, EventArgs e)
         {
+            // Open prompt to get the username
             string username = Prompt.ShowDialog("Add new user", "Enter the new username:");
 
+            // If none given or window exited stop the method
             if (username.Equals("")) return;
             
+            // Add the user and retrieve the user id (cast long to int)
             int userId = (int) Auth.AddUser(username);
 
+            // If user id = 0 user is not added
             if (userId == 0) return;
 
+            // Add user to the dictionary
             _userDictionary.Add(userId, username);
 
+            // Update the screen
             UpdateUsers();
         }
 
@@ -112,6 +123,9 @@ namespace Playground_v3
         /// <param name="e"></param>
         private void btnJoinGroup_Click(object sender, EventArgs e)
         {
+            // If no item is selected, do nothing
+            if (lstBoxUsers.SelectedIndex == -1) return;
+
             // Get the selected user and cast it to a KeyValuePair to get the user id
             KeyValuePair<int, string> user = (KeyValuePair<int, string>) lstBoxUsers.SelectedItem;
             // The key has to be saved to a new variable to be used in the userGroupPair 
@@ -134,6 +148,9 @@ namespace Playground_v3
         /// <param name="e"></param>
         private void btnLeaveGroup_Click(object sender, EventArgs e)
         {
+            // If no item is selected, do nothing
+            if (lstBoxUserGroup.SelectedIndex == -1) return;
+            
             // Get the selected user and cast it to a KeyValuePair to get the user id
             KeyValuePair<int, string> user = (KeyValuePair<int, string>) lstBoxUserGroup.SelectedItem;
             // The key has to be saved to a new variable to be used in the userGroupPair 
@@ -159,6 +176,7 @@ namespace Playground_v3
             // Only update when selected value is an actual integer to prevent runtime errors
             if (lstBoxGroups.SelectedValue is int)
             {
+                lblUserGroup.Text = @"Users in group " + _groupDictionary[(int) lstBoxGroups.SelectedValue] + @":";
                 UpdateUsers();
             }
         }
