@@ -88,19 +88,19 @@ namespace Playground_v3
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             // Open prompt to get the username
-            string username = Prompt.ShowDialog("Add new user", "Enter the new username:");
+            string userName = Prompt.ShowDialog("Enter the new username:", "Add new user");
 
             // If none given or window exited stop the method
-            if (username.Equals("")) return;
+            if (userName.Equals("")) return;
             
             // Add the user and retrieve the user id (cast long to int)
-            int userId = (int) Auth.AddUser(username);
+            int userId = (int) Auth.AddUser(userName);
 
             // If user id = 0 user is not added
             if (userId == 0) return;
 
             // Add user to the dictionary
-            _userDictionary.Add(userId, username);
+            _userDictionary.Add(userId, userName);
 
             // Update the screen
             UpdateUsers();
@@ -108,7 +108,24 @@ namespace Playground_v3
 
         private void btnCreateGroup_Click(object sender, EventArgs e)
         {
+            // Open prompt to get the username
+            string groupName = Prompt.ShowDialog("Enter the new groupname:", "Create new group");
 
+            // If none given or window exited stop the method
+            if (groupName.Equals("")) return;
+
+            // Add the user and retrieve the user id (cast long to int)
+            int groupId = (int) Auth.CreateGroup(groupName);
+
+            // If user id = 0 user is not added
+            if (groupId == 0) return;
+
+            // Add user to the dictionary
+            _groupDictionary.Add(groupId, groupName);
+
+            // Update the screen
+            lstBoxGroups.DataSource = new BindingSource(_groupDictionary, null);
+            UpdateUsers();
         }
 
         private void btnSave_Click(object sender, EventArgs e)

@@ -142,7 +142,7 @@ namespace Playground_v3
         }
 
         /// <summary>
-        /// Add the user with the given username
+        /// Add a user with the given username
         /// </summary>
         /// <param name="username"></param>
         /// <returns>The userId of the new user or 0 if no user is added</returns>
@@ -157,12 +157,47 @@ namespace Playground_v3
             cmd.CommandText = "INSERT INTO users (username) VALUES(@username)";
             cmd.Parameters.Add(new SQLiteParameter("@username") {Value = username});
 
-            // Execute the query, if the no affected rows is not 1 user is not added
+            // Execute the query, if the no affected rows is not 1, user is not added
             if (cmd.ExecuteNonQuery() != 1) return 0;
 
             // Get the last inserted row id and return it
             cmd.CommandText = "SELECT last_insert_rowid()";
             return (long) cmd.ExecuteScalar();
+        }
+
+        /// <summary>
+        /// Add a group with the given groupname
+        /// </summary>
+        /// <param name="groupname"></param>
+        /// <returns>The groupId of the newly created group, or 0 if no user is added</returns>
+        public static long CreateGroup(string groupname)
+        {
+            // Get the sqlite connection and open it
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            // Create the command, set the command text with a named parameter and add the parameter value
+            SQLiteCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "INSERT INTO groups (groupname) VALUES(@groupname)";
+            cmd.Parameters.Add(new SQLiteParameter("@groupname") {Value = groupname});
+
+            // Execute the query, if the no affected rows is not 1, group is not added
+            if (cmd.ExecuteNonQuery() != 1) return 0;
+
+            // Get the last inserted row id and return it
+            cmd.CommandText = "SELECT last_insert_rowid()";
+            return (long) cmd.ExecuteScalar();
+        }
+
+        public static bool UpdateUserGroup(List<KeyValuePair<int, int>> userGroupList)
+        {
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            
+
+            return null;
         }
 
     }
