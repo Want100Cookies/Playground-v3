@@ -128,9 +128,17 @@ namespace Playground_v3
             UpdateUsers();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
 
+            bool successful = await Auth.UpdateUserGroup(_userGroupList);
+
+            MessageBox.Show("Operation " + (successful ? "successful" : "failed"));
+            
+            RefreshTables();
+
+            UpdateUsers();
+            
         }
 
         /// <summary>

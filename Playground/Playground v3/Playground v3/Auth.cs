@@ -16,7 +16,7 @@ namespace Playground_v3
         /// Get a working SQLiteConnection or null if no database file found
         /// </summary>
         /// <returns></returns>
-        private static SQLiteConnection GetSqLiteConnection()
+        public static SQLiteConnection GetSqLiteConnection()
         {
             // Check if the file is an actual file
             if (!File.Exists(Settings.GetSetting("userDatabaseFile")))
@@ -45,7 +45,7 @@ namespace Playground_v3
         /// Open the given SQLiteConnection async
         /// </summary>
         /// <param name="sqLiteConnection"></param>
-        private static async void OpenSqLiteConnection(SQLiteConnection sqLiteConnection)
+        public static async void OpenSqLiteConnection(SQLiteConnection sqLiteConnection)
         {
             await sqLiteConnection.OpenAsync();
         }
@@ -132,7 +132,7 @@ namespace Playground_v3
 
             while (reader.Read())
             {
-                KeyValuePair<int, int> kvPair = new KeyValuePair<int, int>(reader.GetInt32(1), reader.GetInt32(2));
+                KeyValuePair<int, int> kvPair = new KeyValuePair<int, int>(reader.GetInt32(0), reader.GetInt32(1));
                 list.Add(kvPair);
             }
 
@@ -189,15 +189,46 @@ namespace Playground_v3
             return (long) cmd.ExecuteScalar();
         }
 
-        public static bool UpdateUserGroup(List<KeyValuePair<int, int>> userGroupList)
+        /// <summary>
+        /// Update the users_groups table according to the given list
+        /// </summary>
+        /// <param name="userGroupList"></param>
+        /// <returns>Is the operation succesful</returns>
+        public static async Task<bool> UpdateUserGroup(List<KeyValuePair<int, int>> userGroupList)
         {
             SQLiteConnection conn = GetSqLiteConnection();
             OpenSqLiteConnection(conn);
 
             SQLiteCommand cmd = conn.CreateCommand();
+            // Delete all rows from the table
+            cmd.CommandText = "DELETE FROM users_groups";
+            await cmd.ExecuteNonQueryAsync();
             
+            // Insert one new row per time
+            cmd.CommandText = "INSERT INTO users_groups (users_id, groups_id) VALUES (@users_id, @groups_id)";
 
-            return null;
+            // Add parameters
+            SQLiteParameter userIdParameter = new SQLiteParameter("@users_id");
+            cmd.Parameters.Add(userIdParameter);
+            SQLiteParameter groupIdParameter = new SQLiteParameter("@groups_id");
+            cmd.Parameters.Add(groupIdParameter);
+
+            bool successful = true;
+
+            foreach (KeyValuePair<int, int> kvPair in userGroupList)
+            {
+                // Asign values to the parameters
+                userIdParameter.Value = kvPair.Key;
+                groupIdParameter.Value = kvPair.Value;
+
+                // Execute the query async
+                int affectedrows = await cmd.ExecuteNonQueryAsync();
+
+                // Check if this operation and all previous ones were successful
+                successful = affectedrows == 1 && successful;
+            }
+
+            return successful;
         }
 
     }
