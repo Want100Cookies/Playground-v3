@@ -16,6 +16,7 @@ namespace Playground_v3
          * variabele waarin de huidige rij is opgeslagen. Dit wordt gebruikt bij het genereren van rijen, en de zoekfunctie.
          */
         public int row;
+        private Dictionary<PictureBox, TextBox> koppelDictionary;
 
         public Form1()
         {
@@ -35,6 +36,10 @@ namespace Playground_v3
             labelAmountRecords2.Visible = false;
 
             row = 1;
+            koppelDictionary=new Dictionary<PictureBox, TextBox>();
+
+            koppelDictionary.Add(pictureBoxSearch, textBoxColumnname);
+            koppelDictionary.Add(pictureBoxSearch2, textBoxColumnname2);
         }
 
         private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -53,12 +58,6 @@ namespace Playground_v3
             {
                 numericUpDownRecords.Enabled = false;
             }
-        }
-
-
-        private void pictureBoxSearch2_Click(object sender, EventArgs e)
-        {
-            pictureBoxSearch_Click_1(sender, e);
         }
 
         private void radioButtonValue_CheckedChanged(object sender, EventArgs e)
@@ -99,9 +98,9 @@ namespace Playground_v3
             }
         }
 
-        private void pictureBoxSearch_Click_1(object sender, EventArgs e)
+        private void pictureBoxSearch_Click(object sender, EventArgs e)
         {
-            searchBox form = new searchBox();
+            searchBox form = new searchBox(koppelDictionary[(PictureBox)sender]);
             form.ShowDialog();
             if (form.DialogResult == DialogResult.Cancel)
             {
@@ -112,13 +111,20 @@ namespace Playground_v3
                 foreach (var str in form.getRusultString())
                 {
                     //add formule rij
-                    if (true) //links
-                    {
-                        String name = textBoxColumnname + row.ToString();
-                        textBoxColumnname.Text = str;
-                    }
+                    form.getTextBox().Text = str;
                 }
             }
+        }
+
+        public void newLine()
+        {
+            //methode die nieuwe lijn maakt.
+            //de textboxes worden opgeslagen in een dictionary<TextBox, int>
+            //de int bestaat uit de lijn: 1 tiental voor de 1e lijn, 2 tientallen voor de 2e lijn enz.
+            //de eentallen in de int representeerd de 1e- of 2e textbox van de rij.
+            //je krijgt dus iets als 22 (2e rij, 2e textbox)
+            //of 11: (1e rij 1e textbox).
+            //note: in eerste instantie is in deze de dictionary hardcoded erin gezet.
         }
     }
 }

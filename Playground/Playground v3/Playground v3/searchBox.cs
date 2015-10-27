@@ -12,8 +12,10 @@ namespace Playground_v3
 {
     public partial class searchBox : Form
     {
-        public searchBox()
+        public TextBox txtBox;
+        public searchBox(TextBox txtBox)
         {
+            this.txtBox = txtBox;
             InitializeComponent();
             txtBoxSearch.Enabled = false;
             pictureBoxSearch.Enabled = false;
@@ -49,6 +51,11 @@ namespace Playground_v3
                 returnList.Add(itemChecked.ToString());
             }
             return returnList;
+        }
+
+        public TextBox getTextBox()
+        {
+            return txtBox;
         }
     }
 }

@@ -147,7 +147,7 @@
             this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxSearch.TabIndex = 46;
             this.pictureBoxSearch.TabStop = false;
-            this.pictureBoxSearch.Click += new System.EventHandler(this.pictureBoxSearch_Click_1);
+            this.pictureBoxSearch.Click += new System.EventHandler(this.pictureBoxSearch_Click);
             // 
             // labelValue
             // 
@@ -292,7 +292,7 @@
             this.pictureBoxSearch2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxSearch2.TabIndex = 35;
             this.pictureBoxSearch2.TabStop = false;
-            this.pictureBoxSearch2.Click += new System.EventHandler(this.pictureBoxSearch2_Click);
+            this.pictureBoxSearch2.Click += new System.EventHandler(this.pictureBoxSearch_Click);
             // 
             // textBoxColumnname2
             // 
