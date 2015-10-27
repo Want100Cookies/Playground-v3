@@ -50,6 +50,44 @@ namespace Playground_v3
             await sqLiteConnection.OpenAsync();
         }
 
+        public static void InitilizeFunc(Dictionary<int, string> funcList)
+        {
+            // Get the sqlite connection and open it
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            Dictionary<int, string> funcFromDb = GetFuncDictionary();
+            //funcFromDb.o
+        }
+
+        public static Dictionary<int, string> GetFuncDictionary()
+        {
+            // Get the sqlite connection and open it
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            // Create the command and insert the query
+            SQLiteCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM func";
+
+            // Execute the command and put it in a new reader
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            // Initialise a dictionary
+            Dictionary<int, string> list = new Dictionary<int, string>(reader.StepCount);
+
+            while (reader.Read())
+            {
+                // For each record, get the integer id and the string name, and add it to the dictionary
+                list.Add(reader.GetInt32(0), reader.GetString(1));
+            }
+
+            // Close the connection to prevent runtime errors
+            conn.Close();
+
+            return list;
+        }
+
         /// <summary>
         /// Get all groups returned in a Dictionary
         /// </summary>
@@ -162,7 +200,12 @@ namespace Playground_v3
 
             // Get the last inserted row id and return it
             cmd.CommandText = "SELECT last_insert_rowid()";
-            return (long) cmd.ExecuteScalar();
+
+            long result = (long)cmd.ExecuteScalar();
+
+            conn.Close();
+
+            return result;
         }
 
         /// <summary>
@@ -186,7 +229,12 @@ namespace Playground_v3
 
             // Get the last inserted row id and return it
             cmd.CommandText = "SELECT last_insert_rowid()";
-            return (long) cmd.ExecuteScalar();
+
+            long result = (long) cmd.ExecuteScalar();
+
+            conn.Close();
+
+            return result;
         }
 
         /// <summary>
@@ -228,7 +276,32 @@ namespace Playground_v3
                 successful = affectedrows == 1 && successful;
             }
 
+            conn.Close();
+
             return successful;
+        }
+
+        /// <summary>
+        /// Delete the user with the given id
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns>true if user is deleted</returns>
+        public static async Task<bool> DeleteUser(int userId)
+        {
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            
+            // Delete row with given user id
+            cmd.CommandText = "DELETE FROM users WHERE id = @userId";
+            cmd.Parameters.Add(new SQLiteParameter("@userId") {Value = userId});
+
+            int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return rowsAffected == 1;
         }
 
     }

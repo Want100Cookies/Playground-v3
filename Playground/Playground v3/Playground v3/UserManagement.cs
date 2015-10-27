@@ -202,8 +202,54 @@ namespace Playground_v3
             if (lstBoxGroups.SelectedValue is int)
             {
                 lblUserGroup.Text = @"Users in group " + _groupDictionary[(int) lstBoxGroups.SelectedValue] + @":";
+                lblFunctionality.Text = @"Functionality assigned to " +
+                                        _groupDictionary[(int) lstBoxGroups.SelectedValue] + @":";
                 UpdateUsers();
             }
+        }
+
+        private async void btnDeleteUser_Click(object sender, EventArgs e)
+        {
+            KeyValuePair<int, string> user;
+
+            if (lstBoxUsers.SelectedItem != null)
+            {
+                // Get the selected user and cast it to a KeyValuePair to get the user id
+                user = (KeyValuePair<int, string>)lstBoxUsers.SelectedItem;
+            }
+            else if (lstBoxUserGroup.SelectedItem != null)
+            {
+                user = (KeyValuePair<int, string>) lstBoxUserGroup.SelectedItem;
+            }
+            else
+            {
+                return;
+            }
+
+            int userId = user.Key;
+
+            bool result = await Auth.DeleteUser(userId);
+
+            RefreshTables();
+
+            UpdateUsers();
+
+            MessageBox.Show("Operation " + (result ? "succesful" : "failed"));
+        }
+
+        private void btnDeleteGroup_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstBoxUserGroup_Enter(object sender, EventArgs e)
+        {
+            lstBoxUsers.SelectedIndex = -1;
+        }
+
+        private void lstBoxUsers_Enter(object sender, EventArgs e)
+        {
+            lstBoxUserGroup.SelectedIndex = -1;
         }
     }
 }

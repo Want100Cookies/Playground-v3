@@ -60,6 +60,7 @@
             this.lstBoxUsers.Size = new System.Drawing.Size(244, 404);
             this.lstBoxUsers.TabIndex = 0;
             this.lstBoxUsers.ValueMember = "Key";
+            this.lstBoxUsers.Enter += new System.EventHandler(this.lstBoxUsers_Enter);
             // 
             // lstBoxGroups
             // 
@@ -81,6 +82,7 @@
             this.lstBoxUserGroup.Size = new System.Drawing.Size(244, 404);
             this.lstBoxUserGroup.TabIndex = 2;
             this.lstBoxUserGroup.ValueMember = "Key";
+            this.lstBoxUserGroup.Enter += new System.EventHandler(this.lstBoxUserGroup_Enter);
             // 
             // btnUserLeaveGroup
             // 
@@ -170,6 +172,7 @@
             this.btnDeleteUser.TabIndex = 8;
             this.btnDeleteUser.Text = "Delete selected user";
             this.btnDeleteUser.UseVisualStyleBackColor = true;
+            this.btnDeleteUser.Click += new System.EventHandler(this.btnDeleteUser_Click);
             // 
             // btnDeleteGroup
             // 
@@ -179,6 +182,7 @@
             this.btnDeleteGroup.TabIndex = 9;
             this.btnDeleteGroup.Text = "Delete selected group";
             this.btnDeleteGroup.UseVisualStyleBackColor = true;
+            this.btnDeleteGroup.Click += new System.EventHandler(this.btnDeleteGroup_Click);
             // 
             // label1
             // 
