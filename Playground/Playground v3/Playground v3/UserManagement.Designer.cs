@@ -55,7 +55,7 @@
             this.lstBoxUsers.DisplayMember = "Value";
             this.lstBoxUsers.FormattingEnabled = true;
             this.lstBoxUsers.ItemHeight = 20;
-            this.lstBoxUsers.Location = new System.Drawing.Point(12, 32);
+            this.lstBoxUsers.Location = new System.Drawing.Point(12, 55);
             this.lstBoxUsers.Name = "lstBoxUsers";
             this.lstBoxUsers.Size = new System.Drawing.Size(244, 404);
             this.lstBoxUsers.TabIndex = 0;
@@ -66,7 +66,7 @@
             // 
             this.lstBoxGroups.FormattingEnabled = true;
             this.lstBoxGroups.ItemHeight = 20;
-            this.lstBoxGroups.Location = new System.Drawing.Point(594, 32);
+            this.lstBoxGroups.Location = new System.Drawing.Point(594, 301);
             this.lstBoxGroups.Name = "lstBoxGroups";
             this.lstBoxGroups.Size = new System.Drawing.Size(244, 404);
             this.lstBoxGroups.TabIndex = 1;
@@ -77,7 +77,7 @@
             this.lstBoxUserGroup.DisplayMember = "Value";
             this.lstBoxUserGroup.FormattingEnabled = true;
             this.lstBoxUserGroup.ItemHeight = 20;
-            this.lstBoxUserGroup.Location = new System.Drawing.Point(344, 32);
+            this.lstBoxUserGroup.Location = new System.Drawing.Point(344, 55);
             this.lstBoxUserGroup.Name = "lstBoxUserGroup";
             this.lstBoxUserGroup.Size = new System.Drawing.Size(244, 404);
             this.lstBoxUserGroup.TabIndex = 2;
@@ -87,7 +87,7 @@
             // btnUserLeaveGroup
             // 
             this.btnUserLeaveGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUserLeaveGroup.Location = new System.Drawing.Point(262, 244);
+            this.btnUserLeaveGroup.Location = new System.Drawing.Point(262, 267);
             this.btnUserLeaveGroup.Name = "btnUserLeaveGroup";
             this.btnUserLeaveGroup.Size = new System.Drawing.Size(75, 192);
             this.btnUserLeaveGroup.TabIndex = 3;
@@ -98,7 +98,7 @@
             // btnUserJoinGroup
             // 
             this.btnUserJoinGroup.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUserJoinGroup.Location = new System.Drawing.Point(263, 32);
+            this.btnUserJoinGroup.Location = new System.Drawing.Point(263, 55);
             this.btnUserJoinGroup.Name = "btnUserJoinGroup";
             this.btnUserJoinGroup.Size = new System.Drawing.Size(75, 192);
             this.btnUserJoinGroup.TabIndex = 4;
@@ -109,142 +109,152 @@
             // lblUsers
             // 
             this.lblUsers.AutoSize = true;
-            this.lblUsers.Location = new System.Drawing.Point(17, 9);
+            this.lblUsers.Location = new System.Drawing.Point(17, 29);
             this.lblUsers.Name = "lblUsers";
-            this.lblUsers.Size = new System.Drawing.Size(55, 20);
+            this.lblUsers.Size = new System.Drawing.Size(91, 20);
             this.lblUsers.TabIndex = 5;
-            this.lblUsers.Text = "Users:";
+            this.lblUsers.Text = "Gebruikers:";
             // 
             // lblUserGroup
             // 
             this.lblUserGroup.AutoSize = true;
             this.lblUserGroup.Location = new System.Drawing.Point(349, 9);
+            this.lblUserGroup.MaximumSize = new System.Drawing.Size(244, 0);
             this.lblUserGroup.MinimumSize = new System.Drawing.Size(244, 0);
             this.lblUserGroup.Name = "lblUserGroup";
-            this.lblUserGroup.Size = new System.Drawing.Size(244, 20);
+            this.lblUserGroup.Size = new System.Drawing.Size(244, 40);
             this.lblUserGroup.TabIndex = 6;
-            this.lblUserGroup.Text = "Users in group <group>:";
+            this.lblUserGroup.Text = "Gebruikers in de geselecteerde groep:";
             // 
             // lblGroup
             // 
             this.lblGroup.AutoSize = true;
-            this.lblGroup.Location = new System.Drawing.Point(599, 9);
+            this.lblGroup.Location = new System.Drawing.Point(599, 278);
             this.lblGroup.Name = "lblGroup";
-            this.lblGroup.Size = new System.Drawing.Size(66, 20);
+            this.lblGroup.Size = new System.Drawing.Size(76, 20);
             this.lblGroup.TabIndex = 6;
-            this.lblGroup.Text = "Groups:";
+            this.lblGroup.Text = "Groepen:";
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(344, 442);
+            this.btnSave.Location = new System.Drawing.Point(344, 465);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(244, 78);
             this.btnSave.TabIndex = 7;
-            this.btnSave.Text = "Save";
+            this.btnSave.Text = "Opslaan";
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnCreateGroup
             // 
-            this.btnCreateGroup.Location = new System.Drawing.Point(594, 442);
+            this.btnCreateGroup.Location = new System.Drawing.Point(594, 711);
             this.btnCreateGroup.Name = "btnCreateGroup";
             this.btnCreateGroup.Size = new System.Drawing.Size(244, 36);
             this.btnCreateGroup.TabIndex = 7;
-            this.btnCreateGroup.Text = "Create new group";
+            this.btnCreateGroup.Text = "Nieuwe groep maken";
             this.btnCreateGroup.UseVisualStyleBackColor = true;
             this.btnCreateGroup.Click += new System.EventHandler(this.btnCreateGroup_Click);
             // 
             // btnAddUser
             // 
-            this.btnAddUser.Location = new System.Drawing.Point(12, 442);
+            this.btnAddUser.Location = new System.Drawing.Point(12, 465);
             this.btnAddUser.Name = "btnAddUser";
             this.btnAddUser.Size = new System.Drawing.Size(244, 36);
             this.btnAddUser.TabIndex = 7;
-            this.btnAddUser.Text = "Add new user";
+            this.btnAddUser.Text = "Voeg nieuwe gebruiker toe";
             this.btnAddUser.UseVisualStyleBackColor = true;
             this.btnAddUser.Click += new System.EventHandler(this.btnAddUser_Click);
             // 
             // btnDeleteUser
             // 
-            this.btnDeleteUser.Location = new System.Drawing.Point(12, 484);
+            this.btnDeleteUser.Location = new System.Drawing.Point(12, 507);
             this.btnDeleteUser.Name = "btnDeleteUser";
-            this.btnDeleteUser.Size = new System.Drawing.Size(244, 36);
+            this.btnDeleteUser.Size = new System.Drawing.Size(244, 54);
             this.btnDeleteUser.TabIndex = 8;
-            this.btnDeleteUser.Text = "Delete selected user";
+            this.btnDeleteUser.Text = "Geselecteerde gebruiker verwijderen";
             this.btnDeleteUser.UseVisualStyleBackColor = true;
             this.btnDeleteUser.Click += new System.EventHandler(this.btnDeleteUser_Click);
             // 
             // btnDeleteGroup
             // 
-            this.btnDeleteGroup.Location = new System.Drawing.Point(594, 484);
+            this.btnDeleteGroup.Location = new System.Drawing.Point(594, 753);
             this.btnDeleteGroup.Name = "btnDeleteGroup";
-            this.btnDeleteGroup.Size = new System.Drawing.Size(244, 36);
+            this.btnDeleteGroup.Size = new System.Drawing.Size(244, 54);
             this.btnDeleteGroup.TabIndex = 9;
-            this.btnDeleteGroup.Text = "Delete selected group";
+            this.btnDeleteGroup.Text = "Geselecteerde groep verwijderen";
             this.btnDeleteGroup.UseVisualStyleBackColor = true;
             this.btnDeleteGroup.Click += new System.EventHandler(this.btnDeleteGroup_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(17, 531);
+            this.label1.Location = new System.Drawing.Point(17, 574);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(102, 20);
+            this.label1.Size = new System.Drawing.Size(112, 20);
             this.label1.TabIndex = 11;
-            this.label1.Text = "Functionality:";
+            this.label1.Text = "Functionaliteit:";
             // 
             // lstBoxFunc
             // 
+            this.lstBoxFunc.DisplayMember = "Value";
             this.lstBoxFunc.FormattingEnabled = true;
             this.lstBoxFunc.ItemHeight = 20;
-            this.lstBoxFunc.Location = new System.Drawing.Point(12, 554);
+            this.lstBoxFunc.Location = new System.Drawing.Point(12, 601);
             this.lstBoxFunc.Name = "lstBoxFunc";
             this.lstBoxFunc.Size = new System.Drawing.Size(244, 404);
             this.lstBoxFunc.TabIndex = 10;
+            this.lstBoxFunc.ValueMember = "Key";
+            this.lstBoxFunc.Enter += new System.EventHandler(this.lstBoxFunc_Enter);
             // 
             // lblFunctionality
             // 
             this.lblFunctionality.AutoSize = true;
-            this.lblFunctionality.Location = new System.Drawing.Point(349, 531);
+            this.lblFunctionality.Location = new System.Drawing.Point(349, 554);
+            this.lblFunctionality.MaximumSize = new System.Drawing.Size(244, 0);
             this.lblFunctionality.Name = "lblFunctionality";
-            this.lblFunctionality.Size = new System.Drawing.Size(251, 20);
+            this.lblFunctionality.Size = new System.Drawing.Size(159, 40);
             this.lblFunctionality.TabIndex = 13;
-            this.lblFunctionality.Text = "Functionality assigned to <group>:";
+            this.lblFunctionality.Text = "Functionaliteit in de geselecteerde groep:";
             // 
             // lstBoxFuncGroup
             // 
+            this.lstBoxFuncGroup.DisplayMember = "Value";
             this.lstBoxFuncGroup.FormattingEnabled = true;
             this.lstBoxFuncGroup.ItemHeight = 20;
-            this.lstBoxFuncGroup.Location = new System.Drawing.Point(344, 554);
+            this.lstBoxFuncGroup.Location = new System.Drawing.Point(344, 601);
             this.lstBoxFuncGroup.Name = "lstBoxFuncGroup";
             this.lstBoxFuncGroup.Size = new System.Drawing.Size(244, 404);
             this.lstBoxFuncGroup.TabIndex = 12;
+            this.lstBoxFuncGroup.ValueMember = "Key";
+            this.lstBoxFuncGroup.Enter += new System.EventHandler(this.lstBoxFuncGroup_Enter);
             // 
             // btnFuncAssign
             // 
             this.btnFuncAssign.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFuncAssign.Location = new System.Drawing.Point(263, 554);
+            this.btnFuncAssign.Location = new System.Drawing.Point(263, 601);
             this.btnFuncAssign.Name = "btnFuncAssign";
             this.btnFuncAssign.Size = new System.Drawing.Size(75, 192);
             this.btnFuncAssign.TabIndex = 15;
             this.btnFuncAssign.Text = "→";
             this.btnFuncAssign.UseVisualStyleBackColor = true;
+            this.btnFuncAssign.Click += new System.EventHandler(this.btnFuncAssign_Click);
             // 
             // btnFuncRemove
             // 
             this.btnFuncRemove.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFuncRemove.Location = new System.Drawing.Point(262, 766);
+            this.btnFuncRemove.Location = new System.Drawing.Point(262, 813);
             this.btnFuncRemove.Name = "btnFuncRemove";
             this.btnFuncRemove.Size = new System.Drawing.Size(75, 192);
             this.btnFuncRemove.TabIndex = 14;
             this.btnFuncRemove.Text = "←";
             this.btnFuncRemove.UseVisualStyleBackColor = true;
+            this.btnFuncRemove.Click += new System.EventHandler(this.btnFuncRemove_Click);
             // 
             // UserManagement
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(867, 978);
+            this.ClientSize = new System.Drawing.Size(852, 1023);
             this.Controls.Add(this.btnFuncAssign);
             this.Controls.Add(this.btnFuncRemove);
             this.Controls.Add(this.lblFunctionality);
@@ -265,7 +275,11 @@
             this.Controls.Add(this.lstBoxGroups);
             this.Controls.Add(this.lstBoxUsers);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(874, 1079);
+            this.MinimumSize = new System.Drawing.Size(874, 1079);
             this.Name = "UserManagement";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "User Management";
             this.Load += new System.EventHandler(this.UserManagement_Load);
             this.ResumeLayout(false);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,6 +12,11 @@ namespace Playground_v3
 {
     class Auth
     {
+        private static Dictionary<int, string> _funcDictionary;
+        private static List<KeyValuePair<int, int>> _userGroupDictionary;
+        private static List<KeyValuePair<int, int>> _funcGroupDictionary;  
+        private static KeyValuePair<int, string> _user;
+
 
         /// <summary>
         /// Get a working SQLiteConnection or null if no database file found
@@ -31,7 +37,7 @@ namespace Playground_v3
                     InitialDirectory = AppDomain.CurrentDomain.BaseDirectory
                 };
 
-                if (openFileDialog.ShowDialog() != DialogResult.OK) return null;
+                if (openFileDialog.ShowDialog() != DialogResult.OK) Application.Exit();
 
                 Settings.RemoveSetting("userDatabaseFile");
                 Settings.AddSetting("userDatabaseFile", openFileDialog.FileName);
@@ -47,19 +53,88 @@ namespace Playground_v3
         /// <param name="sqLiteConnection"></param>
         public static async void OpenSqLiteConnection(SQLiteConnection sqLiteConnection)
         {
-            await sqLiteConnection.OpenAsync();
+            try
+            {
+                await sqLiteConnection.OpenAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(@"Exception opening .db: " + ex);
+                Application.Exit();
+            }
         }
 
-        public static void InitilizeFunc(Dictionary<int, string> funcList)
+        /// <summary>
+        /// Make sure all functions exist in the database and cache some stuff for later use
+        /// </summary>
+        /// <param name="funcList">All functions used in the program</param>
+        public static async void Init(List<string> funcList)
         {
-            // Get the sqlite connection and open it
             SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
 
             Dictionary<int, string> funcFromDb = GetFuncDictionary();
-            //funcFromDb.o
+
+            // For each value in funcList wich is not in the database, add it.
+            foreach (string value in funcList.Where(value => !funcFromDb.ContainsValue(value)))
+            {
+                OpenSqLiteConnection(conn);
+
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO func (name) VALUES (@name)";
+                cmd.Parameters.Add(new SQLiteParameter("@name") {Value = value});
+
+                await cmd.ExecuteNonQueryAsync();
+
+                conn.Close();
+            }
+
+            // Set the current user
+            WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            Dictionary<int, string> userDictionary = GetUserDictionary();
+
+            _user = userDictionary.FirstOrDefault(x => x.Value == windowsIdentity?.Name);
+
+            // Todo: periodicly update the static fields (in a System.Threading.Timer class perhaps?)
+            _funcDictionary = funcFromDb;
+            _userGroupDictionary = GetUserGroupList();
+            _funcGroupDictionary = GetFuncGroupList();
         }
 
+        /// <summary>
+        /// Determine wether the current user has access to the given function
+        /// </summary>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        public static bool HasAccessTo(string func)
+        {
+            // Get key by value
+            int funcId = _funcDictionary.FirstOrDefault(x => x.Value == func).Key;
+
+            // Generate a list with all groups containing the given function id
+            List<int> groupList = (
+                    from funcGroupKvPair 
+                    in _funcGroupDictionary
+                    where funcGroupKvPair.Key == funcId
+                    select funcGroupKvPair.Value
+                ).ToList();
+
+            // Determine if the current user is in any of the given groups
+            return _userGroupDictionary.Any(userGroupkvPair => userGroupkvPair.Key == _user.Key && groupList.Contains(userGroupkvPair.Value));
+        }
+
+        /// <summary>
+        /// Get the currently logged in user
+        /// </summary>
+        /// <returns></returns>
+        public static KeyValuePair<int, string> GetUser()
+        {
+            return _user;
+        }
+
+        /// <summary>
+        /// Get all functions 
+        /// </summary>
+        /// <returns></returns>
         public static Dictionary<int, string> GetFuncDictionary()
         {
             // Get the sqlite connection and open it
@@ -124,7 +199,7 @@ namespace Playground_v3
         /// Get all users returned in a dictionary
         /// </summary>
         /// <returns></returns>
-        public static Dictionary<int, string> GetUserList()
+        public static Dictionary<int, string> GetUserDictionary()
         {
             // Get the sqlite connection and open it
             SQLiteConnection conn = GetSqLiteConnection();
@@ -163,6 +238,33 @@ namespace Playground_v3
 
             SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT * FROM users_groups";
+
+            SQLiteDataReader reader = cmd.ExecuteReader();
+
+            List<KeyValuePair<int, int>> list = new List<KeyValuePair<int, int>>(reader.StepCount);
+
+            while (reader.Read())
+            {
+                KeyValuePair<int, int> kvPair = new KeyValuePair<int, int>(reader.GetInt32(0), reader.GetInt32(1));
+                list.Add(kvPair);
+            }
+
+            conn.Close();
+
+            return list;
+        }
+
+        /// <summary>
+        /// Get all entries in the join table, wich combines the functions to groups
+        /// </summary>
+        /// <returns></returns>
+        public static List<KeyValuePair<int, int>> GetFuncGroupList()
+        {
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM func_groups";
 
             SQLiteDataReader reader = cmd.ExecuteReader();
 
@@ -282,6 +384,50 @@ namespace Playground_v3
         }
 
         /// <summary>
+        /// Update the func_groups table according to the funcGroupList
+        /// </summary>
+        /// <param name="funcGroupList"></param>
+        /// <returns></returns>
+        public static async Task<bool> UpdateFuncGroup(List<KeyValuePair<int, int>> funcGroupList)
+        {
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            // Delete all rows from the table
+            cmd.CommandText = "DELETE FROM func_groups";
+            await cmd.ExecuteNonQueryAsync();
+
+            // Insert one new row per time
+            cmd.CommandText = "INSERT INTO func_groups (func_id, groups_id) VALUES (@func_id, @groups_id)";
+
+            // Add parameters
+            SQLiteParameter funcIdParameter = new SQLiteParameter("@func_id");
+            cmd.Parameters.Add(funcIdParameter);
+            SQLiteParameter groupIdParameter = new SQLiteParameter("@groups_id");
+            cmd.Parameters.Add(groupIdParameter);
+
+            bool successful = true;
+
+            foreach (KeyValuePair<int, int> kvPair in funcGroupList)
+            {
+                // Asign values to the parameters
+                funcIdParameter.Value = kvPair.Key;
+                groupIdParameter.Value = kvPair.Value;
+
+                // Execute the query async
+                int affectedrows = await cmd.ExecuteNonQueryAsync();
+
+                // Check if this operation and all previous ones were successful
+                successful = affectedrows == 1 && successful;
+            }
+
+            conn.Close();
+
+            return successful;
+        }
+
+        /// <summary>
         /// Delete the user with the given id
         /// </summary>
         /// <param name="userId"></param>
@@ -296,6 +442,27 @@ namespace Playground_v3
             // Delete row with given user id
             cmd.CommandText = "DELETE FROM users WHERE id = @userId";
             cmd.Parameters.Add(new SQLiteParameter("@userId") {Value = userId});
+
+            int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+            conn.Close();
+
+            return rowsAffected == 1;
+        }
+
+        /// <summary>
+        /// Delete the group with the givven id
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public static async Task<bool> DeleteGroup(int groupId)
+        {
+            SQLiteConnection conn = GetSqLiteConnection();
+            OpenSqLiteConnection(conn);
+
+            SQLiteCommand cmd = conn.CreateCommand();
+            cmd.CommandText = "DELETE FROM groups WHERE id = @groupId";
+            cmd.Parameters.Add(new SQLiteParameter("@groupId") {Value = groupId});
 
             int rowsAffected = await cmd.ExecuteNonQueryAsync();
 
