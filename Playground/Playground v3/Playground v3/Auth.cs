@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 
 namespace Playground_v3
@@ -16,6 +17,8 @@ namespace Playground_v3
         private static List<KeyValuePair<int, int>> _userGroupDictionary;
         private static List<KeyValuePair<int, int>> _funcGroupDictionary;  
         private static KeyValuePair<int, string> _user;
+
+        private static System.Timers.Timer _timer;
 
 
         /// <summary>
@@ -94,8 +97,17 @@ namespace Playground_v3
 
             _user = userDictionary.FirstOrDefault(x => x.Value == windowsIdentity?.Name);
 
-            // Todo: periodicly update the static fields (in a System.Threading.Timer class perhaps?)
-            _funcDictionary = funcFromDb;
+            // Execute this immediatly, prevent a nullreferenceexception on HassAccessTo
+            TimerTick(null, null);
+
+            _timer = new System.Timers.Timer(30000); // 30 seconds
+            _timer.Elapsed += TimerTick;
+            _timer.Start();
+        }
+
+        private static void TimerTick(object sender, ElapsedEventArgs e)
+        {
+            _funcDictionary = GetFuncDictionary();
             _userGroupDictionary = GetUserGroupList();
             _funcGroupDictionary = GetFuncGroupList();
         }
