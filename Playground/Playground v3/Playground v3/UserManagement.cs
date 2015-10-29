@@ -33,6 +33,10 @@ namespace Playground_v3
         /// <param name="e"></param>
         private void UserManagement_Load(object sender, EventArgs e)
         {
+            // Make form compatible with lower resolutions
+            this.Height = lstBoxFunc.Bottom + 50;
+            this.CenterToScreen();
+
             RefreshTables();
 
             lstBoxGroups.DataSource = new BindingSource(_groupDictionary, null);

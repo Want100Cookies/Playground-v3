@@ -274,9 +274,9 @@
             this.Controls.Add(this.lstBoxUserGroup);
             this.Controls.Add(this.lstBoxGroups);
             this.Controls.Add(this.lstBoxUsers);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(874, 1079);
             this.MinimumSize = new System.Drawing.Size(874, 1079);
             this.Name = "UserManagement";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

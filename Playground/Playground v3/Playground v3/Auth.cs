@@ -98,8 +98,6 @@ namespace Playground_v3
 
             _user = userDictionary.FirstOrDefault(x => x.Value == windowsIdentity?.Name);
 
-            MessageBox.Show(_user.ToString());
-
             // Execute this immediatly, prevent a nullreferenceexception on HassAccessTo
             TimerTick(null, null);
 
