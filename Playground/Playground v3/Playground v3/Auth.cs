@@ -73,22 +73,23 @@ namespace Playground_v3
         /// <param name="funcList">All functions used in the program</param>
         public static async void Init(List<string> funcList)
         {
-            SQLiteConnection conn = GetSqLiteConnection();
-
-            Dictionary<int, string> funcFromDb = GetFuncDictionary();
-
-            // For each value in funcList wich is not in the database, add it.
-            foreach (string value in funcList.Where(value => !funcFromDb.ContainsValue(value)))
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                OpenSqLiteConnection(conn);
+                Dictionary<int, string> funcFromDb = GetFuncDictionary();
 
-                SQLiteCommand cmd = conn.CreateCommand();
-                cmd.CommandText = "INSERT INTO func (name) VALUES (@name)";
-                cmd.Parameters.Add(new SQLiteParameter("@name") {Value = value});
+                // For each value in funcList wich is not in the database, add it.
+                foreach (string value in funcList.Where(value => !funcFromDb.ContainsValue(value)))
+                {
+                    OpenSqLiteConnection(conn);
 
-                await cmd.ExecuteNonQueryAsync();
+                    SQLiteCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "INSERT INTO func (name) VALUES (@name)";
+                    cmd.Parameters.Add(new SQLiteParameter("@name") { Value = value });
 
-                conn.Close();
+                    await cmd.ExecuteNonQueryAsync();
+
+                    conn.Close();
+                }
             }
 
             // Set the current user
@@ -110,6 +111,14 @@ namespace Playground_v3
             _funcDictionary = GetFuncDictionary();
             _userGroupDictionary = GetUserGroupList();
             _funcGroupDictionary = GetFuncGroupList();
+
+            if (_user.Key != 0) return;
+
+            // Set the current user
+            WindowsIdentity windowsIdentity = WindowsIdentity.GetCurrent();
+            Dictionary<int, string> userDictionary = GetUserDictionary();
+
+            _user = userDictionary.FirstOrDefault(x => x.Value == windowsIdentity?.Name);
         }
 
         /// <summary>
@@ -150,29 +159,31 @@ namespace Playground_v3
         public static Dictionary<int, string> GetFuncDictionary()
         {
             // Get the sqlite connection and open it
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
-
-            // Create the command and insert the query
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM func";
-
-            // Execute the command and put it in a new reader
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
-            // Initialise a dictionary
-            Dictionary<int, string> list = new Dictionary<int, string>(reader.StepCount);
-
-            while (reader.Read())
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                // For each record, get the integer id and the string name, and add it to the dictionary
-                list.Add(reader.GetInt32(0), reader.GetString(1));
+                OpenSqLiteConnection(conn);
+                // Create the command and insert the query
+
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM func";
+
+                // Execute the command and put it in a new reader
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                // Initialise a dictionary
+                Dictionary<int, string> list = new Dictionary<int, string>(reader.StepCount);
+
+                while (reader.Read())
+                {
+                    // For each record, get the integer id and the string name, and add it to the dictionary
+                    list.Add(reader.GetInt32(0), reader.GetString(1));
+                }
+
+                // Close the connection to prevent runtime errors
+                conn.Close();
+
+                return list;
             }
-
-            // Close the connection to prevent runtime errors
-            conn.Close();
-
-            return list;
         }
 
         /// <summary>
@@ -182,29 +193,31 @@ namespace Playground_v3
         public static Dictionary<int, string> GetGroupDictionary()
         {
             // Get the sqlite connection and open it
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
-
-            // Create the command and insert the query
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM groups";
-
-            // Execute the command and put it in a new reader
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
-            // Initialise a dictionary
-            Dictionary<int, string> list = new Dictionary<int, string>(reader.StepCount);
-
-            while (reader.Read())
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                // For each record, get the integer id and the string name, and add it to the dictionary
-                list.Add(reader.GetInt32(0), reader.GetString(1));
+                OpenSqLiteConnection(conn);
+
+                // Create the command and insert the query
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM groups";
+
+                // Execute the command and put it in a new reader
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                // Initialise a dictionary
+                Dictionary<int, string> list = new Dictionary<int, string>(reader.StepCount);
+
+                while (reader.Read())
+                {
+                    // For each record, get the integer id and the string name, and add it to the dictionary
+                    list.Add(reader.GetInt32(0), reader.GetString(1));
+                }
+
+                // Close the connection to prevent runtime errors
+                conn.Close();
+
+                return list;
             }
-
-            // Close the connection to prevent runtime errors
-            conn.Close();
-
-            return list;
         }
 
         /// <summary>
@@ -214,29 +227,31 @@ namespace Playground_v3
         public static Dictionary<int, string> GetUserDictionary()
         {
             // Get the sqlite connection and open it
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
-
-            // Create the command and insert the query
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM users";
-
-            // Execute the command and put it in a new reader
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
-            // Initialise a dictionary
-            Dictionary<int, string> list = new Dictionary<int, string>(reader.StepCount);
-
-            while (reader.Read())
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                // For each record, get the integer id and the string name, and add it to the dictionary
-                list.Add(reader.GetInt32(0), reader.GetString(1));
+                OpenSqLiteConnection(conn);
+
+                // Create the command and insert the query
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM users";
+
+                // Execute the command and put it in a new reader
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                // Initialise a dictionary
+                Dictionary<int, string> list = new Dictionary<int, string>(reader.StepCount);
+
+                while (reader.Read())
+                {
+                    // For each record, get the integer id and the string name, and add it to the dictionary
+                    list.Add(reader.GetInt32(0), reader.GetString(1));
+                }
+
+                // Close the connection to prevent runtime errors
+                conn.Close();
+
+                return list;
             }
-
-            // Close the connection to prevent runtime errors
-            conn.Close();
-
-            return list;
         }
 
         /// <summary>
@@ -245,25 +260,28 @@ namespace Playground_v3
         /// <returns></returns>
         public static List<KeyValuePair<int, int>> GetUserGroupList()
         {
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
-
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM users_groups";
-
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
-            List<KeyValuePair<int, int>> list = new List<KeyValuePair<int, int>>(reader.StepCount);
-
-            while (reader.Read())
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                KeyValuePair<int, int> kvPair = new KeyValuePair<int, int>(reader.GetInt32(0), reader.GetInt32(1));
-                list.Add(kvPair);
+                OpenSqLiteConnection(conn);
+
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM users_groups";
+
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                List<KeyValuePair<int, int>> list = new List<KeyValuePair<int, int>>(reader.StepCount);
+
+                while (reader.Read())
+                {
+                    KeyValuePair<int, int> kvPair = new KeyValuePair<int, int>(reader.GetInt32(0), reader.GetInt32(1));
+                    list.Add(kvPair);
+                }
+
+                conn.Close();
+
+                return list;
             }
-
-            conn.Close();
-
-            return list;
+                
         }
 
         /// <summary>
@@ -272,25 +290,28 @@ namespace Playground_v3
         /// <returns></returns>
         public static List<KeyValuePair<int, int>> GetFuncGroupList()
         {
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
-
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM func_groups";
-
-            SQLiteDataReader reader = cmd.ExecuteReader();
-
-            List<KeyValuePair<int, int>> list = new List<KeyValuePair<int, int>>(reader.StepCount);
-
-            while (reader.Read())
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                KeyValuePair<int, int> kvPair = new KeyValuePair<int, int>(reader.GetInt32(0), reader.GetInt32(1));
-                list.Add(kvPair);
+                OpenSqLiteConnection(conn);
+
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT * FROM func_groups";
+
+                SQLiteDataReader reader = cmd.ExecuteReader();
+
+                List<KeyValuePair<int, int>> list = new List<KeyValuePair<int, int>>(reader.StepCount);
+
+                while (reader.Read())
+                {
+                    KeyValuePair<int, int> kvPair = new KeyValuePair<int, int>(reader.GetInt32(0), reader.GetInt32(1));
+                    list.Add(kvPair);
+                }
+
+                conn.Close();
+
+                return list;
             }
-
-            conn.Close();
-
-            return list;
+                
         }
 
         /// <summary>
@@ -301,25 +322,28 @@ namespace Playground_v3
         public static long AddUser(string username)
         {
             // Get the sqlite connection and open it
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
+            using (SQLiteConnection conn = GetSqLiteConnection())
+            {
+                OpenSqLiteConnection(conn);
 
-            // Create the command, set the command text with a named parameter and add the parameter value
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO users (username) VALUES(@username)";
-            cmd.Parameters.Add(new SQLiteParameter("@username") {Value = username});
+                // Create the command, set the command text with a named parameter and add the parameter value
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO users (username) VALUES(@username)";
+                cmd.Parameters.Add(new SQLiteParameter("@username") {Value = username});
 
-            // Execute the query, if the no affected rows is not 1, user is not added
-            if (cmd.ExecuteNonQuery() != 1) return 0;
+                // Execute the query, if the no affected rows is not 1, user is not added
+                if (cmd.ExecuteNonQuery() != 1) return 0;
 
-            // Get the last inserted row id and return it
-            cmd.CommandText = "SELECT last_insert_rowid()";
+                // Get the last inserted row id and return it
+                cmd.CommandText = "SELECT last_insert_rowid()";
 
-            long result = (long)cmd.ExecuteScalar();
+                long result = (long)cmd.ExecuteScalar();
 
-            conn.Close();
+                conn.Close();
 
-            return result;
+                return result;
+            }
+            
         }
 
         /// <summary>
@@ -330,25 +354,28 @@ namespace Playground_v3
         public static long CreateGroup(string groupname)
         {
             // Get the sqlite connection and open it
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
+            using (SQLiteConnection conn = GetSqLiteConnection())
+            {
+                OpenSqLiteConnection(conn);
 
-            // Create the command, set the command text with a named parameter and add the parameter value
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "INSERT INTO groups (groupname) VALUES(@groupname)";
-            cmd.Parameters.Add(new SQLiteParameter("@groupname") {Value = groupname});
+                // Create the command, set the command text with a named parameter and add the parameter value
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "INSERT INTO groups (groupname) VALUES(@groupname)";
+                cmd.Parameters.Add(new SQLiteParameter("@groupname") {Value = groupname});
 
-            // Execute the query, if the no affected rows is not 1, group is not added
-            if (cmd.ExecuteNonQuery() != 1) return 0;
+                // Execute the query, if the no affected rows is not 1, group is not added
+                if (cmd.ExecuteNonQuery() != 1) return 0;
 
-            // Get the last inserted row id and return it
-            cmd.CommandText = "SELECT last_insert_rowid()";
+                // Get the last inserted row id and return it
+                cmd.CommandText = "SELECT last_insert_rowid()";
 
-            long result = (long) cmd.ExecuteScalar();
+                long result = (long) cmd.ExecuteScalar();
 
-            conn.Close();
+                conn.Close();
 
-            return result;
+                return result;
+            }
+            
         }
 
         /// <summary>
@@ -358,41 +385,44 @@ namespace Playground_v3
         /// <returns>Is the operation succesful</returns>
         public static async Task<bool> UpdateUserGroup(List<KeyValuePair<int, int>> userGroupList)
         {
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
-
-            SQLiteCommand cmd = conn.CreateCommand();
-            // Delete all rows from the table
-            cmd.CommandText = "DELETE FROM users_groups";
-            await cmd.ExecuteNonQueryAsync();
-            
-            // Insert one new row per time
-            cmd.CommandText = "INSERT INTO users_groups (users_id, groups_id) VALUES (@users_id, @groups_id)";
-
-            // Add parameters
-            SQLiteParameter userIdParameter = new SQLiteParameter("@users_id");
-            cmd.Parameters.Add(userIdParameter);
-            SQLiteParameter groupIdParameter = new SQLiteParameter("@groups_id");
-            cmd.Parameters.Add(groupIdParameter);
-
-            bool successful = true;
-
-            foreach (KeyValuePair<int, int> kvPair in userGroupList)
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                // Asign values to the parameters
-                userIdParameter.Value = kvPair.Key;
-                groupIdParameter.Value = kvPair.Value;
+                OpenSqLiteConnection(conn);
 
-                // Execute the query async
-                int affectedrows = await cmd.ExecuteNonQueryAsync();
+                SQLiteCommand cmd = conn.CreateCommand();
+                // Delete all rows from the table
+                cmd.CommandText = "DELETE FROM users_groups";
+                await cmd.ExecuteNonQueryAsync();
+            
+                // Insert one new row per time
+                cmd.CommandText = "INSERT INTO users_groups (users_id, groups_id) VALUES (@users_id, @groups_id)";
 
-                // Check if this operation and all previous ones were successful
-                successful = affectedrows == 1 && successful;
+                // Add parameters
+                SQLiteParameter userIdParameter = new SQLiteParameter("@users_id");
+                cmd.Parameters.Add(userIdParameter);
+                SQLiteParameter groupIdParameter = new SQLiteParameter("@groups_id");
+                cmd.Parameters.Add(groupIdParameter);
+
+                bool successful = true;
+
+                foreach (KeyValuePair<int, int> kvPair in userGroupList)
+                {
+                    // Asign values to the parameters
+                    userIdParameter.Value = kvPair.Key;
+                    groupIdParameter.Value = kvPair.Value;
+
+                    // Execute the query async
+                    int affectedrows = await cmd.ExecuteNonQueryAsync();
+
+                    // Check if this operation and all previous ones were successful
+                    successful = affectedrows == 1 && successful;
+                }
+
+                conn.Close();
+
+                return successful;
             }
-
-            conn.Close();
-
-            return successful;
+                
         }
 
         /// <summary>
@@ -402,41 +432,44 @@ namespace Playground_v3
         /// <returns></returns>
         public static async Task<bool> UpdateFuncGroup(List<KeyValuePair<int, int>> funcGroupList)
         {
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
-
-            SQLiteCommand cmd = conn.CreateCommand();
-            // Delete all rows from the table
-            cmd.CommandText = "DELETE FROM func_groups";
-            await cmd.ExecuteNonQueryAsync();
-
-            // Insert one new row per time
-            cmd.CommandText = "INSERT INTO func_groups (func_id, groups_id) VALUES (@func_id, @groups_id)";
-
-            // Add parameters
-            SQLiteParameter funcIdParameter = new SQLiteParameter("@func_id");
-            cmd.Parameters.Add(funcIdParameter);
-            SQLiteParameter groupIdParameter = new SQLiteParameter("@groups_id");
-            cmd.Parameters.Add(groupIdParameter);
-
-            bool successful = true;
-
-            foreach (KeyValuePair<int, int> kvPair in funcGroupList)
+            using (SQLiteConnection conn = GetSqLiteConnection())
             {
-                // Asign values to the parameters
-                funcIdParameter.Value = kvPair.Key;
-                groupIdParameter.Value = kvPair.Value;
+                OpenSqLiteConnection(conn);
 
-                // Execute the query async
-                int affectedrows = await cmd.ExecuteNonQueryAsync();
+                SQLiteCommand cmd = conn.CreateCommand();
+                // Delete all rows from the table
+                cmd.CommandText = "DELETE FROM func_groups";
+                await cmd.ExecuteNonQueryAsync();
 
-                // Check if this operation and all previous ones were successful
-                successful = affectedrows == 1 && successful;
+                // Insert one new row per time
+                cmd.CommandText = "INSERT INTO func_groups (func_id, groups_id) VALUES (@func_id, @groups_id)";
+
+                // Add parameters
+                SQLiteParameter funcIdParameter = new SQLiteParameter("@func_id");
+                cmd.Parameters.Add(funcIdParameter);
+                SQLiteParameter groupIdParameter = new SQLiteParameter("@groups_id");
+                cmd.Parameters.Add(groupIdParameter);
+
+                bool successful = true;
+
+                foreach (KeyValuePair<int, int> kvPair in funcGroupList)
+                {
+                    // Asign values to the parameters
+                    funcIdParameter.Value = kvPair.Key;
+                    groupIdParameter.Value = kvPair.Value;
+
+                    // Execute the query async
+                    int affectedrows = await cmd.ExecuteNonQueryAsync();
+
+                    // Check if this operation and all previous ones were successful
+                    successful = affectedrows == 1 && successful;
+                }
+
+                conn.Close();
+
+                return successful;
             }
-
-            conn.Close();
-
-            return successful;
+                
         }
 
         /// <summary>
@@ -446,20 +479,23 @@ namespace Playground_v3
         /// <returns>true if user is deleted</returns>
         public static async Task<bool> DeleteUser(int userId)
         {
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
+            using (SQLiteConnection conn = GetSqLiteConnection())
+            {
+                OpenSqLiteConnection(conn);
 
-            SQLiteCommand cmd = conn.CreateCommand();
+                SQLiteCommand cmd = conn.CreateCommand();
             
-            // Delete row with given user id
-            cmd.CommandText = "DELETE FROM users WHERE id = @userId";
-            cmd.Parameters.Add(new SQLiteParameter("@userId") {Value = userId});
+                // Delete row with given user id
+                cmd.CommandText = "DELETE FROM users WHERE id = @userId";
+                cmd.Parameters.Add(new SQLiteParameter("@userId") {Value = userId});
 
-            int rowsAffected = await cmd.ExecuteNonQueryAsync();
+                int rowsAffected = await cmd.ExecuteNonQueryAsync();
 
-            conn.Close();
+                conn.Close();
 
-            return rowsAffected == 1;
+                return rowsAffected == 1;
+            }
+                
         }
 
         /// <summary>
@@ -469,18 +505,21 @@ namespace Playground_v3
         /// <returns></returns>
         public static async Task<bool> DeleteGroup(int groupId)
         {
-            SQLiteConnection conn = GetSqLiteConnection();
-            OpenSqLiteConnection(conn);
+            using (SQLiteConnection conn = GetSqLiteConnection())
+            {
+                OpenSqLiteConnection(conn);
 
-            SQLiteCommand cmd = conn.CreateCommand();
-            cmd.CommandText = "DELETE FROM groups WHERE id = @groupId";
-            cmd.Parameters.Add(new SQLiteParameter("@groupId") {Value = groupId});
+                SQLiteCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM groups WHERE id = @groupId";
+                cmd.Parameters.Add(new SQLiteParameter("@groupId") {Value = groupId});
 
-            int rowsAffected = await cmd.ExecuteNonQueryAsync();
+                int rowsAffected = await cmd.ExecuteNonQueryAsync();
 
-            conn.Close();
+                conn.Close();
 
-            return rowsAffected == 1;
+                return rowsAffected == 1;
+            }
+                
         }
 
     }
