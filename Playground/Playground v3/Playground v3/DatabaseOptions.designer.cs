@@ -800,7 +800,7 @@
             this.Name = "DatabaseOptions";
             this.Text = "Edit/New connection";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DatabaseOptions_FormClosing);
-            this.Load += new System.EventHandler(this.NewDatabase_Load);
+            this.Load += new System.EventHandler(this.DatabaseOptions_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
