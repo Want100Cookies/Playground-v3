@@ -26,7 +26,7 @@ namespace DatabaseAbstraction
         private void button1_Click(object sender, EventArgs e)
         {
             // Specify database type and location.
-            OdbcDbManager db = new OdbcDbManager(OdbcDbManager.DB_SQLITE, @"D:\mydb.db");
+            DbSQLite db = new DbSQLite(DbManagerBase.DB_SQLITE, @"D:\mydb.db");
 
             // Fetch all results of the query.
             DataTable dt = db.select("`name` FROM `test`");
@@ -37,10 +37,10 @@ namespace DatabaseAbstraction
                 MessageBox.Show(row["name"].ToString());
             }
 
-            Dictionary<string, string> d = new Dictionary<string, string>();
-            d.Add("@id", "23");
+            Dictionary<string, dynamic> d = new Dictionary<string, dynamic>();
+            d.Add("@id", 23);
             d.Add("@name", "haha");
-            db.insert("`test` (``id`,`name`) VALUES(?,?)", d);
+            db.insert("`test` (`id`,`name`) VALUES(?,?)", d);
         }
     }
 }
