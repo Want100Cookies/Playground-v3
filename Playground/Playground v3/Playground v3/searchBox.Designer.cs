@@ -111,6 +111,7 @@
             this.txtBoxSearch.TabIndex = 14;
             this.txtBoxSearch.Text = "Zoek hier";
             this.txtBoxSearch.TextChanged += new System.EventHandler(this.txtBoxSearch_TextChanged);
+            this.txtBoxSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBoxSearch_KeyPress);
             // 
             // lableGuide
             // 

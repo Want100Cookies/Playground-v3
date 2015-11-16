@@ -57,5 +57,28 @@ namespace Playground_v3
         {
             return txtBox;
         }
+
+        private void txtBoxSearch_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)13) //als er op enter is gedrukt
+            {
+
+                //als er op search wordt geklik:
+                //query runnen: SELECT `COLUMN_NAME` From INFORMATION_SCHEMA.COLUMNS Where column_name LIKE '%txtBoxSearch%'
+                //AND TABLE_SCHEMA = "lstBoxDatabases.selectedtext ofzo"
+                //resultaten loopen en in checkedListBoxResultaten zetten. (via item.add ofzo)
+                var query = "SELECT `COLUMN_NAME` as name FROM INFORMATION_SCHEMA.COLUMNS Where column_name LIKE '%" + txtBoxSearch.Text + "%' AND TABLE_SCHEMA = '" + lstBoxDatabases.Text + "'";
+                MessageBox.Show(query);
+
+                /* DbODBC db = new DbODBC(DbManagerBase.DB_ODBC, "tald");
+                 DataTable data = db.select("`name` FROM `table`");
+
+                 // Loop through results.
+                 foreach (DataRow row in dt.Rows)
+                 {
+                     checkedListBoxResultaten.Items.Add(row["name"].ToString());
+                 } */
+            }
+        }
     }
 }
