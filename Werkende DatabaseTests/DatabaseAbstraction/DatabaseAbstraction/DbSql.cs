@@ -1,47 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SQLite;
-using System.Windows.Forms;
 
 namespace DatabaseAbstraction
 {
-    /// <summary>
-    /// This class separates SQLite database operations from
-    /// the SQLite it's own objects & methods, which allows separation
-    /// of components. This way we can create our own 'DAL' (Database
-    /// Abstraction Layer), so we can always use the same code, even
-    /// if other lower level components of SQLite will be changed.
-    /// 
-    /// This class depends on the DbManagerBase class.
-    /// </summary>
-    class DbSQLite : DbManagerBase
+    class DbSql : DbManagerBase
     {
         /// <summary>
-        /// Contains the SQLite connection.
+        /// Holds the connection object.
         /// </summary>
-        private SQLiteConnection __conn;
+        private SqlConnection __conn;
 
         /// <summary>
-        /// Contains the full (UNC) path to the SQLite database file.
+        /// Connection string for the database.
         /// </summary>
-        private String __path;
+        private String __dsn;
 
         /// <summary>
-        /// Initializes this (and the parent) object and sets up the connection object.
+        /// Stores the connection string and sets up the connection object.
         /// </summary>
-        /// <param name="type">The DbManagerBase database type (static int)</param>
-        /// <param name="path">The full path to the SQLite database</param>
-        public DbSQLite(string path)
+        /// <param name="dsn">The connection string</param>
+        public DbSql(string dsn)
         {
-            // Sets the database type.
-            this._setType(DbManagerBase.DB_SQLITE);
+            this._setType(DbManagerBase.DB_MSSQL);
 
             // Sets the full file path...
-            this.__path = path;
+            this.__dsn = dsn;
             this.__setupConnection();
         }
 
@@ -52,10 +40,10 @@ namespace DatabaseAbstraction
         {
             try
             {
-                this.__conn = new SQLiteConnection("DataSource=" + this.__path);
+                this.__conn = new SqlConnection(this.__dsn);
                 this.__conn.Close(); // Make sure connection is NOT open!
             }
-            catch (SQLiteException e)
+            catch (SqlException e)
             {
                 this._showConnectErrorMsg(e);
             }
@@ -70,7 +58,7 @@ namespace DatabaseAbstraction
             {
                 this.__conn.Open();
             }
-            catch (SQLiteException e)
+            catch (SqlException e)
             {
                 this._showConnectErrorMsg(e);
             }
@@ -78,7 +66,7 @@ namespace DatabaseAbstraction
 
         /// <summary>
         /// Opens the connection to the database engine.
-        /// This happens asynchronously.
+        /// This method does it asynchronously.
         /// </summary>
         private async void __openConnAsync()
         {
@@ -86,7 +74,7 @@ namespace DatabaseAbstraction
             {
                 await this.__conn.OpenAsync();
             }
-            catch (SQLiteException e)
+            catch (SqlException e)
             {
                 this._showConnectErrorMsg(e);
             }
@@ -101,7 +89,7 @@ namespace DatabaseAbstraction
             {
                 this.__conn.Close();
             }
-            catch (SQLiteException e)
+            catch (SqlException e)
             {
                 this._showDisconnectErrorMsg(e);
             }
@@ -122,19 +110,21 @@ namespace DatabaseAbstraction
             DataTable dt = new DataTable();
 
             // Build command and open connection.
-            SQLiteCommand com = base._bindParams(new SQLiteCommand(query), qParams);
+            SqlCommand com = base._bindParams(new SqlCommand(query), qParams);
             this.__openConn();
             com.Connection = this.__conn;
 
             // Read result set.
             try
             {
-                SQLiteDataReader reader = com.ExecuteReader();
+                SqlDataReader reader = com.ExecuteReader();
 
-                // Load resulting data into datatable and close reader.
+                // Load resulting data into datatable.
                 dt.BeginLoadData(); // For performance. It disables some indexing / monitoring.
                 dt.Load(reader);
                 dt.EndLoadData(); // Re-enables some indexing / monitoring tools.
+
+                // Close the reader.
                 reader.Close();
             }
             catch (InvalidOperationException e)
@@ -147,7 +137,7 @@ namespace DatabaseAbstraction
                 this.__closeConn();
                 com.Dispose();
             }
-            
+
             // Return datatable with all information.
             return dt;
         }
@@ -164,7 +154,7 @@ namespace DatabaseAbstraction
             query = "INSERT INTO " + query;
             this.__execCommand(query, qParams);
         }
-        
+
         /// <summary>
         /// Updates one or more records into the SQLite database.
         /// Requires a Dictionary<string, dynamic> object to process
@@ -202,7 +192,7 @@ namespace DatabaseAbstraction
             this._checkParams(qParams);
 
             // Setup DB command and perform connect.
-            SQLiteCommand com = base._bindParams(new SQLiteCommand(query), qParams);
+            SqlCommand com = base._bindParams(new SqlCommand(query), qParams);
             this.__openConnAsync();
             com.Connection = this.__conn;
 
@@ -210,16 +200,14 @@ namespace DatabaseAbstraction
             {
                 await com.ExecuteNonQueryAsync();
             }
-            catch (SQLiteException e)
+            catch (SqlException e)
             {
                 this._showConnectErrorMsg(query.Substring(0, 6), e);
             }
-            finally
-            {
-                // Close connections
-                this.__closeConn();
-                com.Dispose();
-            }
+
+            // Close connections
+            this.__closeConn();
+            com.Dispose();
         }
     }
 }

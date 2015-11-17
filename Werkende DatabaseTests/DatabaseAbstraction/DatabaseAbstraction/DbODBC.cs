@@ -26,16 +26,20 @@ namespace DatabaseAbstraction
         private OdbcConnection __conn;
 
         /// <summary>
-        /// Contains the full DSN (Data Source Name)
-        /// (incl. any specific settings).
+        /// Connection string for the database.
         /// </summary>
         private String __dsn;
 
-
-        public DbODBC(int type, string path) : base(type)
+        /// <summary>
+        /// Stores the connection string and sets up the connection object.
+        /// </summary>
+        /// <param name="dsn">The connection string</param>
+        public DbODBC(string dsn)
         {
+            this._setType(DbManagerBase.DB_ODBC);
+
             // Sets the full file path...
-            this.__dsn = path;
+            this.__dsn = dsn;
             this.__setupConnection();
         }
 
@@ -121,18 +125,29 @@ namespace DatabaseAbstraction
             com.Connection = this.__conn;
 
             // Read result set.
-            OdbcDataReader reader = com.ExecuteReader();
+            try
+            {
+                OdbcDataReader reader = com.ExecuteReader();
 
-            // Load resulting data into datatable.
-            dt.BeginLoadData(); // For performance. It disables some indexing / monitoring.
-            dt.Load(reader);
-            dt.EndLoadData(); // Re-enables some indexing / monitoring tools.
+                // Load resulting data into datatable.
+                dt.BeginLoadData(); // For performance. It disables some indexing / monitoring.
+                dt.Load(reader);
+                dt.EndLoadData(); // Re-enables some indexing / monitoring tools.
 
-            // Close connections
-            reader.Close();
-            this.__closeConn();
-            com.Dispose();
-
+                // Close the reader.
+                reader.Close();
+            }
+            catch (InvalidOperationException e)
+            {
+                this._showConnectErrorMsg("SELECT", e);
+            }
+            finally
+            {
+                // Close connections
+                this.__closeConn();
+                com.Dispose();
+            }
+            
             // Return datatable with all information.
             return dt;
         }
@@ -197,7 +212,7 @@ namespace DatabaseAbstraction
             }
             catch (OdbcException e)
             {
-                this._showErrorMsg(query.Substring(0, 5), e);
+                this._showConnectErrorMsg(query.Substring(0, 6), e);
             }
 
             // Close connections

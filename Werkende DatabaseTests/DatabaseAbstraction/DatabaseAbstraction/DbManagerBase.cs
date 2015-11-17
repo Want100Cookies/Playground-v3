@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Data.Odbc;
 using System.Data.SQLite;
 using System.Windows.Forms;
@@ -27,8 +28,8 @@ namespace DatabaseAbstraction
         /// some DSN specific strings.
         /// </summary>
         public static readonly int DB_SQLITE = 1;
-        public static readonly int DB_MSSQL = 2;
-        public static readonly int DB_ODBC = 3;
+        public static readonly int DB_ODBC = 2;
+        public static readonly int DB_MSSQL = 3;
         
         /// <summary>
         /// Keeps track which type this database is (see static props above).
@@ -39,11 +40,16 @@ namespace DatabaseAbstraction
         /// <summary>
         /// Constructor for instantiating this class.
         /// </summary>
-        /// <param name="connString">The connection string.</param>
-        public DbManagerBase(int type)
+        public DbManagerBase() {}
+
+        /// <summary>
+        /// Sets the database type.
+        /// </summary>
+        /// <param name="type">The database type (self-referencing static int)</param>
+        protected void _setType(int type)
         {
             this._type = type;
-            
+
             if (this._type == DB_SQLITE) this.__readableType = "SQLite";
             if (this._type == DB_ODBC) this.__readableType = "ODBC Generic";
             if (this._type == DB_MSSQL) this.__readableType = "MS SQL";
@@ -73,7 +79,7 @@ namespace DatabaseAbstraction
         /// </summary>
         /// <param name="op">The current operation mode of the database.</param>
         /// <param name="e">The exception object</param>
-        protected void _showErrorMsg(string op, dynamic e)
+        protected void _showConnectErrorMsg(string op, dynamic e)
         {
             MessageBox.Show(
                    "An unexpected error occurred during a database operation [" + op + "]: " + e.Message,
@@ -110,6 +116,10 @@ namespace DatabaseAbstraction
                     {
                         param = new SQLiteParameter(k);
                         param.Value = v;
+                    }
+                    else if (this._type == DbManagerBase.DB_MSSQL)
+                    {
+                        param = new SqlParameter(k, v);
                     }
                     else
                     {
