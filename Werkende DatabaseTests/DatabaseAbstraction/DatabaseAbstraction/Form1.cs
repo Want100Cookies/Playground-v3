@@ -51,17 +51,39 @@ namespace DatabaseAbstraction
             MessageBox.Show(aTech.ConnectionString);
 
             DbODBC db = new DbODBC(aTech.ConnectionString);
-            DataTable data = db.select("`test` FROM `test` LIMIT 20");
+            DataTable data = db.select("name FROM master.dbo.sysdatabases");
+
+            foreach (DataColumn col in data.Columns)
+            {
+                MessageBox.Show(col.ColumnName.ToString());
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             ConnectionStringSettings wonderWare = ConfigurationManager.ConnectionStrings["Wonderware"];
 
-            MessageBox.Show(wonderWare.ConnectionString);
-
             DbSql db = new DbSql(wonderWare.ConnectionString);
-            DataTable data = db.select("`test` FROM `test` LIMIT 20");
+            DataTable data = db.select("TABLE_NAME FROM MESDB.INFORMATION_SCHEMA.Tables");
+
+            // Get all tables present in the database.
+            foreach (DataRow tableNames in data.Rows)
+            {
+                // Loop through every table name...
+                foreach(Object tableName in tableNames.ItemArray)
+                {
+                    MessageBox.Show(null, "BEGIN SHOWING COLUMN HEADS FOR TABLE: " + tableName.ToString(), "INFO!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    DataTable columns = db.select("COLUMN_NAME FROM MESDB.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=N'" + tableName.ToString() + "'");
+                    foreach (DataRow column in columns.Rows)
+                    {
+                        foreach (Object columnName in column.ItemArray)
+                        {
+                            MessageBox.Show("COLUMN NAME: " + columnName.ToString());
+                        } // End foreach
+                    } // End foreach
+                } // End foreach
+            } //End foreach
         }
     }
 }
