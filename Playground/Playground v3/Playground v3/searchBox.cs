@@ -67,7 +67,7 @@ namespace Playground_v3
                 //query runnen: SELECT `COLUMN_NAME` From INFORMATION_SCHEMA.COLUMNS Where column_name LIKE '%txtBoxSearch%'
                 //AND TABLE_SCHEMA = "lstBoxDatabases.selectedtext ofzo"
                 //resultaten loopen en in checkedListBoxResultaten zetten. (via item.add ofzo)
-                var query = "SELECT `COLUMN_NAME` as name FROM INFORMATION_SCHEMA.COLUMNS Where column_name LIKE '%" + txtBoxSearch.Text + "%' AND TABLE_SCHEMA = '" + lstBoxDatabases.Text + "'";
+                var query = "SELECT `COLUMN_NAME` as name FROM INFORMATION_SCHEMA.COLUMNS Where column_name LIKE '%" + txtBoxSearch.Text + "%' AND TABLE_SCHEMA = '" + lstBoxDatabases.Text + "' limit 250";
                 MessageBox.Show(query);
 
                 /* DbODBC db = new DbODBC(DbManagerBase.DB_ODBC, "tald");

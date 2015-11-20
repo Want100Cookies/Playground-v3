@@ -72,6 +72,7 @@ namespace Playground_v3
                 labelColumnname2.Visible = false;
                 labelOperator2.Visible = false;
                 labelAmountRecords2.Visible = false;
+                textBoxValue.Enabled = true;
             }
             else
             {
@@ -83,6 +84,7 @@ namespace Playground_v3
                 labelColumnname2.Visible = true;
                 labelOperator2.Visible = true;
                 labelAmountRecords2.Visible = true;
+                textBoxValue.Enabled = false;
             }
         }
 
