@@ -68,11 +68,7 @@
             "extruder1temp",
             "extruder2temp",
             "extruder3temp",
-            "extruder4temp",
-            "voorraad1",
-            "voorraad2",
-            "voorraad3",
-            "voorraad4"});
+            "extruder4temp"});
             this.checkedListBoxResultaten.Location = new System.Drawing.Point(15, 114);
             this.checkedListBoxResultaten.Name = "checkedListBoxResultaten";
             this.checkedListBoxResultaten.Size = new System.Drawing.Size(441, 174);
@@ -135,7 +131,7 @@
             this.Controls.Add(this.lstBoxDatabases);
             this.Controls.Add(this.txtBoxSearch);
             this.Name = "searchBox";
-            this.Text = "searchBox";
+            this.Text = "Search";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

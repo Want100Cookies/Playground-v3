@@ -88,13 +88,13 @@
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.databaseToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(97, 24);
-            this.settingsToolStripMenuItem.Text = "Instellingen";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.settingsToolStripMenuItem.Text = "Settings";
             // 
             // databaseToolStripMenuItem
             // 
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
-            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.databaseToolStripMenuItem.Text = "Database";
             this.databaseToolStripMenuItem.Click += new System.EventHandler(this.databaseToolStripMenuItem_Click);
             // 
@@ -189,8 +189,8 @@
             this.comboBoxOperator1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxOperator1.FormattingEnabled = true;
             this.comboBoxOperator1.Items.AddRange(new object[] {
-            "Meest recente",
-            "Gemiddelde"});
+            "Most recent",
+            "Average"});
             this.comboBoxOperator1.Location = new System.Drawing.Point(256, 66);
             this.comboBoxOperator1.Name = "comboBoxOperator1";
             this.comboBoxOperator1.Size = new System.Drawing.Size(121, 24);
