@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.Odbc;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -52,26 +53,17 @@ namespace DatabaseAbstraction
 
             DbODBC db = new DbODBC(aTech.ConnectionString);
             //DataTable data = db.select("NAME FROM IP_PVDEF");
-            DataTable data = db.select("TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
 
-            // Get all tables present in the database.
-            foreach (DataRow tableNames in data.Rows)
+            OdbcConnection cn = new OdbcConnection(aTech.ConnectionString);
+            cn.Open();
+
+            DataTable tables = cn.GetSchema("Tables");
+            DataTable columns = cn.GetSchema("Columns");
+
+            foreach (DataRow row in columns.Rows)
             {
-                // Loop through every table name...
-                foreach (Object tableName in tableNames.ItemArray)
-                {
-                    MessageBox.Show(null, "BEGIN SHOWING COLUMN HEADS FOR TABLE: " + tableName.ToString(), "INFO!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-
-                    //DataTable columns = db.select("COLUMN_NAME FROM MESDB.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=N'" + tableName.ToString() + "'");
-                    //foreach (DataRow column in columns.Rows)
-                    //{
-                    //    foreach (Object columnName in column.ItemArray)
-                    //    {
-                    //        MessageBox.Show("COLUMN NAME: " + columnName.ToString());
-                    //    } // End foreach
-                    //} // End foreach
-                } // End foreach
-            } //End foreach
+                MessageBox.Show("Table name: " + row["TABLE_NAME"].ToString() + "\r\n" + "Column name: " + row["COLUMN_NAME"].ToString());
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
