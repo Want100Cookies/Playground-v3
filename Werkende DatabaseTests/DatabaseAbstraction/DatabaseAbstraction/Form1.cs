@@ -51,12 +51,27 @@ namespace DatabaseAbstraction
             MessageBox.Show(aTech.ConnectionString);
 
             DbODBC db = new DbODBC(aTech.ConnectionString);
-            DataTable data = db.select("name FROM master.dbo.sysdatabases");
+            //DataTable data = db.select("NAME FROM IP_PVDEF");
+            DataTable data = db.select("TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
 
-            foreach (DataColumn col in data.Columns)
+            // Get all tables present in the database.
+            foreach (DataRow tableNames in data.Rows)
             {
-                MessageBox.Show(col.ColumnName.ToString());
-            }
+                // Loop through every table name...
+                foreach (Object tableName in tableNames.ItemArray)
+                {
+                    MessageBox.Show(null, "BEGIN SHOWING COLUMN HEADS FOR TABLE: " + tableName.ToString(), "INFO!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                    //DataTable columns = db.select("COLUMN_NAME FROM MESDB.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=N'" + tableName.ToString() + "'");
+                    //foreach (DataRow column in columns.Rows)
+                    //{
+                    //    foreach (Object columnName in column.ItemArray)
+                    //    {
+                    //        MessageBox.Show("COLUMN NAME: " + columnName.ToString());
+                    //    } // End foreach
+                    //} // End foreach
+                } // End foreach
+            } //End foreach
         }
 
         private void button3_Click(object sender, EventArgs e)
