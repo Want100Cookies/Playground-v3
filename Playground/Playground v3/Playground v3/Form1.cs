@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.IO;
 
 namespace Playground_v3
 {
@@ -32,7 +34,7 @@ namespace Playground_v3
             comboBoxOperator3.Visible = false;
             numericUpDownRecords2.Visible = false;
             labelColumnname2.Visible = false;
-            labelOperator2.Visible = false;
+            labelData2.Visible = false;
             labelAmountRecords2.Visible = false;
 
             row = 1;
@@ -70,7 +72,7 @@ namespace Playground_v3
                 comboBoxOperator3.Visible = false;
                 numericUpDownRecords2.Visible = false;
                 labelColumnname2.Visible = false;
-                labelOperator2.Visible = false;
+                labelData2.Visible = false;
                 labelAmountRecords2.Visible = false;
                 textBoxValue.Enabled = true;
             }
@@ -82,7 +84,7 @@ namespace Playground_v3
                 comboBoxOperator3.Visible = true;
                 numericUpDownRecords2.Visible = true;
                 labelColumnname2.Visible = true;
-                labelOperator2.Visible = true;
+                labelData2.Visible = true;
                 labelAmountRecords2.Visible = true;
                 textBoxValue.Enabled = false;
             }
@@ -127,6 +129,45 @@ namespace Playground_v3
             //je krijgt dus iets als 22 (2e rij, 2e textbox)
             //of 11: (1e rij 1e textbox).
             //note: in eerste instantie is in deze de dictionary hardcoded erin gezet.
+        }
+
+        /**
+        * sla de formule op.
+        * vraag: hoe wordt ervoor gezorgd dat er meerdere formule nodes komen?
+        */
+        private void btnSaveFormula_Click(object sender, EventArgs e)
+        {
+            XmlDocument doc = new XmlDocument();
+            XmlElement formule = doc.CreateElement("formule");
+            //controleren of soort is 1 of soort is 2.
+            XmlElement soort = doc.CreateElement("soort");
+            XmlElement kolomnaam = doc.CreateElement("kolomnaam");
+            kolomnaam.InnerText = textBoxColumnname.Text;
+
+            XmlElement type = doc.CreateElement("type");
+            //als type is gemiddelde: dan attribuut waarde verandren
+            type.SetAttribute("amount", "-999");
+            XmlElement operatorEl = doc.CreateElement("operator");
+            operatorEl.SetAttribute("soort", comboBoxOperator2.SelectedText);
+            //als soort is 1, dan:
+            operatorEl.InnerText = textBoxValue.Text;
+            //anders:
+            XmlElement operatorEl2 = doc.CreateElement("kolomnaam2");
+            operatorEl2.InnerText = textBoxColumnname2.Text;
+
+            XmlElement type2 = doc.CreateElement("type2");
+            //als type is gemiddelde: dan attribuut waarde verandren
+            type2.SetAttribute("amount", "-999");
+
+            formule.AppendChild(kolomnaam);
+            formule.AppendChild(type);
+            formule.AppendChild(operatorEl);
+            formule.AppendChild(operatorEl2);
+            formule.AppendChild(type2);
+
+            doc.AppendChild(formule);
+
+            doc.Save("test.xml");
         }
     }
 }

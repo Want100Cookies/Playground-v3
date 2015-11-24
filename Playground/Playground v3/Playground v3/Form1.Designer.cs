@@ -42,7 +42,7 @@
             this.labelRecords = new System.Windows.Forms.Label();
             this.numericUpDownRecords = new System.Windows.Forms.NumericUpDown();
             this.comboBoxOperator1 = new System.Windows.Forms.ComboBox();
-            this.labelOperator = new System.Windows.Forms.Label();
+            this.labelData = new System.Windows.Forms.Label();
             this.comboBoxOperator2 = new System.Windows.Forms.ComboBox();
             this.labelKolomnaam = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -55,8 +55,10 @@
             this.labelColumnname2 = new System.Windows.Forms.Label();
             this.numericUpDownRecords2 = new System.Windows.Forms.NumericUpDown();
             this.comboBoxOperator3 = new System.Windows.Forms.ComboBox();
-            this.labelOperator2 = new System.Windows.Forms.Label();
+            this.labelData2 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnSaveFormula = new System.Windows.Forms.Button();
+            this.labelOperator = new System.Windows.Forms.Label();
             this.labelAmountRecords2 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -94,7 +96,7 @@
             // databaseToolStripMenuItem
             // 
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
-            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.databaseToolStripMenuItem.Text = "Database";
             this.databaseToolStripMenuItem.Click += new System.EventHandler(this.databaseToolStripMenuItem_Click);
             // 
@@ -197,14 +199,14 @@
             this.comboBoxOperator1.TabIndex = 38;
             this.comboBoxOperator1.SelectedIndexChanged += new System.EventHandler(this.comboBoxOperator1_SelectedIndexChanged);
             // 
-            // labelOperator
+            // labelData
             // 
-            this.labelOperator.AutoSize = true;
-            this.labelOperator.Location = new System.Drawing.Point(253, 44);
-            this.labelOperator.Name = "labelOperator";
-            this.labelOperator.Size = new System.Drawing.Size(69, 17);
-            this.labelOperator.TabIndex = 41;
-            this.labelOperator.Text = "Operator:";
+            this.labelData.AutoSize = true;
+            this.labelData.Location = new System.Drawing.Point(253, 44);
+            this.labelData.Name = "labelData";
+            this.labelData.Size = new System.Drawing.Size(42, 17);
+            this.labelData.TabIndex = 41;
+            this.labelData.Text = "Data:";
             // 
             // comboBoxOperator2
             // 
@@ -334,27 +336,29 @@
             this.comboBoxOperator3.TabIndex = 27;
             this.comboBoxOperator3.SelectedIndexChanged += new System.EventHandler(this.comboBoxOperator3_SelectedIndexChanged);
             // 
-            // labelOperator2
+            // labelData2
             // 
-            this.labelOperator2.AutoSize = true;
-            this.labelOperator2.Location = new System.Drawing.Point(918, 44);
-            this.labelOperator2.Name = "labelOperator2";
-            this.labelOperator2.Size = new System.Drawing.Size(69, 17);
-            this.labelOperator2.TabIndex = 30;
-            this.labelOperator2.Text = "Operator:";
+            this.labelData2.AutoSize = true;
+            this.labelData2.Location = new System.Drawing.Point(918, 44);
+            this.labelData2.Name = "labelData2";
+            this.labelData2.Size = new System.Drawing.Size(42, 17);
+            this.labelData2.TabIndex = 30;
+            this.labelData2.Text = "Data:";
             // 
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.btnSaveFormula);
             this.tabPage1.Controls.Add(this.radioButtonValue);
             this.tabPage1.Controls.Add(this.radioButtonAbsolute);
             this.tabPage1.Controls.Add(this.pictureBoxSearch);
             this.tabPage1.Controls.Add(this.labelValue);
             this.tabPage1.Controls.Add(this.textBoxValue);
+            this.tabPage1.Controls.Add(this.labelOperator);
             this.tabPage1.Controls.Add(this.labelRecords);
             this.tabPage1.Controls.Add(this.numericUpDownRecords);
             this.tabPage1.Controls.Add(this.comboBoxOperator1);
-            this.tabPage1.Controls.Add(this.labelOperator);
+            this.tabPage1.Controls.Add(this.labelData);
             this.tabPage1.Controls.Add(this.comboBoxOperator2);
             this.tabPage1.Controls.Add(this.labelKolomnaam);
             this.tabPage1.Controls.Add(this.textBoxColumnname);
@@ -365,7 +369,7 @@
             this.tabPage1.Controls.Add(this.labelColumnname2);
             this.tabPage1.Controls.Add(this.numericUpDownRecords2);
             this.tabPage1.Controls.Add(this.comboBoxOperator3);
-            this.tabPage1.Controls.Add(this.labelOperator2);
+            this.tabPage1.Controls.Add(this.labelData2);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -373,6 +377,25 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Create formulas";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnSaveFormula
+            // 
+            this.btnSaveFormula.Location = new System.Drawing.Point(9, 205);
+            this.btnSaveFormula.Name = "btnSaveFormula";
+            this.btnSaveFormula.Size = new System.Drawing.Size(187, 23);
+            this.btnSaveFormula.TabIndex = 95;
+            this.btnSaveFormula.Text = "Save formula";
+            this.btnSaveFormula.UseVisualStyleBackColor = true;
+            this.btnSaveFormula.Click += new System.EventHandler(this.btnSaveFormula_Click);
+            // 
+            // labelOperator
+            // 
+            this.labelOperator.AutoSize = true;
+            this.labelOperator.Location = new System.Drawing.Point(487, 46);
+            this.labelOperator.Name = "labelOperator";
+            this.labelOperator.Size = new System.Drawing.Size(69, 17);
+            this.labelOperator.TabIndex = 43;
+            this.labelOperator.Text = "Operator:";
             // 
             // labelAmountRecords2
             // 
@@ -449,7 +472,7 @@
         private System.Windows.Forms.Label labelRecords;
         private System.Windows.Forms.NumericUpDown numericUpDownRecords;
         private System.Windows.Forms.ComboBox comboBoxOperator1;
-        private System.Windows.Forms.Label labelOperator;
+        private System.Windows.Forms.Label labelData;
         private System.Windows.Forms.ComboBox comboBoxOperator2;
         private System.Windows.Forms.Label labelKolomnaam;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -462,11 +485,13 @@
         private System.Windows.Forms.Label labelColumnname2;
         private System.Windows.Forms.NumericUpDown numericUpDownRecords2;
         private System.Windows.Forms.ComboBox comboBoxOperator3;
-        private System.Windows.Forms.Label labelOperator2;
+        private System.Windows.Forms.Label labelData2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label labelAmountRecords2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.Label labelOperator;
+        private System.Windows.Forms.Button btnSaveFormula;
     }
 }
 
