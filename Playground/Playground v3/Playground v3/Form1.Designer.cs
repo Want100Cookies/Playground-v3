@@ -62,6 +62,7 @@
             this.labelAmountRecords2 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.buttonOpenFormula = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords)).BeginInit();
@@ -182,9 +183,24 @@
     "lde heeft.";
             this.numericUpDownRecords.Enabled = false;
             this.numericUpDownRecords.Location = new System.Drawing.Point(383, 66);
+            this.numericUpDownRecords.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.numericUpDownRecords.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.numericUpDownRecords.Name = "numericUpDownRecords";
             this.numericUpDownRecords.Size = new System.Drawing.Size(101, 22);
             this.numericUpDownRecords.TabIndex = 40;
+            this.numericUpDownRecords.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // comboBoxOperator1
             // 
@@ -319,9 +335,24 @@
     "lde heeft.";
             this.numericUpDownRecords2.Enabled = false;
             this.numericUpDownRecords2.Location = new System.Drawing.Point(1048, 66);
+            this.numericUpDownRecords2.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            this.numericUpDownRecords2.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             this.numericUpDownRecords2.Name = "numericUpDownRecords2";
             this.numericUpDownRecords2.Size = new System.Drawing.Size(101, 22);
             this.numericUpDownRecords2.TabIndex = 29;
+            this.numericUpDownRecords2.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // comboBoxOperator3
             // 
@@ -348,6 +379,7 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.buttonOpenFormula);
             this.tabPage1.Controls.Add(this.btnSaveFormula);
             this.tabPage1.Controls.Add(this.radioButtonValue);
             this.tabPage1.Controls.Add(this.radioButtonAbsolute);
@@ -382,7 +414,7 @@
             // 
             this.btnSaveFormula.Location = new System.Drawing.Point(9, 205);
             this.btnSaveFormula.Name = "btnSaveFormula";
-            this.btnSaveFormula.Size = new System.Drawing.Size(187, 23);
+            this.btnSaveFormula.Size = new System.Drawing.Size(187, 27);
             this.btnSaveFormula.TabIndex = 95;
             this.btnSaveFormula.Text = "Save formula";
             this.btnSaveFormula.UseVisualStyleBackColor = true;
@@ -427,6 +459,16 @@
             this.tabControl1.Size = new System.Drawing.Size(1503, 474);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 94;
+            // 
+            // buttonOpenFormula
+            // 
+            this.buttonOpenFormula.Location = new System.Drawing.Point(9, 238);
+            this.buttonOpenFormula.Name = "buttonOpenFormula";
+            this.buttonOpenFormula.Size = new System.Drawing.Size(187, 27);
+            this.buttonOpenFormula.TabIndex = 96;
+            this.buttonOpenFormula.Text = "Open formula";
+            this.buttonOpenFormula.UseVisualStyleBackColor = true;
+            this.buttonOpenFormula.Click += new System.EventHandler(this.buttonOpenFormula_Click);
             // 
             // Form1
             // 
@@ -492,6 +534,7 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label labelOperator;
         private System.Windows.Forms.Button btnSaveFormula;
+        private System.Windows.Forms.Button buttonOpenFormula;
     }
 }
 
