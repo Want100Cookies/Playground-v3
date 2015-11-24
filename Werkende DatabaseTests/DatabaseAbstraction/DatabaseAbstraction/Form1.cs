@@ -57,13 +57,15 @@ namespace DatabaseAbstraction
             OdbcConnection cn = new OdbcConnection(aTech.ConnectionString);
             cn.Open();
 
-            DataTable tables = cn.GetSchema("Tables");
-            DataTable columns = cn.GetSchema("Columns");
-
-            foreach (DataRow row in columns.Rows)
+            //DataTable tableschema = cn.GetSchema("TABLES");
+            DataTable tableschema = db.select("* FROM IP_PVDEF");
+            foreach (DataRow row in tableschema.Rows)
             {
-                MessageBox.Show("Table name: " + row["TABLE_NAME"].ToString() + "\r\n" + "Column name: " + row["COLUMN_NAME"].ToString());
+                MessageBox.Show(row["COLUMN_NAME"].ToString());
             }
+
+            cn.Close();
+            cn.Dispose();
         }
 
         private void button3_Click(object sender, EventArgs e)
