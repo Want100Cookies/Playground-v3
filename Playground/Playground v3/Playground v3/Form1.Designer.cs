@@ -57,6 +57,7 @@
             this.comboBoxOperator3 = new System.Windows.Forms.ComboBox();
             this.labelData2 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panelFormulaControls = new System.Windows.Forms.Panel();
             this.buttonNewLine = new System.Windows.Forms.Button();
             this.buttonOpenFormula = new System.Windows.Forms.Button();
             this.btnSaveFormula = new System.Windows.Forms.Button();
@@ -64,7 +65,6 @@
             this.labelAmountRecords2 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.panelFormulaControls = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords)).BeginInit();
@@ -73,8 +73,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords2)).BeginInit();
             this.tabPage1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
             this.panelFormulaControls.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -146,7 +146,7 @@
             // pictureBoxSearch
             // 
             this.pictureBoxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBoxSearch.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch.Image")));
+            this.pictureBoxSearch.Image = global::Playground_v3.Properties.Resources._1426093958_common_search_lookup__128;
             this.pictureBoxSearch.Location = new System.Drawing.Point(194, 3);
             this.pictureBoxSearch.Name = "pictureBoxSearch";
             this.pictureBoxSearch.Size = new System.Drawing.Size(50, 22);
@@ -405,6 +405,24 @@
             this.tabPage1.Text = "Create formulas";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // panelFormulaControls
+            // 
+            this.panelFormulaControls.AutoScroll = true;
+            this.panelFormulaControls.Controls.Add(this.textBoxColumnname);
+            this.panelFormulaControls.Controls.Add(this.comboBoxOperator3);
+            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords2);
+            this.panelFormulaControls.Controls.Add(this.textBoxColumnname2);
+            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch2);
+            this.panelFormulaControls.Controls.Add(this.comboBoxOperator2);
+            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch);
+            this.panelFormulaControls.Controls.Add(this.comboBoxOperator1);
+            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords);
+            this.panelFormulaControls.Controls.Add(this.textBoxValue);
+            this.panelFormulaControls.Location = new System.Drawing.Point(3, 66);
+            this.panelFormulaControls.Name = "panelFormulaControls";
+            this.panelFormulaControls.Size = new System.Drawing.Size(1175, 133);
+            this.panelFormulaControls.TabIndex = 95;
+            // 
             // buttonNewLine
             // 
             this.buttonNewLine.Location = new System.Drawing.Point(202, 205);
@@ -475,24 +493,6 @@
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 94;
             // 
-            // panelFormulaControls
-            // 
-            this.panelFormulaControls.AutoScroll = true;
-            this.panelFormulaControls.Controls.Add(this.textBoxColumnname);
-            this.panelFormulaControls.Controls.Add(this.comboBoxOperator3);
-            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords2);
-            this.panelFormulaControls.Controls.Add(this.textBoxColumnname2);
-            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch2);
-            this.panelFormulaControls.Controls.Add(this.comboBoxOperator2);
-            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch);
-            this.panelFormulaControls.Controls.Add(this.comboBoxOperator1);
-            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords);
-            this.panelFormulaControls.Controls.Add(this.textBoxValue);
-            this.panelFormulaControls.Location = new System.Drawing.Point(3, 66);
-            this.panelFormulaControls.Name = "panelFormulaControls";
-            this.panelFormulaControls.Size = new System.Drawing.Size(1175, 133);
-            this.panelFormulaControls.TabIndex = 95;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -516,9 +516,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords2)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
             this.panelFormulaControls.ResumeLayout(false);
             this.panelFormulaControls.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using System.Reflection;
+using Playground_v3.Properties;
 
 namespace Playground_v3
 {
@@ -139,6 +141,8 @@ namespace Playground_v3
         ///</summary>
         public void newLine(string kolomnaam = "", string amount="", string operatorSoort = "", string operatorValue = "", string kolomnaam2 = "", string amount2 = "")
         {
+            
+        
             //methode die nieuwe lijn maakt.
             //de textboxes worden opgeslagen in een dictionary<TextBox, int>
             //de int bestaat uit de lijn: 1 tiental voor de 1e lijn, 2 tientallen voor de 2e lijn enz.
@@ -158,15 +162,16 @@ namespace Playground_v3
 
             //picturebox:
             PictureBox picSearch1 = new PictureBox();
-            picSearch1.BackColor = System.Drawing.Color.White;
-         //   picSearch1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-
-            picSearch1.Location = new Point(166, row * regelAfstand);
+            picSearch1.BackColor = Color.White;
+          
+            picSearch1.Location = new Point(194, row * regelAfstand);
             picSearch1.Name = "pictureBox + " + row;
+            picSearch1.Cursor = Cursors.Hand;
             picSearch1.Size = new Size(50, 22);
             picSearch1.SizeMode = PictureBoxSizeMode.Zoom;
+            picSearch1.Image = Resources._1426093958_common_search_lookup__128;
             panelFormulaControls.Controls.Add(picSearch1);
-
+            picSearch1.Click += pictureBoxSearch_Click;
             //koppeldictionary columnName1 en picturebox toevoegen:
             koppelDictionary.Add(picSearch1, columnname);
 
@@ -243,14 +248,17 @@ namespace Playground_v3
             //pictureboxSearch2:
             PictureBox pictureBox2 = new PictureBox();
             pictureBox2.Cursor = Cursors.Hand;
-          //  pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch2.Image")));
-            pictureBox2.Location = new Point(859, 3);
+            pictureBox2.Image = Playground_v3.Properties.Resources._1426093958_common_search_lookup__128;
+            pictureBox2.Location = new Point(859, row * regelAfstand);
             pictureBox2.Name = "pictureBoxSearch2";
             pictureBox2.Size = new Size(50, 22);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabStop = false;
             pictureBox2.Click += pictureBoxSearch_Click;
             panelFormulaControls.Controls.Add(pictureBox2);
+
+            //pictureboxSearch 2 koppelen aan textBoxColumnName2:
+            koppelDictionary.Add(pictureBox2, textBoxCol2);
 
             //comboBoxOperator3: gelijk aan comboBoxOperator1
             ComboBox comboB2 = new ComboBox();
@@ -291,6 +299,7 @@ namespace Playground_v3
             panelFormulaControls.Controls.Add(numUpDown2);
 
 
+
             row++;
         }
 
@@ -305,16 +314,11 @@ namespace Playground_v3
                 var soort1 = radioButtonAbsolute.Checked;
                 XmlDocument doc = new XmlDocument();
                 XmlElement formule = doc.CreateElement("formule");
+
+                XmlElement regel = doc.CreateElement("regel");
                 //controleren of soort is 1 of soort is 2.
                 XmlElement soort = doc.CreateElement("soort");
-                if (soort1)
-                {
-                    soort.InnerText = "1";
-                }
-                else
-                {
-                    soort.InnerText = "2";
-                }
+                soort.InnerText = soort1 ? "1" : "2";
 
                 XmlElement kolomnaam = doc.CreateElement("kolomnaam");
                 kolomnaam.InnerText = textBoxColumnname.Text;
@@ -342,12 +346,11 @@ namespace Playground_v3
                     XmlElement kolomnaam2 = doc.CreateElement("kolomnaam2");
                     kolomnaam2.InnerText = textBoxColumnname2.Text;
                     formule.AppendChild(kolomnaam2);
-
                 }
 
                 XmlElement type2 = doc.CreateElement("type2");
                 //als type is gemiddelde: dan attribuut waarde verandren
-                if (comboBoxOperator1.SelectedIndex == 0)
+                if (comboBoxOperator3.SelectedIndex == 0)
                 {
                     type2.SetAttribute("amount", "");
                 }
@@ -356,13 +359,14 @@ namespace Playground_v3
                     type2.SetAttribute("amount", numericUpDownRecords2.Text);
                 }
 
-                formule.AppendChild(soort);
-                formule.AppendChild(kolomnaam);
-                formule.AppendChild(type);
-                formule.AppendChild(operatorEl);
+                formule.AppendChild(regel);
+                regel.AppendChild(soort);
+                regel.AppendChild(kolomnaam);
+                regel.AppendChild(type);
+                regel.AppendChild(operatorEl);
                 if (!soort1)
                 {
-                    formule.AppendChild(type2);
+                    regel.AppendChild(type2);
                 }
 
                 doc.AppendChild(formule);
