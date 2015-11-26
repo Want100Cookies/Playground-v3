@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,12 +19,14 @@ namespace Playground_v3
          * variabele waarin de huidige rij is opgeslagen. Dit wordt gebruikt bij het genereren van rijen, en de zoekfunctie.
          */
         public int row;
+        public int defaultOffset;
+        public int regelAfstand; //var die het aantal points (=afstand) tussen twee regels bijhoudt.
 
         private Dictionary<PictureBox, TextBox> koppelDictionary;
             //veld die helpt bij het koppelen van search icons en tekstvelden.
 
         private Dictionary<int, TextBox> fieldDictionary;
-            //veld die helpt bij het koppelen van de textbox aan een nummer.
+       //veld die helpt bij het koppelen van de textbox aan een nummer.
 
         public Form1()
         {
@@ -44,8 +47,12 @@ namespace Playground_v3
             labelAmountRecords2.Visible = false;
 
             row = 1;
+            defaultOffset = 50;
+            regelAfstand = 60;
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
             fieldDictionary = new Dictionary<int, TextBox>();
+
+            newLine();
 
             koppelDictionary.Add(pictureBoxSearch, textBoxColumnname);
             koppelDictionary.Add(pictureBoxSearch2, textBoxColumnname2);
@@ -139,10 +146,152 @@ namespace Playground_v3
             //je krijgt dus iets als 22 (2e rij, 2e textbox)
             //of 11: (1e rij 1e textbox).
             //note: in eerste instantie is in deze de dictionary hardcoded erin gezet.
-            TextBox textBoxColumnname = new TextBox();
-            //TODO: newlin methode maken.
+            //TODO: newline methode maken.
 
-            PictureBox pictureBoxSearch = new PictureBox();
+            //column name 1:
+            TextBox columnname = new TextBox();
+            columnname.Location = new Point(3, row * regelAfstand);
+            columnname.Name = "textBoxColumnname" + row;
+            columnname.Size = new Size(145, 22);
+            columnname.Text = kolomnaam;
+            panelFormulaControls.Controls.Add(columnname);
+
+            //picturebox:
+            PictureBox picSearch1 = new PictureBox();
+            picSearch1.BackColor = System.Drawing.Color.White;
+         //   picSearch1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+
+            picSearch1.Location = new Point(166, row * regelAfstand);
+            picSearch1.Name = "pictureBox + " + row;
+            picSearch1.Size = new Size(50, 22);
+            picSearch1.SizeMode = PictureBoxSizeMode.Zoom;
+            panelFormulaControls.Controls.Add(picSearch1);
+
+            //koppeldictionary columnName1 en picturebox toevoegen:
+            koppelDictionary.Add(picSearch1, columnname);
+
+            //combobox operator 1:
+            ComboBox comboB1 = new ComboBox();
+            comboB1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboB1.Items.AddRange(new object[] {
+            "Most recent",
+            "Average"});
+            comboB1.Location = new Point(250, row * regelAfstand);
+            comboB1.Name = "comboBoxOperator1";
+            comboB1.Size = new Size(100, 24);
+            //TODO: een gedeelde event handler maken voor de combobox:
+            //note: nu staat het er hardcoded in.
+            comboB1.SelectedIndexChanged += comboBoxOperator1_SelectedIndexChanged;
+            comboB1.SelectedIndex = 0;
+            panelFormulaControls.Controls.Add(comboB1);
+
+            //numeric up down records:
+            NumericUpDown numUpDown = new NumericUpDown();
+            numUpDown.Enabled = false;
+            numUpDown.Location = new System.Drawing.Point(383, row * regelAfstand);
+            numUpDown.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            numUpDown.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            numUpDown.Name = "numUpDown" + row;
+            numUpDown.Size = new Size(101, 22);
+            numUpDown.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            panelFormulaControls.Controls.Add(numUpDown);
+
+            //combobox2
+            ComboBox combob2 = new ComboBox();
+            combob2.DropDownStyle = ComboBoxStyle.DropDownList;
+            combob2.FormattingEnabled = true;
+            combob2.Items.AddRange(new object[] {
+            ">",
+            "<",
+            "=",
+            ">=",
+            "<=",
+            "≠"});
+            combob2.Location = new Point(490, row * regelAfstand);
+            combob2.Name = "combob2" + row + "2";
+            combob2.Size = new Size(68, 24);
+            combob2.SelectedIndex = 0;
+            panelFormulaControls.Controls.Add(combob2);
+
+            //textBoxValue
+            TextBox textBoxVal = new TextBox();
+            textBoxVal.Location = new Point(564, row * regelAfstand);
+            textBoxVal.Name = "textBoxValue" + row;
+            textBoxVal.Size = new Size(100, 22);
+            panelFormulaControls.Controls.Add(textBoxVal);
+
+            //TODO: meer form controls toevoegen.
+            //textBoxColumnname2:
+            TextBox textBoxCol2 = new TextBox();
+            textBoxCol2.Location = new Point(668, row * regelAfstand);
+            textBoxCol2.Name = "textBoxColumnname" + row + 2;
+            textBoxCol2.Size = new Size(187, 22);
+            panelFormulaControls.Controls.Add(textBoxCol2);
+
+            //pictureboxSearch2:
+            PictureBox pictureBox2 = new PictureBox();
+            pictureBox2.Cursor = Cursors.Hand;
+          //  pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch2.Image")));
+            pictureBox2.Location = new Point(859, 3);
+            pictureBox2.Name = "pictureBoxSearch2";
+            pictureBox2.Size = new Size(50, 22);
+            pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox2.TabStop = false;
+            pictureBox2.Click += pictureBoxSearch_Click;
+            panelFormulaControls.Controls.Add(pictureBox2);
+
+            //comboBoxOperator3: gelijk aan comboBoxOperator1
+            ComboBox comboB2 = new ComboBox();
+            comboB2.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboB2.Items.AddRange(new object[] {
+            "Most recent",
+            "Average"});
+            comboB2.Location = new Point(915, row * regelAfstand);
+            comboB2.Name = "comboBoxOperator1";
+            comboB2.Size = new Size(121, 24);
+            //TODO: een gedeelde event handler maken voor de combobox:
+            //note: nu staat het er hardcoded in.
+            comboB2.SelectedIndexChanged += comboBoxOperator1_SelectedIndexChanged;
+            comboB2.SelectedIndex = 0;
+            panelFormulaControls.Controls.Add(comboB2);
+
+            //numeric up down records2:
+            NumericUpDown numUpDown2 = new NumericUpDown();
+            numUpDown2.Enabled = false;
+            numUpDown2.Location = new System.Drawing.Point(1042, row * regelAfstand);
+            numUpDown2.Maximum = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+            numUpDown2.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            numUpDown2.Name = "numUpDown" + row + "2";
+            numUpDown2.Size = new Size(101, 22);
+            numUpDown2.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            panelFormulaControls.Controls.Add(numUpDown2);
+
+
+            row++;
         }
 
         /**
@@ -294,6 +443,11 @@ namespace Playground_v3
                 doc.Load(openFileDialog.FileName);
                 MessageBox.Show(doc.SelectSingleNode("formule/type").Attributes[0].Value.GetType().ToString());
             }
+        }
+
+        private void buttonNewLine_Click(object sender, EventArgs e)
+        {
+            newLine();
         }
     }
     }

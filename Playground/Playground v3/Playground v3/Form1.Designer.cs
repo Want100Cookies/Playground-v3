@@ -57,12 +57,14 @@
             this.comboBoxOperator3 = new System.Windows.Forms.ComboBox();
             this.labelData2 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.buttonNewLine = new System.Windows.Forms.Button();
+            this.buttonOpenFormula = new System.Windows.Forms.Button();
             this.btnSaveFormula = new System.Windows.Forms.Button();
             this.labelOperator = new System.Windows.Forms.Label();
             this.labelAmountRecords2 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.buttonOpenFormula = new System.Windows.Forms.Button();
+            this.panelFormulaControls = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords)).BeginInit();
@@ -72,6 +74,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords2)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.panelFormulaControls.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -144,7 +147,7 @@
             // 
             this.pictureBoxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxSearch.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch.Image")));
-            this.pictureBoxSearch.Location = new System.Drawing.Point(200, 66);
+            this.pictureBoxSearch.Location = new System.Drawing.Point(194, 3);
             this.pictureBoxSearch.Name = "pictureBoxSearch";
             this.pictureBoxSearch.Size = new System.Drawing.Size(50, 22);
             this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -163,7 +166,7 @@
             // 
             // textBoxValue
             // 
-            this.textBoxValue.Location = new System.Drawing.Point(564, 65);
+            this.textBoxValue.Location = new System.Drawing.Point(558, 2);
             this.textBoxValue.Name = "textBoxValue";
             this.textBoxValue.Size = new System.Drawing.Size(100, 22);
             this.textBoxValue.TabIndex = 44;
@@ -182,7 +185,7 @@
             this.numericUpDownRecords.AccessibleDescription = "Standaard op disabled, wordt pas enabled als comboBoxOperator1 als waarde gemidde" +
     "lde heeft.";
             this.numericUpDownRecords.Enabled = false;
-            this.numericUpDownRecords.Location = new System.Drawing.Point(383, 66);
+            this.numericUpDownRecords.Location = new System.Drawing.Point(377, 3);
             this.numericUpDownRecords.Maximum = new decimal(new int[] {
             250,
             0,
@@ -209,7 +212,7 @@
             this.comboBoxOperator1.Items.AddRange(new object[] {
             "Most recent",
             "Average"});
-            this.comboBoxOperator1.Location = new System.Drawing.Point(256, 66);
+            this.comboBoxOperator1.Location = new System.Drawing.Point(250, 3);
             this.comboBoxOperator1.Name = "comboBoxOperator1";
             this.comboBoxOperator1.Size = new System.Drawing.Size(121, 24);
             this.comboBoxOperator1.TabIndex = 38;
@@ -235,7 +238,7 @@
             ">=",
             "<=",
             "≠"});
-            this.comboBoxOperator2.Location = new System.Drawing.Point(490, 66);
+            this.comboBoxOperator2.Location = new System.Drawing.Point(484, 3);
             this.comboBoxOperator2.Name = "comboBoxOperator2";
             this.comboBoxOperator2.Size = new System.Drawing.Size(68, 24);
             this.comboBoxOperator2.TabIndex = 42;
@@ -285,7 +288,7 @@
             // textBoxColumnname
             // 
             this.textBoxColumnname.AccessibleDescription = "";
-            this.textBoxColumnname.Location = new System.Drawing.Point(9, 66);
+            this.textBoxColumnname.Location = new System.Drawing.Point(3, 3);
             this.textBoxColumnname.Name = "textBoxColumnname";
             this.textBoxColumnname.Size = new System.Drawing.Size(187, 22);
             this.textBoxColumnname.TabIndex = 37;
@@ -304,7 +307,7 @@
             // 
             this.pictureBoxSearch2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxSearch2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch2.Image")));
-            this.pictureBoxSearch2.Location = new System.Drawing.Point(865, 66);
+            this.pictureBoxSearch2.Location = new System.Drawing.Point(859, 3);
             this.pictureBoxSearch2.Name = "pictureBoxSearch2";
             this.pictureBoxSearch2.Size = new System.Drawing.Size(50, 22);
             this.pictureBoxSearch2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -315,7 +318,7 @@
             // textBoxColumnname2
             // 
             this.textBoxColumnname2.AccessibleDescription = "";
-            this.textBoxColumnname2.Location = new System.Drawing.Point(674, 66);
+            this.textBoxColumnname2.Location = new System.Drawing.Point(668, 3);
             this.textBoxColumnname2.Name = "textBoxColumnname2";
             this.textBoxColumnname2.Size = new System.Drawing.Size(187, 22);
             this.textBoxColumnname2.TabIndex = 26;
@@ -334,7 +337,7 @@
             this.numericUpDownRecords2.AccessibleDescription = "Standaard op disabled, wordt pas enabled als comboBoxOperator1 als waarde gemidde" +
     "lde heeft.";
             this.numericUpDownRecords2.Enabled = false;
-            this.numericUpDownRecords2.Location = new System.Drawing.Point(1048, 66);
+            this.numericUpDownRecords2.Location = new System.Drawing.Point(1042, 3);
             this.numericUpDownRecords2.Maximum = new decimal(new int[] {
             250,
             0,
@@ -361,7 +364,7 @@
             this.comboBoxOperator3.Items.AddRange(new object[] {
             "Meest recente",
             "Gemiddelde"});
-            this.comboBoxOperator3.Location = new System.Drawing.Point(921, 66);
+            this.comboBoxOperator3.Location = new System.Drawing.Point(915, 3);
             this.comboBoxOperator3.Name = "comboBoxOperator3";
             this.comboBoxOperator3.Size = new System.Drawing.Size(121, 24);
             this.comboBoxOperator3.TabIndex = 27;
@@ -379,28 +382,20 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.panelFormulaControls);
+            this.tabPage1.Controls.Add(this.buttonNewLine);
             this.tabPage1.Controls.Add(this.buttonOpenFormula);
             this.tabPage1.Controls.Add(this.btnSaveFormula);
             this.tabPage1.Controls.Add(this.radioButtonValue);
             this.tabPage1.Controls.Add(this.radioButtonAbsolute);
-            this.tabPage1.Controls.Add(this.pictureBoxSearch);
             this.tabPage1.Controls.Add(this.labelValue);
-            this.tabPage1.Controls.Add(this.textBoxValue);
             this.tabPage1.Controls.Add(this.labelOperator);
             this.tabPage1.Controls.Add(this.labelRecords);
-            this.tabPage1.Controls.Add(this.numericUpDownRecords);
-            this.tabPage1.Controls.Add(this.comboBoxOperator1);
             this.tabPage1.Controls.Add(this.labelData);
-            this.tabPage1.Controls.Add(this.comboBoxOperator2);
             this.tabPage1.Controls.Add(this.labelKolomnaam);
-            this.tabPage1.Controls.Add(this.textBoxColumnname);
             this.tabPage1.Controls.Add(this.lblUitleg);
-            this.tabPage1.Controls.Add(this.pictureBoxSearch2);
             this.tabPage1.Controls.Add(this.labelAmountRecords2);
-            this.tabPage1.Controls.Add(this.textBoxColumnname2);
             this.tabPage1.Controls.Add(this.labelColumnname2);
-            this.tabPage1.Controls.Add(this.numericUpDownRecords2);
-            this.tabPage1.Controls.Add(this.comboBoxOperator3);
             this.tabPage1.Controls.Add(this.labelData2);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
@@ -409,6 +404,26 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Create formulas";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // buttonNewLine
+            // 
+            this.buttonNewLine.Location = new System.Drawing.Point(202, 205);
+            this.buttonNewLine.Name = "buttonNewLine";
+            this.buttonNewLine.Size = new System.Drawing.Size(175, 27);
+            this.buttonNewLine.TabIndex = 97;
+            this.buttonNewLine.Text = "New Line";
+            this.buttonNewLine.UseVisualStyleBackColor = true;
+            this.buttonNewLine.Click += new System.EventHandler(this.buttonNewLine_Click);
+            // 
+            // buttonOpenFormula
+            // 
+            this.buttonOpenFormula.Location = new System.Drawing.Point(9, 238);
+            this.buttonOpenFormula.Name = "buttonOpenFormula";
+            this.buttonOpenFormula.Size = new System.Drawing.Size(187, 27);
+            this.buttonOpenFormula.TabIndex = 96;
+            this.buttonOpenFormula.Text = "Open formula";
+            this.buttonOpenFormula.UseVisualStyleBackColor = true;
+            this.buttonOpenFormula.Click += new System.EventHandler(this.buttonOpenFormula_Click);
             // 
             // btnSaveFormula
             // 
@@ -460,15 +475,23 @@
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 94;
             // 
-            // buttonOpenFormula
+            // panelFormulaControls
             // 
-            this.buttonOpenFormula.Location = new System.Drawing.Point(9, 238);
-            this.buttonOpenFormula.Name = "buttonOpenFormula";
-            this.buttonOpenFormula.Size = new System.Drawing.Size(187, 27);
-            this.buttonOpenFormula.TabIndex = 96;
-            this.buttonOpenFormula.Text = "Open formula";
-            this.buttonOpenFormula.UseVisualStyleBackColor = true;
-            this.buttonOpenFormula.Click += new System.EventHandler(this.buttonOpenFormula_Click);
+            this.panelFormulaControls.AutoScroll = true;
+            this.panelFormulaControls.Controls.Add(this.textBoxColumnname);
+            this.panelFormulaControls.Controls.Add(this.comboBoxOperator3);
+            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords2);
+            this.panelFormulaControls.Controls.Add(this.textBoxColumnname2);
+            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch2);
+            this.panelFormulaControls.Controls.Add(this.comboBoxOperator2);
+            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch);
+            this.panelFormulaControls.Controls.Add(this.comboBoxOperator1);
+            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords);
+            this.panelFormulaControls.Controls.Add(this.textBoxValue);
+            this.panelFormulaControls.Location = new System.Drawing.Point(3, 66);
+            this.panelFormulaControls.Name = "panelFormulaControls";
+            this.panelFormulaControls.Size = new System.Drawing.Size(1175, 133);
+            this.panelFormulaControls.TabIndex = 95;
             // 
             // Form1
             // 
@@ -494,6 +517,8 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.panelFormulaControls.ResumeLayout(false);
+            this.panelFormulaControls.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -535,6 +560,8 @@
         private System.Windows.Forms.Label labelOperator;
         private System.Windows.Forms.Button btnSaveFormula;
         private System.Windows.Forms.Button buttonOpenFormula;
+        private System.Windows.Forms.Button buttonNewLine;
+        private System.Windows.Forms.Panel panelFormulaControls;
     }
 }
 
