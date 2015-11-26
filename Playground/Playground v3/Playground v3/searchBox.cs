@@ -13,6 +13,8 @@ namespace Playground_v3
     public partial class searchBox : Form
     {
         public TextBox txtBox;
+        public bool demoData = false;
+
         public searchBox(TextBox txtBox)
         {
             this.txtBox = txtBox;
@@ -39,7 +41,17 @@ namespace Playground_v3
         private void txtBoxSearch_TextChanged(object sender, EventArgs e)
         {
             checkedListBoxResultaten.Enabled = true;
-
+            if (!demoData)
+            {
+                checkedListBoxResultaten.Items.AddRange(new object[]
+                {
+                    "extruder1temp",
+                    "extruder2temp",
+                    "extruder3temp",
+                    "extruder4temp"
+                });
+                demoData = true;
+            }
         }
 
         public List<String> getRusultString()

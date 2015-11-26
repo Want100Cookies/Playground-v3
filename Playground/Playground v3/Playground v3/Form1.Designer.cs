@@ -85,7 +85,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1182, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1272, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -123,7 +123,7 @@
             // radioButtonValue
             // 
             this.radioButtonValue.AutoSize = true;
-            this.radioButtonValue.Location = new System.Drawing.Point(703, 20);
+            this.radioButtonValue.Location = new System.Drawing.Point(697, 22);
             this.radioButtonValue.Name = "radioButtonValue";
             this.radioButtonValue.Size = new System.Drawing.Size(114, 21);
             this.radioButtonValue.TabIndex = 48;
@@ -135,7 +135,7 @@
             // 
             this.radioButtonAbsolute.AutoSize = true;
             this.radioButtonAbsolute.Checked = true;
-            this.radioButtonAbsolute.Location = new System.Drawing.Point(564, 20);
+            this.radioButtonAbsolute.Location = new System.Drawing.Point(558, 22);
             this.radioButtonAbsolute.Name = "radioButtonAbsolute";
             this.radioButtonAbsolute.Size = new System.Drawing.Size(122, 21);
             this.radioButtonAbsolute.TabIndex = 47;
@@ -147,7 +147,7 @@
             // 
             this.pictureBoxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxSearch.Image = global::Playground_v3.Properties.Resources._1426093958_common_search_lookup__128;
-            this.pictureBoxSearch.Location = new System.Drawing.Point(194, 3);
+            this.pictureBoxSearch.Location = new System.Drawing.Point(194, 105);
             this.pictureBoxSearch.Name = "pictureBoxSearch";
             this.pictureBoxSearch.Size = new System.Drawing.Size(50, 22);
             this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -158,7 +158,7 @@
             // labelValue
             // 
             this.labelValue.AutoSize = true;
-            this.labelValue.Location = new System.Drawing.Point(561, 44);
+            this.labelValue.Location = new System.Drawing.Point(560, 0);
             this.labelValue.Name = "labelValue";
             this.labelValue.Size = new System.Drawing.Size(48, 17);
             this.labelValue.TabIndex = 45;
@@ -166,7 +166,7 @@
             // 
             // textBoxValue
             // 
-            this.textBoxValue.Location = new System.Drawing.Point(558, 2);
+            this.textBoxValue.Location = new System.Drawing.Point(558, 104);
             this.textBoxValue.Name = "textBoxValue";
             this.textBoxValue.Size = new System.Drawing.Size(100, 22);
             this.textBoxValue.TabIndex = 44;
@@ -174,7 +174,7 @@
             // labelRecords
             // 
             this.labelRecords.AutoSize = true;
-            this.labelRecords.Location = new System.Drawing.Point(380, 44);
+            this.labelRecords.Location = new System.Drawing.Point(379, 0);
             this.labelRecords.Name = "labelRecords";
             this.labelRecords.Size = new System.Drawing.Size(112, 17);
             this.labelRecords.TabIndex = 43;
@@ -185,7 +185,7 @@
             this.numericUpDownRecords.AccessibleDescription = "Standaard op disabled, wordt pas enabled als comboBoxOperator1 als waarde gemidde" +
     "lde heeft.";
             this.numericUpDownRecords.Enabled = false;
-            this.numericUpDownRecords.Location = new System.Drawing.Point(377, 3);
+            this.numericUpDownRecords.Location = new System.Drawing.Point(377, 105);
             this.numericUpDownRecords.Maximum = new decimal(new int[] {
             250,
             0,
@@ -212,7 +212,7 @@
             this.comboBoxOperator1.Items.AddRange(new object[] {
             "Most recent",
             "Average"});
-            this.comboBoxOperator1.Location = new System.Drawing.Point(250, 3);
+            this.comboBoxOperator1.Location = new System.Drawing.Point(250, 105);
             this.comboBoxOperator1.Name = "comboBoxOperator1";
             this.comboBoxOperator1.Size = new System.Drawing.Size(121, 24);
             this.comboBoxOperator1.TabIndex = 38;
@@ -221,7 +221,7 @@
             // labelData
             // 
             this.labelData.AutoSize = true;
-            this.labelData.Location = new System.Drawing.Point(253, 44);
+            this.labelData.Location = new System.Drawing.Point(252, 0);
             this.labelData.Name = "labelData";
             this.labelData.Size = new System.Drawing.Size(42, 17);
             this.labelData.TabIndex = 41;
@@ -238,7 +238,7 @@
             ">=",
             "<=",
             "≠"});
-            this.comboBoxOperator2.Location = new System.Drawing.Point(484, 3);
+            this.comboBoxOperator2.Location = new System.Drawing.Point(484, 105);
             this.comboBoxOperator2.Name = "comboBoxOperator2";
             this.comboBoxOperator2.Size = new System.Drawing.Size(68, 24);
             this.comboBoxOperator2.TabIndex = 42;
@@ -246,7 +246,7 @@
             // labelKolomnaam
             // 
             this.labelKolomnaam.AutoSize = true;
-            this.labelKolomnaam.Location = new System.Drawing.Point(6, 44);
+            this.labelKolomnaam.Location = new System.Drawing.Point(5, 0);
             this.labelKolomnaam.Name = "labelKolomnaam";
             this.labelKolomnaam.Size = new System.Drawing.Size(98, 17);
             this.labelKolomnaam.TabIndex = 39;
@@ -288,7 +288,7 @@
             // textBoxColumnname
             // 
             this.textBoxColumnname.AccessibleDescription = "";
-            this.textBoxColumnname.Location = new System.Drawing.Point(3, 3);
+            this.textBoxColumnname.Location = new System.Drawing.Point(3, 105);
             this.textBoxColumnname.Name = "textBoxColumnname";
             this.textBoxColumnname.Size = new System.Drawing.Size(187, 22);
             this.textBoxColumnname.TabIndex = 37;
@@ -307,7 +307,7 @@
             // 
             this.pictureBoxSearch2.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBoxSearch2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch2.Image")));
-            this.pictureBoxSearch2.Location = new System.Drawing.Point(859, 3);
+            this.pictureBoxSearch2.Location = new System.Drawing.Point(859, 105);
             this.pictureBoxSearch2.Name = "pictureBoxSearch2";
             this.pictureBoxSearch2.Size = new System.Drawing.Size(50, 22);
             this.pictureBoxSearch2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -318,7 +318,7 @@
             // textBoxColumnname2
             // 
             this.textBoxColumnname2.AccessibleDescription = "";
-            this.textBoxColumnname2.Location = new System.Drawing.Point(668, 3);
+            this.textBoxColumnname2.Location = new System.Drawing.Point(668, 105);
             this.textBoxColumnname2.Name = "textBoxColumnname2";
             this.textBoxColumnname2.Size = new System.Drawing.Size(187, 22);
             this.textBoxColumnname2.TabIndex = 26;
@@ -326,7 +326,7 @@
             // labelColumnname2
             // 
             this.labelColumnname2.AutoSize = true;
-            this.labelColumnname2.Location = new System.Drawing.Point(671, 44);
+            this.labelColumnname2.Location = new System.Drawing.Point(670, 0);
             this.labelColumnname2.Name = "labelColumnname2";
             this.labelColumnname2.Size = new System.Drawing.Size(98, 17);
             this.labelColumnname2.TabIndex = 28;
@@ -337,7 +337,7 @@
             this.numericUpDownRecords2.AccessibleDescription = "Standaard op disabled, wordt pas enabled als comboBoxOperator1 als waarde gemidde" +
     "lde heeft.";
             this.numericUpDownRecords2.Enabled = false;
-            this.numericUpDownRecords2.Location = new System.Drawing.Point(1042, 3);
+            this.numericUpDownRecords2.Location = new System.Drawing.Point(1042, 105);
             this.numericUpDownRecords2.Maximum = new decimal(new int[] {
             250,
             0,
@@ -364,7 +364,7 @@
             this.comboBoxOperator3.Items.AddRange(new object[] {
             "Meest recente",
             "Gemiddelde"});
-            this.comboBoxOperator3.Location = new System.Drawing.Point(915, 3);
+            this.comboBoxOperator3.Location = new System.Drawing.Point(915, 105);
             this.comboBoxOperator3.Name = "comboBoxOperator3";
             this.comboBoxOperator3.Size = new System.Drawing.Size(121, 24);
             this.comboBoxOperator3.TabIndex = 27;
@@ -373,7 +373,7 @@
             // labelData2
             // 
             this.labelData2.AutoSize = true;
-            this.labelData2.Location = new System.Drawing.Point(918, 44);
+            this.labelData2.Location = new System.Drawing.Point(917, 0);
             this.labelData2.Name = "labelData2";
             this.labelData2.Size = new System.Drawing.Size(42, 17);
             this.labelData2.TabIndex = 30;
@@ -386,17 +386,7 @@
             this.tabPage1.Controls.Add(this.buttonNewLine);
             this.tabPage1.Controls.Add(this.buttonOpenFormula);
             this.tabPage1.Controls.Add(this.btnSaveFormula);
-            this.tabPage1.Controls.Add(this.radioButtonValue);
-            this.tabPage1.Controls.Add(this.radioButtonAbsolute);
-            this.tabPage1.Controls.Add(this.labelValue);
-            this.tabPage1.Controls.Add(this.labelOperator);
-            this.tabPage1.Controls.Add(this.labelRecords);
-            this.tabPage1.Controls.Add(this.labelData);
-            this.tabPage1.Controls.Add(this.labelKolomnaam);
             this.tabPage1.Controls.Add(this.lblUitleg);
-            this.tabPage1.Controls.Add(this.labelAmountRecords2);
-            this.tabPage1.Controls.Add(this.labelColumnname2);
-            this.tabPage1.Controls.Add(this.labelData2);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -412,15 +402,25 @@
             this.panelFormulaControls.Controls.Add(this.comboBoxOperator3);
             this.panelFormulaControls.Controls.Add(this.numericUpDownRecords2);
             this.panelFormulaControls.Controls.Add(this.textBoxColumnname2);
+            this.panelFormulaControls.Controls.Add(this.labelValue);
+            this.panelFormulaControls.Controls.Add(this.radioButtonValue);
+            this.panelFormulaControls.Controls.Add(this.labelOperator);
             this.panelFormulaControls.Controls.Add(this.pictureBoxSearch2);
+            this.panelFormulaControls.Controls.Add(this.labelRecords);
+            this.panelFormulaControls.Controls.Add(this.radioButtonAbsolute);
+            this.panelFormulaControls.Controls.Add(this.labelData);
+            this.panelFormulaControls.Controls.Add(this.labelKolomnaam);
             this.panelFormulaControls.Controls.Add(this.comboBoxOperator2);
             this.panelFormulaControls.Controls.Add(this.pictureBoxSearch);
+            this.panelFormulaControls.Controls.Add(this.labelAmountRecords2);
             this.panelFormulaControls.Controls.Add(this.comboBoxOperator1);
+            this.panelFormulaControls.Controls.Add(this.labelColumnname2);
             this.panelFormulaControls.Controls.Add(this.numericUpDownRecords);
+            this.panelFormulaControls.Controls.Add(this.labelData2);
             this.panelFormulaControls.Controls.Add(this.textBoxValue);
-            this.panelFormulaControls.Location = new System.Drawing.Point(3, 66);
+            this.panelFormulaControls.Location = new System.Drawing.Point(3, 23);
             this.panelFormulaControls.Name = "panelFormulaControls";
-            this.panelFormulaControls.Size = new System.Drawing.Size(1175, 133);
+            this.panelFormulaControls.Size = new System.Drawing.Size(1265, 176);
             this.panelFormulaControls.TabIndex = 95;
             // 
             // buttonNewLine
@@ -456,7 +456,7 @@
             // labelOperator
             // 
             this.labelOperator.AutoSize = true;
-            this.labelOperator.Location = new System.Drawing.Point(487, 46);
+            this.labelOperator.Location = new System.Drawing.Point(486, 2);
             this.labelOperator.Name = "labelOperator";
             this.labelOperator.Size = new System.Drawing.Size(69, 17);
             this.labelOperator.TabIndex = 43;
@@ -465,7 +465,7 @@
             // labelAmountRecords2
             // 
             this.labelAmountRecords2.AutoSize = true;
-            this.labelAmountRecords2.Location = new System.Drawing.Point(1045, 44);
+            this.labelAmountRecords2.Location = new System.Drawing.Point(1044, 0);
             this.labelAmountRecords2.Name = "labelAmountRecords2";
             this.labelAmountRecords2.Size = new System.Drawing.Size(112, 17);
             this.labelAmountRecords2.TabIndex = 32;
@@ -497,7 +497,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1182, 439);
+            this.ClientSize = new System.Drawing.Size(1272, 439);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

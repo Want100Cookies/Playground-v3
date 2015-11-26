@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -27,8 +28,8 @@ namespace Playground_v3
         private Dictionary<PictureBox, TextBox> koppelDictionary;
             //veld die helpt bij het koppelen van search icons en tekstvelden.
 
-        private Dictionary<int, TextBox> fieldDictionary;
-       //veld die helpt bij het koppelen van de textbox aan een nummer.
+        IList<Control> controls = new List<Control>();
+        private Dictionary<RadioButton, IList<Control>> koppelDictionaryControls;
 
         public Form1()
         {
@@ -52,7 +53,7 @@ namespace Playground_v3
             defaultOffset = 50;
             regelAfstand = 60;
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
-            fieldDictionary = new Dictionary<int, TextBox>();
+            koppelDictionaryControls = new Dictionary<RadioButton, IList<Control>>();
 
             newLine();
 
@@ -80,29 +81,63 @@ namespace Playground_v3
 
         private void radioButtonValue_CheckedChanged(object sender, EventArgs e)
         {
-            if (!radioButtonValue.Checked)
+            RadioButton radioButton = sender as RadioButton;
+            if (radioButton.Checked)
             {
-                //hide components:
-                textBoxColumnname2.Visible = false;
-                pictureBoxSearch2.Visible = false;
-                comboBoxOperator3.Visible = false;
-                numericUpDownRecords2.Visible = false;
-                labelColumnname2.Visible = false;
-                labelData2.Visible = false;
-                labelAmountRecords2.Visible = false;
-                textBoxValue.Enabled = true;
+                hideOrShowComponents(radioButton, true);
             }
             else
             {
-                //show components:
-                textBoxColumnname2.Visible = true;
-                pictureBoxSearch2.Visible = true;
-                comboBoxOperator3.Visible = true;
-                numericUpDownRecords2.Visible = true;
-                labelColumnname2.Visible = true;
-                labelData2.Visible = true;
-                labelAmountRecords2.Visible = true;
-                textBoxValue.Enabled = false;
+                hideOrShowComponents(radioButton, false);
+            }
+
+            //if (!radioButtonValue.Checked)
+            //{
+            //    //hide components:
+            //    textBoxColumnname2.Visible = false;
+            //    pictureBoxSearch2.Visible = false;
+            //    comboBoxOperator3.Visible = false;
+            //    numericUpDownRecords2.Visible = false;
+            //    labelColumnname2.Visible = false;
+            //    labelData2.Visible = false;
+            //    labelAmountRecords2.Visible = false;
+            //    textBoxValue.Enabled = true;
+            //}
+            //else
+            //{
+            //    //show components:
+            //    textBoxColumnname2.Visible = true;
+            //    pictureBoxSearch2.Visible = true;
+            //    comboBoxOperator3.Visible = true;
+            //    numericUpDownRecords2.Visible = true;
+            //    labelColumnname2.Visible = true;
+            //    labelData2.Visible = true;
+            //    labelAmountRecords2.Visible = true;
+            //    textBoxValue.Enabled = false;
+            //}
+        }
+
+        /// <summary>
+        /// methode om bepaalde componenten (gedefiniëerd in een IList (parameter van koppelDictionaryControls)) te showen/hiden.
+        /// </summary>
+        /// <param name="radioButton">desbetreffende radiobuttonValue waarop is geklikt</param>
+        /// <param name="toHide">moeten er elementen gehide/gedisabled worden? of anders om.</param>
+        private void hideOrShowComponents(RadioButton radioButton, bool toHide)
+        {
+            //voor elke IList control in Dictionary bla bla lba [radioButton]
+            var maxAmountControls = koppelDictionaryControls[radioButton].Count;
+            var count = 0;
+            foreach (Control ctrl in koppelDictionaryControls[radioButton])
+            {
+                count++;
+                if (count != maxAmountControls)
+                {
+                    ctrl.Visible = !toHide;
+                }
+                else
+                {
+                    ctrl.Enabled = toHide;
+                }
             }
         }
 
@@ -141,8 +176,8 @@ namespace Playground_v3
         ///</summary>
         public void newLine(string kolomnaam = "", string amount="", string operatorSoort = "", string operatorValue = "", string kolomnaam2 = "", string amount2 = "")
         {
-            
-        
+
+
             //methode die nieuwe lijn maakt.
             //de textboxes worden opgeslagen in een dictionary<TextBox, int>
             //de int bestaat uit de lijn: 1 tiental voor de 1e lijn, 2 tientallen voor de 2e lijn enz.
@@ -152,11 +187,32 @@ namespace Playground_v3
             //note: in eerste instantie is in deze de dictionary hardcoded erin gezet.
             //TODO: newline methode maken.
 
+#region notButArea
+            //radio button absolute:
+            RadioButton radioButtonAbsol = new RadioButton();
+            radioButtonAbsol.Checked = true;
+            radioButtonAbsol.Location = new Point(418, row * regelAfstand - 25);
+            radioButtonAbsol.Name = "radioButtonAbsolute" + row;
+            radioButtonAbsol.Size = new Size(100, 21);
+            radioButtonAbsol.Text = "Absolute value";
+            radioButtonAbsol.UseVisualStyleBackColor = true;
+            panelFormulaControls.Controls.Add(radioButtonAbsol);
+
+            //radio button value:
+            RadioButton radioButtonVal = new RadioButton();
+            radioButtonVal.Location = new Point(530, row * regelAfstand - 25);
+            radioButtonVal.Name = "radioButtonValue" + row;
+            radioButtonVal.Size = new Size(114, 21);
+            radioButtonVal.Text = "Current value";
+            radioButtonVal.UseVisualStyleBackColor = true;
+            radioButtonVal.CheckedChanged += radioButtonValue_CheckedChanged;
+            panelFormulaControls.Controls.Add(radioButtonVal);
+
             //column name 1:
             TextBox columnname = new TextBox();
             columnname.Location = new Point(3, row * regelAfstand);
             columnname.Name = "textBoxColumnname" + row;
-            columnname.Size = new Size(145, 22);
+            columnname.Size = new Size(140, 22);
             columnname.Text = kolomnaam;
             panelFormulaControls.Controls.Add(columnname);
 
@@ -164,10 +220,10 @@ namespace Playground_v3
             PictureBox picSearch1 = new PictureBox();
             picSearch1.BackColor = Color.White;
           
-            picSearch1.Location = new Point(194, row * regelAfstand);
+            picSearch1.Location = new Point(140, row * regelAfstand);
             picSearch1.Name = "pictureBox + " + row;
             picSearch1.Cursor = Cursors.Hand;
-            picSearch1.Size = new Size(50, 22);
+            picSearch1.Size = new Size(50, 18);
             picSearch1.SizeMode = PictureBoxSizeMode.Zoom;
             picSearch1.Image = Resources._1426093958_common_search_lookup__128;
             panelFormulaControls.Controls.Add(picSearch1);
@@ -181,9 +237,9 @@ namespace Playground_v3
             comboB1.Items.AddRange(new object[] {
             "Most recent",
             "Average"});
-            comboB1.Location = new Point(250, row * regelAfstand);
+            comboB1.Location = new Point(190, row * regelAfstand);
             comboB1.Name = "comboBoxOperator1";
-            comboB1.Size = new Size(100, 24);
+            comboB1.Size = new Size(90, 22);
             //TODO: een gedeelde event handler maken voor de combobox:
             //note: nu staat het er hardcoded in.
             comboB1.SelectedIndexChanged += comboBoxOperator1_SelectedIndexChanged;
@@ -193,7 +249,7 @@ namespace Playground_v3
             //numeric up down records:
             NumericUpDown numUpDown = new NumericUpDown();
             numUpDown.Enabled = false;
-            numUpDown.Location = new System.Drawing.Point(383, row * regelAfstand);
+            numUpDown.Location = new System.Drawing.Point(284, row * regelAfstand);
             numUpDown.Maximum = new decimal(new int[] {
             250,
             0,
@@ -205,7 +261,7 @@ namespace Playground_v3
             0,
             0});
             numUpDown.Name = "numUpDown" + row;
-            numUpDown.Size = new Size(101, 22);
+            numUpDown.Size = new Size(75, 22);
             numUpDown.Value = new decimal(new int[] {
             2,
             0,
@@ -214,44 +270,43 @@ namespace Playground_v3
             panelFormulaControls.Controls.Add(numUpDown);
 
             //combobox2
-            ComboBox combob2 = new ComboBox();
-            combob2.DropDownStyle = ComboBoxStyle.DropDownList;
-            combob2.FormattingEnabled = true;
-            combob2.Items.AddRange(new object[] {
+            ComboBox comboB2 = new ComboBox();
+            comboB2.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboB2.FormattingEnabled = true;
+            comboB2.Items.AddRange(new object[] {
             ">",
             "<",
             "=",
             ">=",
             "<=",
             "≠"});
-            combob2.Location = new Point(490, row * regelAfstand);
-            combob2.Name = "combob2" + row + "2";
-            combob2.Size = new Size(68, 24);
-            combob2.SelectedIndex = 0;
-            panelFormulaControls.Controls.Add(combob2);
+            comboB2.Location = new Point(365, row * regelAfstand);
+            comboB2.Name = "combob2" + row + "2";
+            comboB2.Size = new Size(50, 22);
+            comboB2.SelectedIndex = 0;
+            panelFormulaControls.Controls.Add(comboB2);
 
             //textBoxValue
             TextBox textBoxVal = new TextBox();
-            textBoxVal.Location = new Point(564, row * regelAfstand);
+            textBoxVal.Location = new Point(418, row * regelAfstand);
             textBoxVal.Name = "textBoxValue" + row;
-            textBoxVal.Size = new Size(100, 22);
+            textBoxVal.Size = new Size(75, 22);
             panelFormulaControls.Controls.Add(textBoxVal);
 
-            //TODO: meer form controls toevoegen.
             //textBoxColumnname2:
             TextBox textBoxCol2 = new TextBox();
-            textBoxCol2.Location = new Point(668, row * regelAfstand);
+            textBoxCol2.Location = new Point(500, row * regelAfstand);
             textBoxCol2.Name = "textBoxColumnname" + row + 2;
-            textBoxCol2.Size = new Size(187, 22);
+            textBoxCol2.Size = new Size(140, 22);
             panelFormulaControls.Controls.Add(textBoxCol2);
 
             //pictureboxSearch2:
             PictureBox pictureBox2 = new PictureBox();
             pictureBox2.Cursor = Cursors.Hand;
             pictureBox2.Image = Playground_v3.Properties.Resources._1426093958_common_search_lookup__128;
-            pictureBox2.Location = new Point(859, row * regelAfstand);
+            pictureBox2.Location = new Point(636, row * regelAfstand);
             pictureBox2.Name = "pictureBoxSearch2";
-            pictureBox2.Size = new Size(50, 22);
+            pictureBox2.Size = new Size(50, 18);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox2.TabStop = false;
             pictureBox2.Click += pictureBoxSearch_Click;
@@ -261,24 +316,24 @@ namespace Playground_v3
             koppelDictionary.Add(pictureBox2, textBoxCol2);
 
             //comboBoxOperator3: gelijk aan comboBoxOperator1
-            ComboBox comboB2 = new ComboBox();
-            comboB2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboB2.Items.AddRange(new object[] {
+            ComboBox comboB3 = new ComboBox();
+            comboB3.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboB3.Items.AddRange(new object[] {
             "Most recent",
             "Average"});
-            comboB2.Location = new Point(915, row * regelAfstand);
-            comboB2.Name = "comboBoxOperator1";
-            comboB2.Size = new Size(121, 24);
+            comboB3.Location = new Point(687, row * regelAfstand);
+            comboB3.Name = "comboBoxOperator1";
+            comboB3.Size = new Size(90, 22);
             //TODO: een gedeelde event handler maken voor de combobox:
             //note: nu staat het er hardcoded in.
-            comboB2.SelectedIndexChanged += comboBoxOperator1_SelectedIndexChanged;
-            comboB2.SelectedIndex = 0;
-            panelFormulaControls.Controls.Add(comboB2);
-
+            comboB3.SelectedIndexChanged += comboBoxOperator1_SelectedIndexChanged;
+            comboB3.SelectedIndex = 0;
+            panelFormulaControls.Controls.Add(comboB3);
+            
             //numeric up down records2:
             NumericUpDown numUpDown2 = new NumericUpDown();
             numUpDown2.Enabled = false;
-            numUpDown2.Location = new System.Drawing.Point(1042, row * regelAfstand);
+            numUpDown2.Location = new System.Drawing.Point(780, row * regelAfstand);
             numUpDown2.Maximum = new decimal(new int[] {
             250,
             0,
@@ -297,7 +352,19 @@ namespace Playground_v3
             0,
             0});
             panelFormulaControls.Controls.Add(numUpDown2);
+#endregion
 
+            //toevoegen aan lijstje met controls die straks verborgen/getoont zullen worden.
+            controls.Add(textBoxCol2);
+            controls.Add(pictureBox2);
+            controls.Add(comboB3);
+            controls.Add(numUpDown2);
+            controls.Add(textBoxVal); //deze moet worden enabled
+
+            koppelDictionaryControls.Add(radioButtonVal, controls);
+            //TODO: fix de koppeling tussen radioButtonVal en de controls
+            //Note: wanneer er nu op een radioButton wordt geklikt gaan alle controls uit of aan.
+            //Note: het kan niet zo zijn dat controls alleen unieke waardes accepteerd..
 
 
             row++;

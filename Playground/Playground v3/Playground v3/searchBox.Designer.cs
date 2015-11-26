@@ -64,11 +64,6 @@
             // checkedListBoxResultaten
             // 
             this.checkedListBoxResultaten.FormattingEnabled = true;
-            this.checkedListBoxResultaten.Items.AddRange(new object[] {
-            "extruder1temp",
-            "extruder2temp",
-            "extruder3temp",
-            "extruder4temp"});
             this.checkedListBoxResultaten.Location = new System.Drawing.Point(15, 114);
             this.checkedListBoxResultaten.Name = "checkedListBoxResultaten";
             this.checkedListBoxResultaten.Size = new System.Drawing.Size(441, 174);
