@@ -28,7 +28,11 @@ namespace Playground_v3
         private Dictionary<PictureBox, TextBox> koppelDictionary;
             //veld die helpt bij het koppelen van search icons en tekstvelden.
 
-        IList<Control> controls = new List<Control>();
+        private Dictionary<ComboBox, NumericUpDown> koppelDictionaryComboBox;
+
+        //var die bijhoud hoeveel Radiobuttons er op value staan. Als dit groter is dan 0, moeten bepaalde labels visible zijn.
+        private int CountRadioButtonsValue; 
+
         private Dictionary<RadioButton, IList<Control>> koppelDictionaryControls;
 
         public Form1()
@@ -54,6 +58,9 @@ namespace Playground_v3
             regelAfstand = 60;
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
             koppelDictionaryControls = new Dictionary<RadioButton, IList<Control>>();
+            koppelDictionaryComboBox = new Dictionary<ComboBox, NumericUpDown>();
+
+            CountRadioButtonsValue = 0;
 
             newLine();
 
@@ -67,62 +74,44 @@ namespace Playground_v3
             selectDatabase.Show();
         }
 
-        private void comboBoxOperator1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (comboBoxOperator1.SelectedIndex == 1)
-            {
-                numericUpDownRecords.Enabled = true;
-            }
-            else
-            {
-                numericUpDownRecords.Enabled = false;
-            }
-        }
-
         private void radioButtonValue_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
-            if (radioButton.Checked)
+            if (radioButton.Checked) 
             {
+                //show components:
                 hideOrShowComponents(radioButton, true);
+                CountRadioButtonsValue++;
             }
             else
             {
                 hideOrShowComponents(radioButton, false);
+                if (CountRadioButtonsValue > 0)
+                {
+                    CountRadioButtonsValue--;
+                }
             }
 
-            //if (!radioButtonValue.Checked)
-            //{
-            //    //hide components:
-            //    textBoxColumnname2.Visible = false;
-            //    pictureBoxSearch2.Visible = false;
-            //    comboBoxOperator3.Visible = false;
-            //    numericUpDownRecords2.Visible = false;
-            //    labelColumnname2.Visible = false;
-            //    labelData2.Visible = false;
-            //    labelAmountRecords2.Visible = false;
-            //    textBoxValue.Enabled = true;
-            //}
-            //else
-            //{
-            //    //show components:
-            //    textBoxColumnname2.Visible = true;
-            //    pictureBoxSearch2.Visible = true;
-            //    comboBoxOperator3.Visible = true;
-            //    numericUpDownRecords2.Visible = true;
-            //    labelColumnname2.Visible = true;
-            //    labelData2.Visible = true;
-            //    labelAmountRecords2.Visible = true;
-            //    textBoxValue.Enabled = false;
-            //}
+            if (CountRadioButtonsValue == 0)
+            {
+                labelColumnname2.Visible = false;
+                labelData2.Visible = false;
+                labelAmountRecords2.Visible = false;
+            }
+            else
+            {
+                labelColumnname2.Visible = true;
+                labelData2.Visible = true;
+                labelAmountRecords2.Visible = true;
+            }
         }
 
         /// <summary>
         /// methode om bepaalde componenten (gedefiniëerd in een IList (parameter van koppelDictionaryControls)) te showen/hiden.
         /// </summary>
         /// <param name="radioButton">desbetreffende radiobuttonValue waarop is geklikt</param>
-        /// <param name="toHide">moeten er elementen gehide/gedisabled worden? of anders om.</param>
-        private void hideOrShowComponents(RadioButton radioButton, bool toHide)
+        /// <param name="toShow">moeten er elementen gehide/gedisabled worden? of anders om.</param>
+        private void hideOrShowComponents(RadioButton radioButton, bool toShow)
         {
             //voor elke IList control in Dictionary bla bla lba [radioButton]
             var maxAmountControls = koppelDictionaryControls[radioButton].Count;
@@ -132,17 +121,18 @@ namespace Playground_v3
                 count++;
                 if (count != maxAmountControls)
                 {
-                    ctrl.Visible = !toHide;
+                    ctrl.Visible = toShow;
                 }
                 else
                 {
-                    ctrl.Enabled = toHide;
+                    ctrl.Enabled = !toShow;
                 }
             }
         }
 
         private void comboBoxOperator3_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             if (comboBoxOperator3.SelectedIndex == 1)
             {
                 numericUpDownRecords2.Enabled = true;
@@ -176,37 +166,37 @@ namespace Playground_v3
         ///</summary>
         public void newLine(string kolomnaam = "", string amount="", string operatorSoort = "", string operatorValue = "", string kolomnaam2 = "", string amount2 = "")
         {
-
-
-            //methode die nieuwe lijn maakt.
-            //de textboxes worden opgeslagen in een dictionary<TextBox, int>
-            //de int bestaat uit de lijn: 1 tiental voor de 1e lijn, 2 tientallen voor de 2e lijn enz.
-            //de eentallen in de int representeerd de 1e- of 2e textbox van de rij.
-            //je krijgt dus iets als 22 (2e rij, 2e textbox)
-            //of 11: (1e rij 1e textbox).
-            //note: in eerste instantie is in deze de dictionary hardcoded erin gezet.
             //TODO: newline methode maken.
 
 #region notButArea
+
+            //eerst panel maken, anders kan maar 1 radio button checked zijn binnen het hele formulepanel.
+            Panel radioPanel=new Panel();
+            radioPanel.Location = new Point(417, row * regelAfstand - 30);
+            radioPanel.Size = new Size(200, 25);
+
             //radio button absolute:
             RadioButton radioButtonAbsol = new RadioButton();
             radioButtonAbsol.Checked = true;
-            radioButtonAbsol.Location = new Point(418, row * regelAfstand - 25);
+            radioButtonAbsol.Location = new Point(0, 0);
             radioButtonAbsol.Name = "radioButtonAbsolute" + row;
             radioButtonAbsol.Size = new Size(100, 21);
             radioButtonAbsol.Text = "Absolute value";
             radioButtonAbsol.UseVisualStyleBackColor = true;
-            panelFormulaControls.Controls.Add(radioButtonAbsol);
+            radioPanel.Controls.Add(radioButtonAbsol);
 
             //radio button value:
             RadioButton radioButtonVal = new RadioButton();
-            radioButtonVal.Location = new Point(530, row * regelAfstand - 25);
+            radioButtonVal.Location = new Point(100, 0);
             radioButtonVal.Name = "radioButtonValue" + row;
             radioButtonVal.Size = new Size(114, 21);
             radioButtonVal.Text = "Current value";
             radioButtonVal.UseVisualStyleBackColor = true;
             radioButtonVal.CheckedChanged += radioButtonValue_CheckedChanged;
-            panelFormulaControls.Controls.Add(radioButtonVal);
+            radioPanel.Controls.Add(radioButtonVal);
+            panelFormulaControls.Controls.Add(radioPanel);
+                
+                
 
             //column name 1:
             TextBox columnname = new TextBox();
@@ -242,8 +232,8 @@ namespace Playground_v3
             comboB1.Size = new Size(90, 22);
             //TODO: een gedeelde event handler maken voor de combobox:
             //note: nu staat het er hardcoded in.
-            comboB1.SelectedIndexChanged += comboBoxOperator1_SelectedIndexChanged;
             comboB1.SelectedIndex = 0;
+            comboB1.SelectedIndexChanged += comboBoxOperator_SelectedIndexChanged;
             panelFormulaControls.Controls.Add(comboB1);
 
             //numeric up down records:
@@ -326,8 +316,8 @@ namespace Playground_v3
             comboB3.Size = new Size(90, 22);
             //TODO: een gedeelde event handler maken voor de combobox:
             //note: nu staat het er hardcoded in.
-            comboB3.SelectedIndexChanged += comboBoxOperator1_SelectedIndexChanged;
             comboB3.SelectedIndex = 0;
+            comboB3.SelectedIndexChanged += comboBoxOperator_SelectedIndexChanged;
             panelFormulaControls.Controls.Add(comboB3);
             
             //numeric up down records2:
@@ -352,9 +342,16 @@ namespace Playground_v3
             0,
             0});
             panelFormulaControls.Controls.Add(numUpDown2);
-#endregion
+            #endregion
+
+            textBoxCol2.Visible = false;
+            pictureBox2.Visible = false;
+            comboB3.Visible = false;
+            numUpDown2.Visible = false;
+            textBoxVal.Enabled = true;
 
             //toevoegen aan lijstje met controls die straks verborgen/getoont zullen worden.
+            IList<Control> controls = new List<Control>();
             controls.Add(textBoxCol2);
             controls.Add(pictureBox2);
             controls.Add(comboB3);
@@ -362,12 +359,30 @@ namespace Playground_v3
             controls.Add(textBoxVal); //deze moet worden enabled
 
             koppelDictionaryControls.Add(radioButtonVal, controls);
-            //TODO: fix de koppeling tussen radioButtonVal en de controls
-            //Note: wanneer er nu op een radioButton wordt geklikt gaan alle controls uit of aan.
-            //Note: het kan niet zo zijn dat controls alleen unieke waardes accepteerd..
-
+          
+            koppelDictionaryComboBox.Add(comboB1, numUpDown);
+            koppelDictionaryComboBox.Add(comboB3, numUpDown2);
 
             row++;
+        }
+
+        /// <summary>
+        /// Methode om via de koppelDictionaryComboBox te bepalen welke numericUpDownRecords mag geënabled/disabled worden.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void comboBoxOperator_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ComboBox sndr = sender as ComboBox;
+            NumericUpDown numUpDown = koppelDictionaryComboBox[sndr];
+            if (sndr.SelectedIndex == 1)
+            {
+                numUpDown.Enabled = true;
+            }
+            else
+            {
+                numUpDown.Enabled = false;
+            }
         }
 
         /**

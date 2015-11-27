@@ -216,7 +216,6 @@
             this.comboBoxOperator1.Name = "comboBoxOperator1";
             this.comboBoxOperator1.Size = new System.Drawing.Size(121, 24);
             this.comboBoxOperator1.TabIndex = 38;
-            this.comboBoxOperator1.SelectedIndexChanged += new System.EventHandler(this.comboBoxOperator1_SelectedIndexChanged);
             // 
             // labelData
             // 
