@@ -26,12 +26,12 @@ namespace Playground_v3
         public int regelAfstand; //var die het aantal points (=afstand) tussen twee regels bijhoudt.
 
         private Dictionary<PictureBox, TextBox> koppelDictionary;
-            //veld die helpt bij het koppelen van search icons en tekstvelden.
+        //veld die helpt bij het koppelen van search icons en tekstvelden.
 
         private Dictionary<ComboBox, NumericUpDown> koppelDictionaryComboBox;
 
         //var die bijhoud hoeveel Radiobuttons er op value staan. Als dit groter is dan 0, moeten bepaalde labels visible zijn.
-        private int CountRadioButtonsValue; 
+        private int CountRadioButtonsValue;
 
         private Dictionary<RadioButton, IList<Control>> koppelDictionaryControls;
 
@@ -40,15 +40,6 @@ namespace Playground_v3
             InitializeComponent();
             //formules maken scherm:
             //gui init
-            comboBoxOperator1.SelectedIndex = 0;
-            comboBoxOperator2.SelectedIndex = 0;
-            comboBoxOperator3.SelectedIndex = 0;
-
-            //hide components:
-            textBoxColumnname2.Visible = false;
-            pictureBoxSearch2.Visible = false;
-            comboBoxOperator3.Visible = false;
-            numericUpDownRecords2.Visible = false;
             labelColumnname2.Visible = false;
             labelData2.Visible = false;
             labelAmountRecords2.Visible = false;
@@ -63,9 +54,6 @@ namespace Playground_v3
             CountRadioButtonsValue = 0;
 
             newLine();
-
-            koppelDictionary.Add(pictureBoxSearch, textBoxColumnname);
-            koppelDictionary.Add(pictureBoxSearch2, textBoxColumnname2);
         }
 
         private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
@@ -77,7 +65,7 @@ namespace Playground_v3
         private void radioButtonValue_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
-            if (radioButton.Checked) 
+            if (radioButton.Checked)
             {
                 //show components:
                 hideOrShowComponents(radioButton, true);
@@ -113,7 +101,7 @@ namespace Playground_v3
         /// <param name="toShow">moeten er elementen gehide/gedisabled worden? of anders om.</param>
         private void hideOrShowComponents(RadioButton radioButton, bool toShow)
         {
-            //voor elke IList control in Dictionary bla bla lba [radioButton]
+            //voor elke IList control in Dictionary [radioButton]
             var maxAmountControls = koppelDictionaryControls[radioButton].Count;
             var count = 0;
             foreach (Control ctrl in koppelDictionaryControls[radioButton])
@@ -130,19 +118,6 @@ namespace Playground_v3
             }
         }
 
-        private void comboBoxOperator3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            if (comboBoxOperator3.SelectedIndex == 1)
-            {
-                numericUpDownRecords2.Enabled = true;
-            }
-            else
-            {
-                numericUpDownRecords2.Enabled = false;
-            }
-        }
-
         private void pictureBoxSearch_Click(object sender, EventArgs e)
         {
             searchBox form = new searchBox(koppelDictionary[(PictureBox) sender]);
@@ -155,29 +130,39 @@ namespace Playground_v3
             {
                 foreach (var str in form.getRusultString())
                 {
-                    //add formule rij
                     form.getTextBox().Text = str;
                 }
             }
         }
 
-        ///<summary>
+        /// <summary>
         /// Methode die een nieuwe formuleregel maakt. Met daarin eventueel waardes die ingevuld kunnen worden.
-        ///</summary>
-        public void newLine(string kolomnaam = "", string amount="", string operatorSoort = "", string operatorValue = "", string kolomnaam2 = "", string amount2 = "")
+        /// </summary>
+        /// <param name="kolomnaam">De kolomnaam</param>
+        /// <param name="amount">bij gemiddeld aantal values, is deze "2" als default.</param>
+        /// <param name="operatorSoort">de index van het dropdown menu beginnende vanaf 0.</param>
+        /// <param name="operatorValue">De waarde: dus een getal.</param>
+        /// <param name="kolomnaam2"></param>
+        /// <param name="amount2"></param>
+        public void newLine(string kolomnaam = "", string amount = "", string operatorSoort = "0",
+            string operatorValue = "", string kolomnaam2 = "", string amount2 = "")
         {
-            //TODO: newline methode maken.
+            #region components/controls
+            bool soort1 = !(kolomnaam2 != "");
 
-#region notButArea
-
-            //eerst panel maken, anders kan maar 1 radio button checked zijn binnen het hele formulepanel.
-            Panel radioPanel=new Panel();
-            radioPanel.Location = new Point(417, row * regelAfstand - 30);
+            //eerst panel maken voor het paar radiobuttons, anders kan maar 1 radio button checked zijn binnen het hele formulepanel.
+            Panel radioPanel = new Panel();
+            radioPanel.Location = new Point(417, row*regelAfstand - 30);
             radioPanel.Size = new Size(200, 25);
+            radioPanel.Name = "radioPanel" + row;
 
             //radio button absolute:
             RadioButton radioButtonAbsol = new RadioButton();
-            radioButtonAbsol.Checked = true;
+            //check one of the radio buttons:
+            if (soort1)
+            {
+                radioButtonAbsol.Checked = true;
+            }
             radioButtonAbsol.Location = new Point(0, 0);
             radioButtonAbsol.Name = "radioButtonAbsolute" + row;
             radioButtonAbsol.Size = new Size(100, 21);
@@ -192,16 +177,11 @@ namespace Playground_v3
             radioButtonVal.Size = new Size(114, 21);
             radioButtonVal.Text = "Current value";
             radioButtonVal.UseVisualStyleBackColor = true;
-            radioButtonVal.CheckedChanged += radioButtonValue_CheckedChanged;
-            radioPanel.Controls.Add(radioButtonVal);
-            panelFormulaControls.Controls.Add(radioPanel);
-                
-                
 
             //column name 1:
             TextBox columnname = new TextBox();
-            columnname.Location = new Point(3, row * regelAfstand);
-            columnname.Name = "textBoxColumnname" + row;
+            columnname.Location = new Point(3, row*regelAfstand);
+            columnname.Name = "textBoxColumnname1" + row;
             columnname.Size = new Size(140, 22);
             columnname.Text = kolomnaam;
             panelFormulaControls.Controls.Add(columnname);
@@ -209,9 +189,8 @@ namespace Playground_v3
             //picturebox:
             PictureBox picSearch1 = new PictureBox();
             picSearch1.BackColor = Color.White;
-          
-            picSearch1.Location = new Point(140, row * regelAfstand);
-            picSearch1.Name = "pictureBox + " + row;
+            picSearch1.Location = new Point(140, row*regelAfstand);
+            picSearch1.Name = "pictureBox" + row;
             picSearch1.Cursor = Cursors.Hand;
             picSearch1.Size = new Size(50, 18);
             picSearch1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -224,77 +203,80 @@ namespace Playground_v3
             //combobox operator 1:
             ComboBox comboB1 = new ComboBox();
             comboB1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboB1.Items.AddRange(new object[] {
-            "Most recent",
-            "Average"});
-            comboB1.Location = new Point(190, row * regelAfstand);
-            comboB1.Name = "comboBoxOperator1";
+            comboB1.Items.AddRange(new object[]
+            {
+                "Most recent",
+                "Average"
+            });
+            comboB1.Location = new Point(190, row*regelAfstand);
+            comboB1.Name = "comboBoxOperator1" + row;
             comboB1.Size = new Size(90, 22);
-            //TODO: een gedeelde event handler maken voor de combobox:
-            //note: nu staat het er hardcoded in.
             comboB1.SelectedIndex = 0;
+            if (amount != "") //als average
+            {
+                comboB1.SelectedIndex = 1;
+            }
             comboB1.SelectedIndexChanged += comboBoxOperator_SelectedIndexChanged;
             panelFormulaControls.Controls.Add(comboB1);
 
             //numeric up down records:
             NumericUpDown numUpDown = new NumericUpDown();
-            numUpDown.Enabled = false;
-            numUpDown.Location = new System.Drawing.Point(284, row * regelAfstand);
-            numUpDown.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            numUpDown.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            numUpDown.Name = "numUpDown" + row;
+            if (amount == "")
+            {
+                numUpDown.Enabled = false;
+            }
+            numUpDown.Location = new Point(284, row*regelAfstand);
+            numUpDown.Maximum = 250;
+            numUpDown.Minimum = 2;
+            numUpDown.Name = "numericUpDownRecords1" + row;
             numUpDown.Size = new Size(75, 22);
-            numUpDown.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
+            numUpDown.Value = 2;
+            if (amount != "") //als average
+            {
+                numUpDown.Value = int.Parse(amount);
+            }
             panelFormulaControls.Controls.Add(numUpDown);
 
             //combobox2
             ComboBox comboB2 = new ComboBox();
             comboB2.DropDownStyle = ComboBoxStyle.DropDownList;
             comboB2.FormattingEnabled = true;
-            comboB2.Items.AddRange(new object[] {
-            ">",
-            "<",
-            "=",
-            ">=",
-            "<=",
-            "≠"});
-            comboB2.Location = new Point(365, row * regelAfstand);
-            comboB2.Name = "combob2" + row + "2";
+            comboB2.Items.AddRange(new object[]
+            {
+                ">",
+                "<",
+                "=",
+                ">=",
+                "<=",
+                "≠"
+            });
+            comboB2.Location = new Point(365, row*regelAfstand);
+            comboB2.Name = "comboBoxOperator2" + row;
             comboB2.Size = new Size(50, 22);
-            comboB2.SelectedIndex = 0;
+            comboB2.SelectedIndex = int.Parse(operatorSoort);
             panelFormulaControls.Controls.Add(comboB2);
 
             //textBoxValue
             TextBox textBoxVal = new TextBox();
-            textBoxVal.Location = new Point(418, row * regelAfstand);
+            textBoxVal.Location = new Point(418, row*regelAfstand);
             textBoxVal.Name = "textBoxValue" + row;
             textBoxVal.Size = new Size(75, 22);
+            textBoxVal.Text = operatorValue;
             panelFormulaControls.Controls.Add(textBoxVal);
 
             //textBoxColumnname2:
             TextBox textBoxCol2 = new TextBox();
-            textBoxCol2.Location = new Point(500, row * regelAfstand);
-            textBoxCol2.Name = "textBoxColumnname" + row + 2;
+            textBoxCol2.Location = new Point(500, row*regelAfstand);
+            textBoxCol2.Name = "textBoxColumnname2" + row;
             textBoxCol2.Size = new Size(140, 22);
+            textBoxCol2.Text = kolomnaam2;
             panelFormulaControls.Controls.Add(textBoxCol2);
 
             //pictureboxSearch2:
             PictureBox pictureBox2 = new PictureBox();
             pictureBox2.Cursor = Cursors.Hand;
-            pictureBox2.Image = Playground_v3.Properties.Resources._1426093958_common_search_lookup__128;
-            pictureBox2.Location = new Point(636, row * regelAfstand);
+            pictureBox2.Image = Resources._1426093958_common_search_lookup__128;
+            pictureBox2.Location = new Point(636, row*regelAfstand);
             pictureBox2.Name = "pictureBoxSearch2";
             pictureBox2.Size = new Size(50, 18);
             pictureBox2.SizeMode = PictureBoxSizeMode.Zoom;
@@ -308,47 +290,46 @@ namespace Playground_v3
             //comboBoxOperator3: gelijk aan comboBoxOperator1
             ComboBox comboB3 = new ComboBox();
             comboB3.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboB3.Items.AddRange(new object[] {
-            "Most recent",
-            "Average"});
-            comboB3.Location = new Point(687, row * regelAfstand);
-            comboB3.Name = "comboBoxOperator1";
+            comboB3.Items.AddRange(new object[]
+            {
+                "Most recent",
+                "Average"
+            });
+            comboB3.Location = new Point(687, row*regelAfstand);
+            comboB3.Name = "comboBoxOperator3" + row;
             comboB3.Size = new Size(90, 22);
-            //TODO: een gedeelde event handler maken voor de combobox:
-            //note: nu staat het er hardcoded in.
             comboB3.SelectedIndex = 0;
+            if (amount2 != "")
+            {
+                comboB3.SelectedIndex = 1;
+            }
             comboB3.SelectedIndexChanged += comboBoxOperator_SelectedIndexChanged;
             panelFormulaControls.Controls.Add(comboB3);
-            
+
             //numeric up down records2:
             NumericUpDown numUpDown2 = new NumericUpDown();
-            numUpDown2.Enabled = false;
-            numUpDown2.Location = new System.Drawing.Point(780, row * regelAfstand);
-            numUpDown2.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            numUpDown2.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            numUpDown2.Name = "numUpDown" + row + "2";
+            if (amount == "")
+            {
+                numUpDown.Enabled = false;
+            }
+            numUpDown2.Location = new Point(780, row*regelAfstand);
+            numUpDown2.Maximum = 250;
+            numUpDown2.Minimum = 2;
+            numUpDown2.Name = "numericUpDownRecords2" + row;
             numUpDown2.Size = new Size(101, 22);
-            numUpDown2.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
+            if (amount2 != "")
+            {
+                numUpDown2.Value = int.Parse(amount2);
+            }
             panelFormulaControls.Controls.Add(numUpDown2);
-            #endregion
 
             textBoxCol2.Visible = false;
             pictureBox2.Visible = false;
             comboB3.Visible = false;
             numUpDown2.Visible = false;
             textBoxVal.Enabled = true;
+
+            #endregion
 
             //toevoegen aan lijstje met controls die straks verborgen/getoont zullen worden.
             IList<Control> controls = new List<Control>();
@@ -358,8 +339,17 @@ namespace Playground_v3
             controls.Add(numUpDown2);
             controls.Add(textBoxVal); //deze moet worden enabled
 
+            radioButtonVal.CheckedChanged += radioButtonValue_CheckedChanged;
+            radioPanel.Controls.Add(radioButtonVal);
+            panelFormulaControls.Controls.Add(radioPanel);
             koppelDictionaryControls.Add(radioButtonVal, controls);
-          
+
+            //check one of the radio buttons:
+            if (!soort1)
+            {
+                radioButtonVal.Checked = true;
+            }
+
             koppelDictionaryComboBox.Add(comboB1, numUpDown);
             koppelDictionaryComboBox.Add(comboB3, numUpDown2);
 
@@ -375,85 +365,91 @@ namespace Playground_v3
         {
             ComboBox sndr = sender as ComboBox;
             NumericUpDown numUpDown = koppelDictionaryComboBox[sndr];
-            if (sndr.SelectedIndex == 1)
-            {
-                numUpDown.Enabled = true;
-            }
-            else
-            {
-                numUpDown.Enabled = false;
-            }
+            numUpDown.Enabled = sndr.SelectedIndex == 1;
         }
 
         /**
         * sla de formule op.
         * vraag: hoe wordt ervoor gezorgd dat er meerdere formule nodes komen?
+        * TODO: itereren over elke rij.
         */
+
         private void btnSaveFormula_Click(object sender, EventArgs e)
         {
             if (canSave())
             {
-                var soort1 = radioButtonAbsolute.Checked;
                 XmlDocument doc = new XmlDocument();
                 XmlElement formule = doc.CreateElement("formule");
 
-                XmlElement regel = doc.CreateElement("regel");
-                //controleren of soort is 1 of soort is 2.
-                XmlElement soort = doc.CreateElement("soort");
-                soort.InnerText = soort1 ? "1" : "2";
+                for (int i = 1; i < row; i++)
+                {
+                    RadioButton radioButton = new RadioButton();
+                    radioButton = (RadioButton) Controls.Find("radioButtonAbsolute" + i, true)[0];
+                    var soort1 = radioButton.Checked;
 
-                XmlElement kolomnaam = doc.CreateElement("kolomnaam");
-                kolomnaam.InnerText = textBoxColumnname.Text;
+                    XmlElement regel = doc.CreateElement("regel");
+                    formule.AppendChild(regel);
+                    XmlElement soort = doc.CreateElement("soort");
+                    soort.InnerText = soort1 ? "1" : "2";
 
-                XmlElement type = doc.CreateElement("type");
-                //als type is gemiddelde: dan attribuut waarde verandren
-                if (comboBoxOperator1.SelectedIndex == 0)
-                {
-                    type.SetAttribute("amount", "");
-                }
-                else
-                {
-                    type.SetAttribute("amount", numericUpDownRecords.Text);
-                }
-                XmlElement operatorEl = doc.CreateElement("operator");
-                operatorEl.SetAttribute("soort", comboBoxOperator2.SelectedIndex.ToString());
-                //als soort is 1, dan:
-                if (soort1)
-                {
-                    operatorEl.InnerText = textBoxValue.Text;
-                }
-                else
-                {
-                    //anders:
-                    XmlElement kolomnaam2 = doc.CreateElement("kolomnaam2");
-                    kolomnaam2.InnerText = textBoxColumnname2.Text;
-                    formule.AppendChild(kolomnaam2);
-                }
+                    XmlElement kolomnaam = doc.CreateElement("kolomnaam");
+                    kolomnaam.InnerText = ((TextBox) Controls.Find("textBoxColumnname1" + i, true)[0]).Text;
 
-                XmlElement type2 = doc.CreateElement("type2");
-                //als type is gemiddelde: dan attribuut waarde verandren
-                if (comboBoxOperator3.SelectedIndex == 0)
-                {
-                    type2.SetAttribute("amount", "");
-                }
-                else
-                {
-                    type2.SetAttribute("amount", numericUpDownRecords2.Text);
-                }
+                    XmlElement type = doc.CreateElement("type");
+                    //    //TODO: naamgeving controleren: (xxx)Controls.Find("!!!!!!" + xxx).
+                    //als type is gemiddelde: dan attribuut waarde verandren
+                    if (((ComboBox) Controls.Find("ComboBoxOperator1" + i, true)[0]).SelectedIndex == 0)
+                    {
+                        type.SetAttribute("amount", "");
+                    }
+                    else
+                    {
+                        type.SetAttribute("amount",
+                            ((NumericUpDown) Controls.Find("numericUpDownRecords1" + i, true)[0]).Text);
+                    }
 
-                formule.AppendChild(regel);
-                regel.AppendChild(soort);
-                regel.AppendChild(kolomnaam);
-                regel.AppendChild(type);
-                regel.AppendChild(operatorEl);
-                if (!soort1)
-                {
-                    regel.AppendChild(type2);
+                    XmlElement operatorEl = doc.CreateElement("operator");
+                    operatorEl.SetAttribute("soort",
+                        ((ComboBox) Controls.Find("comboBoxOperator2" + i, true)[0]).SelectedIndex.ToString());
+                    //als soort is 1, dan:
+                    if (soort1)
+                    {
+                        //  operatorEl.InnerText = textBoxValue.Text;
+                        operatorEl.InnerText = ((TextBox) Controls.Find("textBoxValue" + i, true)[0]).Text;
+                    }
+                    else
+                    {
+                        //anders:
+                        XmlElement kolomnaam2 = doc.CreateElement("kolomnaam2");
+                        kolomnaam2.InnerText = ((TextBox) Controls.Find("textBoxColumnname2" + i, true)[0]).Text;
+                        regel.AppendChild(kolomnaam2);
+                    }
+
+                    XmlElement type2 = doc.CreateElement("type2");
+                    //als type is gemiddelde: dan attribuut waarde verandren
+                    if (((ComboBox) Controls.Find("comboBoxOperator3" + i, true)[0]).SelectedIndex == 0)
+                    {
+                        type2.SetAttribute("amount", "");
+                    }
+                    else
+                    {
+                        type2.SetAttribute("amount",
+                            ((NumericUpDown) Controls.Find("numericUpDownRecords2" + i, true)[0]).Text);
+                    }
+
+                    regel.AppendChild(soort);
+                    regel.AppendChild(kolomnaam);
+                    regel.AppendChild(type);
+                    regel.AppendChild(operatorEl);
+                    if (!soort1)
+                    {
+                        regel.AppendChild(type2);
+                    }
+
+
+                    doc.AppendChild(formule);
                 }
-
-                doc.AppendChild(formule);
-
-               // doc.Save("formule1test.xml");
+                //doc.Save("new_formule1test.xml");
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
                 saveFileDialog1.Filter = "XML files|*.xml";
                 saveFileDialog1.Title = "Save an XML formula file";
@@ -463,16 +459,19 @@ namespace Playground_v3
                 if (saveFileDialog1.FileName != "")
                 {
                     doc.Save(saveFileDialog1.FileName);
+                    MessageBox.Show("Formula succesfully saved.");
                 }
+            }
+            else
+            {
+                MessageBox.Show("You haven't filled in all fields yet...");
             }
         }
 
-        /**
-        * functie die controleerd of het formulescherm dusdanig is ingevuld dat deze mag worden opgeslagen.
-        * @return boolean. True als de formule mag worden opgeslagen
-        * TODO: functie werkt niet, de child is geen textbox...
-        */
-
+        /// <summary>
+        /// functie die controleerd of het formulescherm dusdanig is ingevuld dat deze mag worden opgeslagen.
+        /// </summary>
+        /// <returns>true als elk veld voldoende is ingevuld.</returns>
         private bool canSave()
         {
             var canContinue = true;
@@ -498,18 +497,18 @@ namespace Playground_v3
                 }
                 else
                 {
-                 //   MessageBox.Show("geen textbox");
+                    //   MessageBox.Show("geen textbox");
                 }
             }
 
             if (!canContinue)
             {
-                    MessageBox.Show("Please fill in all the textfields.");
-                    return false;
+                MessageBox.Show("Please fill in all the textfields.");
+                return false;
             }
 
             return true;
-            }
+        }
 
         private void buttonOpenFormula_Click(object sender, EventArgs e)
         {
@@ -523,11 +522,33 @@ namespace Playground_v3
             // If the file name is not an empty string open it for saving.
             if (openFileDialog.FileName != "")
             {
-                  MessageBox.Show(openFileDialog.FileName);
+                //  MessageBox.Show(openFileDialog.FileName);
+                clearFormulaScreen();
 
                 var doc = new XmlDocument();
                 doc.Load(openFileDialog.FileName);
-                MessageBox.Show(doc.SelectSingleNode("formule/type").Attributes[0].Value.GetType().ToString());
+                //  MessageBox.Show(doc.SelectSingleNode("formule/type").Attributes[0].Value.GetType().ToString());
+
+                foreach (XmlElement regel in doc.SelectNodes("formule/regel"))
+                {
+                    //TODO: clear alle elementen.
+                    //todo: soort van reset methode.
+                    string kolomnaam = regel.SelectSingleNode("kolomnaam").InnerText;
+                    string amount = regel.SelectSingleNode("type").Attributes[0].Value;
+                    string operatorSoort = regel.SelectSingleNode("operator").Attributes[0].Value;
+
+                    if (regel.SelectSingleNode("soort").InnerText == "1") //soort is 1: absolute value
+                    {
+                        string operatorValue = regel.SelectSingleNode("operator").InnerText;
+                        newLine(kolomnaam, amount, operatorSoort, operatorValue);
+                    }
+                    else
+                    {
+                        string kolomnaam2 = regel.SelectSingleNode("kolomnaam").InnerText;
+                        string amount2 = regel.SelectSingleNode("type2").Attributes[0].Value;
+                        newLine(kolomnaam, amount, operatorSoort, "0", kolomnaam2, amount2);
+                    }
+                }
             }
         }
 
@@ -535,6 +556,20 @@ namespace Playground_v3
         {
             newLine();
         }
-    }
-    }
 
+        /// <summary>
+        /// Wanneer een formule wordt geladen, wordt het 
+        /// </summary>
+        private void clearFormulaScreen()
+        {
+            foreach (Control item in panelFormulaControls.Controls.OfType<Control>())
+            {
+                if (item.GetType().ToString() != "System.Windows.Forms.Label")
+                {
+                  //  panelFormulaControls.Controls.Remove(item);
+                }
+            }
+          //  row = 1;
+        }
+    }
+}

@@ -34,44 +34,28 @@
             this.databaseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.txtBoxSearch = new System.Windows.Forms.TextBox();
-            this.radioButtonValue = new System.Windows.Forms.RadioButton();
-            this.radioButtonAbsolute = new System.Windows.Forms.RadioButton();
-            this.pictureBoxSearch = new System.Windows.Forms.PictureBox();
             this.labelValue = new System.Windows.Forms.Label();
-            this.textBoxValue = new System.Windows.Forms.TextBox();
             this.labelRecords = new System.Windows.Forms.Label();
-            this.numericUpDownRecords = new System.Windows.Forms.NumericUpDown();
-            this.comboBoxOperator1 = new System.Windows.Forms.ComboBox();
             this.labelData = new System.Windows.Forms.Label();
-            this.comboBoxOperator2 = new System.Windows.Forms.ComboBox();
             this.labelKolomnaam = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.lstBoxDatabases = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBoxColumnname = new System.Windows.Forms.TextBox();
             this.lblUitleg = new System.Windows.Forms.Label();
-            this.pictureBoxSearch2 = new System.Windows.Forms.PictureBox();
-            this.textBoxColumnname2 = new System.Windows.Forms.TextBox();
             this.labelColumnname2 = new System.Windows.Forms.Label();
-            this.numericUpDownRecords2 = new System.Windows.Forms.NumericUpDown();
-            this.comboBoxOperator3 = new System.Windows.Forms.ComboBox();
             this.labelData2 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.panelFormulaControls = new System.Windows.Forms.Panel();
+            this.labelOperator = new System.Windows.Forms.Label();
+            this.labelAmountRecords2 = new System.Windows.Forms.Label();
             this.buttonNewLine = new System.Windows.Forms.Button();
             this.buttonOpenFormula = new System.Windows.Forms.Button();
             this.btnSaveFormula = new System.Windows.Forms.Button();
-            this.labelOperator = new System.Windows.Forms.Label();
-            this.labelAmountRecords2 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords2)).BeginInit();
             this.tabPage1.SuspendLayout();
             this.panelFormulaControls.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -120,41 +104,6 @@
             this.txtBoxSearch.Size = new System.Drawing.Size(154, 22);
             this.txtBoxSearch.TabIndex = 6;
             // 
-            // radioButtonValue
-            // 
-            this.radioButtonValue.AutoSize = true;
-            this.radioButtonValue.Location = new System.Drawing.Point(697, 22);
-            this.radioButtonValue.Name = "radioButtonValue";
-            this.radioButtonValue.Size = new System.Drawing.Size(114, 21);
-            this.radioButtonValue.TabIndex = 48;
-            this.radioButtonValue.Text = "Current value";
-            this.radioButtonValue.UseVisualStyleBackColor = true;
-            this.radioButtonValue.CheckedChanged += new System.EventHandler(this.radioButtonValue_CheckedChanged);
-            // 
-            // radioButtonAbsolute
-            // 
-            this.radioButtonAbsolute.AutoSize = true;
-            this.radioButtonAbsolute.Checked = true;
-            this.radioButtonAbsolute.Location = new System.Drawing.Point(558, 22);
-            this.radioButtonAbsolute.Name = "radioButtonAbsolute";
-            this.radioButtonAbsolute.Size = new System.Drawing.Size(122, 21);
-            this.radioButtonAbsolute.TabIndex = 47;
-            this.radioButtonAbsolute.TabStop = true;
-            this.radioButtonAbsolute.Text = "Absolute value";
-            this.radioButtonAbsolute.UseVisualStyleBackColor = true;
-            // 
-            // pictureBoxSearch
-            // 
-            this.pictureBoxSearch.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBoxSearch.Image = global::Playground_v3.Properties.Resources._1426093958_common_search_lookup__128;
-            this.pictureBoxSearch.Location = new System.Drawing.Point(194, 105);
-            this.pictureBoxSearch.Name = "pictureBoxSearch";
-            this.pictureBoxSearch.Size = new System.Drawing.Size(50, 22);
-            this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxSearch.TabIndex = 46;
-            this.pictureBoxSearch.TabStop = false;
-            this.pictureBoxSearch.Click += new System.EventHandler(this.pictureBoxSearch_Click);
-            // 
             // labelValue
             // 
             this.labelValue.AutoSize = true;
@@ -163,13 +112,6 @@
             this.labelValue.Size = new System.Drawing.Size(48, 17);
             this.labelValue.TabIndex = 45;
             this.labelValue.Text = "Value:";
-            // 
-            // textBoxValue
-            // 
-            this.textBoxValue.Location = new System.Drawing.Point(558, 104);
-            this.textBoxValue.Name = "textBoxValue";
-            this.textBoxValue.Size = new System.Drawing.Size(100, 22);
-            this.textBoxValue.TabIndex = 44;
             // 
             // labelRecords
             // 
@@ -180,43 +122,6 @@
             this.labelRecords.TabIndex = 43;
             this.labelRecords.Text = "Amount records:";
             // 
-            // numericUpDownRecords
-            // 
-            this.numericUpDownRecords.AccessibleDescription = "Standaard op disabled, wordt pas enabled als comboBoxOperator1 als waarde gemidde" +
-    "lde heeft.";
-            this.numericUpDownRecords.Enabled = false;
-            this.numericUpDownRecords.Location = new System.Drawing.Point(377, 105);
-            this.numericUpDownRecords.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.numericUpDownRecords.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDownRecords.Name = "numericUpDownRecords";
-            this.numericUpDownRecords.Size = new System.Drawing.Size(101, 22);
-            this.numericUpDownRecords.TabIndex = 40;
-            this.numericUpDownRecords.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            // 
-            // comboBoxOperator1
-            // 
-            this.comboBoxOperator1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxOperator1.FormattingEnabled = true;
-            this.comboBoxOperator1.Items.AddRange(new object[] {
-            "Most recent",
-            "Average"});
-            this.comboBoxOperator1.Location = new System.Drawing.Point(250, 105);
-            this.comboBoxOperator1.Name = "comboBoxOperator1";
-            this.comboBoxOperator1.Size = new System.Drawing.Size(121, 24);
-            this.comboBoxOperator1.TabIndex = 38;
-            // 
             // labelData
             // 
             this.labelData.AutoSize = true;
@@ -225,22 +130,6 @@
             this.labelData.Size = new System.Drawing.Size(42, 17);
             this.labelData.TabIndex = 41;
             this.labelData.Text = "Data:";
-            // 
-            // comboBoxOperator2
-            // 
-            this.comboBoxOperator2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxOperator2.FormattingEnabled = true;
-            this.comboBoxOperator2.Items.AddRange(new object[] {
-            ">",
-            "<",
-            "=",
-            ">=",
-            "<=",
-            "≠"});
-            this.comboBoxOperator2.Location = new System.Drawing.Point(484, 105);
-            this.comboBoxOperator2.Name = "comboBoxOperator2";
-            this.comboBoxOperator2.Size = new System.Drawing.Size(68, 24);
-            this.comboBoxOperator2.TabIndex = 42;
             // 
             // labelKolomnaam
             // 
@@ -284,14 +173,6 @@
             this.tabPage2.Text = "Create pictures";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // textBoxColumnname
-            // 
-            this.textBoxColumnname.AccessibleDescription = "";
-            this.textBoxColumnname.Location = new System.Drawing.Point(3, 105);
-            this.textBoxColumnname.Name = "textBoxColumnname";
-            this.textBoxColumnname.Size = new System.Drawing.Size(187, 22);
-            this.textBoxColumnname.TabIndex = 37;
-            // 
             // lblUitleg
             // 
             this.lblUitleg.AccessibleDescription = "Note: het idee is om een begeleiding hierin te maken";
@@ -302,26 +183,6 @@
             this.lblUitleg.TabIndex = 36;
             this.lblUitleg.Text = "First, fill in an columnname, or search a column.";
             // 
-            // pictureBoxSearch2
-            // 
-            this.pictureBoxSearch2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.pictureBoxSearch2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch2.Image")));
-            this.pictureBoxSearch2.Location = new System.Drawing.Point(859, 105);
-            this.pictureBoxSearch2.Name = "pictureBoxSearch2";
-            this.pictureBoxSearch2.Size = new System.Drawing.Size(50, 22);
-            this.pictureBoxSearch2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxSearch2.TabIndex = 35;
-            this.pictureBoxSearch2.TabStop = false;
-            this.pictureBoxSearch2.Click += new System.EventHandler(this.pictureBoxSearch_Click);
-            // 
-            // textBoxColumnname2
-            // 
-            this.textBoxColumnname2.AccessibleDescription = "";
-            this.textBoxColumnname2.Location = new System.Drawing.Point(668, 105);
-            this.textBoxColumnname2.Name = "textBoxColumnname2";
-            this.textBoxColumnname2.Size = new System.Drawing.Size(187, 22);
-            this.textBoxColumnname2.TabIndex = 26;
-            // 
             // labelColumnname2
             // 
             this.labelColumnname2.AutoSize = true;
@@ -330,44 +191,6 @@
             this.labelColumnname2.Size = new System.Drawing.Size(98, 17);
             this.labelColumnname2.TabIndex = 28;
             this.labelColumnname2.Text = "Column name:";
-            // 
-            // numericUpDownRecords2
-            // 
-            this.numericUpDownRecords2.AccessibleDescription = "Standaard op disabled, wordt pas enabled als comboBoxOperator1 als waarde gemidde" +
-    "lde heeft.";
-            this.numericUpDownRecords2.Enabled = false;
-            this.numericUpDownRecords2.Location = new System.Drawing.Point(1042, 105);
-            this.numericUpDownRecords2.Maximum = new decimal(new int[] {
-            250,
-            0,
-            0,
-            0});
-            this.numericUpDownRecords2.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDownRecords2.Name = "numericUpDownRecords2";
-            this.numericUpDownRecords2.Size = new System.Drawing.Size(101, 22);
-            this.numericUpDownRecords2.TabIndex = 29;
-            this.numericUpDownRecords2.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            // 
-            // comboBoxOperator3
-            // 
-            this.comboBoxOperator3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxOperator3.FormattingEnabled = true;
-            this.comboBoxOperator3.Items.AddRange(new object[] {
-            "Meest recente",
-            "Gemiddelde"});
-            this.comboBoxOperator3.Location = new System.Drawing.Point(915, 105);
-            this.comboBoxOperator3.Name = "comboBoxOperator3";
-            this.comboBoxOperator3.Size = new System.Drawing.Size(121, 24);
-            this.comboBoxOperator3.TabIndex = 27;
-            this.comboBoxOperator3.SelectedIndexChanged += new System.EventHandler(this.comboBoxOperator3_SelectedIndexChanged);
             // 
             // labelData2
             // 
@@ -397,30 +220,36 @@
             // panelFormulaControls
             // 
             this.panelFormulaControls.AutoScroll = true;
-            this.panelFormulaControls.Controls.Add(this.textBoxColumnname);
-            this.panelFormulaControls.Controls.Add(this.comboBoxOperator3);
-            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords2);
-            this.panelFormulaControls.Controls.Add(this.textBoxColumnname2);
             this.panelFormulaControls.Controls.Add(this.labelValue);
-            this.panelFormulaControls.Controls.Add(this.radioButtonValue);
             this.panelFormulaControls.Controls.Add(this.labelOperator);
-            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch2);
             this.panelFormulaControls.Controls.Add(this.labelRecords);
-            this.panelFormulaControls.Controls.Add(this.radioButtonAbsolute);
             this.panelFormulaControls.Controls.Add(this.labelData);
             this.panelFormulaControls.Controls.Add(this.labelKolomnaam);
-            this.panelFormulaControls.Controls.Add(this.comboBoxOperator2);
-            this.panelFormulaControls.Controls.Add(this.pictureBoxSearch);
             this.panelFormulaControls.Controls.Add(this.labelAmountRecords2);
-            this.panelFormulaControls.Controls.Add(this.comboBoxOperator1);
             this.panelFormulaControls.Controls.Add(this.labelColumnname2);
-            this.panelFormulaControls.Controls.Add(this.numericUpDownRecords);
             this.panelFormulaControls.Controls.Add(this.labelData2);
-            this.panelFormulaControls.Controls.Add(this.textBoxValue);
             this.panelFormulaControls.Location = new System.Drawing.Point(3, 23);
             this.panelFormulaControls.Name = "panelFormulaControls";
             this.panelFormulaControls.Size = new System.Drawing.Size(1265, 176);
             this.panelFormulaControls.TabIndex = 95;
+            // 
+            // labelOperator
+            // 
+            this.labelOperator.AutoSize = true;
+            this.labelOperator.Location = new System.Drawing.Point(486, 2);
+            this.labelOperator.Name = "labelOperator";
+            this.labelOperator.Size = new System.Drawing.Size(69, 17);
+            this.labelOperator.TabIndex = 43;
+            this.labelOperator.Text = "Operator:";
+            // 
+            // labelAmountRecords2
+            // 
+            this.labelAmountRecords2.AutoSize = true;
+            this.labelAmountRecords2.Location = new System.Drawing.Point(1044, 0);
+            this.labelAmountRecords2.Name = "labelAmountRecords2";
+            this.labelAmountRecords2.Size = new System.Drawing.Size(112, 17);
+            this.labelAmountRecords2.TabIndex = 32;
+            this.labelAmountRecords2.Text = "Amount records:";
             // 
             // buttonNewLine
             // 
@@ -451,24 +280,6 @@
             this.btnSaveFormula.Text = "Save formula";
             this.btnSaveFormula.UseVisualStyleBackColor = true;
             this.btnSaveFormula.Click += new System.EventHandler(this.btnSaveFormula_Click);
-            // 
-            // labelOperator
-            // 
-            this.labelOperator.AutoSize = true;
-            this.labelOperator.Location = new System.Drawing.Point(486, 2);
-            this.labelOperator.Name = "labelOperator";
-            this.labelOperator.Size = new System.Drawing.Size(69, 17);
-            this.labelOperator.TabIndex = 43;
-            this.labelOperator.Text = "Operator:";
-            // 
-            // labelAmountRecords2
-            // 
-            this.labelAmountRecords2.AutoSize = true;
-            this.labelAmountRecords2.Location = new System.Drawing.Point(1044, 0);
-            this.labelAmountRecords2.Name = "labelAmountRecords2";
-            this.labelAmountRecords2.Size = new System.Drawing.Size(112, 17);
-            this.labelAmountRecords2.TabIndex = 32;
-            this.labelAmountRecords2.Text = "Amount records:";
             // 
             // tabPage3
             // 
@@ -506,13 +317,9 @@
             this.Text = "Playground (v3)";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRecords2)).EndInit();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.panelFormulaControls.ResumeLayout(false);
@@ -530,27 +337,15 @@
         private System.Windows.Forms.ToolStripMenuItem databaseToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TextBox txtBoxSearch;
-        private System.Windows.Forms.RadioButton radioButtonValue;
-        private System.Windows.Forms.RadioButton radioButtonAbsolute;
-        private System.Windows.Forms.PictureBox pictureBoxSearch;
         private System.Windows.Forms.Label labelValue;
-        private System.Windows.Forms.TextBox textBoxValue;
         private System.Windows.Forms.Label labelRecords;
-        private System.Windows.Forms.NumericUpDown numericUpDownRecords;
-        private System.Windows.Forms.ComboBox comboBoxOperator1;
         private System.Windows.Forms.Label labelData;
-        private System.Windows.Forms.ComboBox comboBoxOperator2;
         private System.Windows.Forms.Label labelKolomnaam;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ListBox lstBoxDatabases;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox textBoxColumnname;
         private System.Windows.Forms.Label lblUitleg;
-        private System.Windows.Forms.PictureBox pictureBoxSearch2;
-        private System.Windows.Forms.TextBox textBoxColumnname2;
         private System.Windows.Forms.Label labelColumnname2;
-        private System.Windows.Forms.NumericUpDown numericUpDownRecords2;
-        private System.Windows.Forms.ComboBox comboBoxOperator3;
         private System.Windows.Forms.Label labelData2;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label labelAmountRecords2;
