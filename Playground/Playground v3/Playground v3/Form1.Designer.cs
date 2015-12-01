@@ -53,6 +53,7 @@
             this.btnSaveFormula = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.buttonDeleteRow = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
@@ -204,6 +205,7 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.buttonDeleteRow);
             this.tabPage1.Controls.Add(this.panelFormulaControls);
             this.tabPage1.Controls.Add(this.buttonNewLine);
             this.tabPage1.Controls.Add(this.buttonOpenFormula);
@@ -303,6 +305,16 @@
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 94;
             // 
+            // buttonDeleteRow
+            // 
+            this.buttonDeleteRow.Location = new System.Drawing.Point(202, 238);
+            this.buttonDeleteRow.Name = "buttonDeleteRow";
+            this.buttonDeleteRow.Size = new System.Drawing.Size(175, 27);
+            this.buttonDeleteRow.TabIndex = 98;
+            this.buttonDeleteRow.Text = "Delete row";
+            this.buttonDeleteRow.UseVisualStyleBackColor = true;
+            this.buttonDeleteRow.Click += new System.EventHandler(this.buttonDeleteRow_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -356,6 +368,7 @@
         private System.Windows.Forms.Button buttonOpenFormula;
         private System.Windows.Forms.Button buttonNewLine;
         private System.Windows.Forms.Panel panelFormulaControls;
+        private System.Windows.Forms.Button buttonDeleteRow;
     }
 }
 

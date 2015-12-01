@@ -28,6 +28,9 @@ namespace Playground_v3
 
         private Dictionary<ComboBox, NumericUpDown> koppelDictionaryComboBox;
 
+        //Dictionary met welke rij bij welke controls horen.
+        private Dictionary<int, IList<Control>> koppelDictionaryRows;
+
         //var die bijhoud hoeveel Radiobuttons er op value staan. Als dit groter is dan 0, moeten bepaalde labels visible zijn.
         private int CountRadioButtonsValue;
 
@@ -48,6 +51,7 @@ namespace Playground_v3
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
             koppelDictionaryControls = new Dictionary<RadioButton, IList<Control>>();
             koppelDictionaryComboBox = new Dictionary<ComboBox, NumericUpDown>();
+            koppelDictionaryRows=new Dictionary<int, IList<Control>>();
 
             CountRadioButtonsValue = 0;
 
@@ -363,6 +367,24 @@ namespace Playground_v3
             koppelDictionaryComboBox.Add(comboB1, numUpDown);
             koppelDictionaryComboBox.Add(comboB3, numUpDown2);
 
+            //koppelDictionaryRows
+            //note: er moet een nieuwe IList<Control> worden aangemaakt omdat er niet voortgeborduurd kan worden op de IList controls.
+            IList<Control> controls2 = new List<Control>();
+            controls2.Add(textBoxCol2);
+            controls2.Add(pictureBox2);
+            controls2.Add(comboB3);
+            controls2.Add(numUpDown2);
+            controls2.Add(textBoxVal);
+            controls2.Add(radioPanel);
+            controls2.Add(columnname);
+            controls2.Add(picSearch1);
+            controls2.Add(comboB1);
+            controls2.Add(numUpDown);
+            controls2.Add(comboB2);
+            controls2.Add(textBoxVal);
+
+            koppelDictionaryRows.Add(row, controls2);
+
             row++;
         }
 
@@ -381,7 +403,6 @@ namespace Playground_v3
         /**
         * sla de formule op.
         * vraag: hoe wordt ervoor gezorgd dat er meerdere formule nodes komen?
-        * TODO: itereren over elke rij.
         */
 
         private void btnSaveFormula_Click(object sender, EventArgs e)
@@ -501,9 +522,7 @@ namespace Playground_v3
                             }
                         }
                     }
-
                 }
-            
 
             if (!canContinue)
             {
@@ -576,6 +595,20 @@ namespace Playground_v3
                 }
             }
             row = 1;
+        }
+
+        private void buttonDeleteRow_Click(object sender, EventArgs e)
+        {
+            if (row > 2)
+            {
+                foreach (Control c in koppelDictionaryRows[row -1])
+                {
+                    panelFormulaControls.Controls.Remove(c);
+                    c.Dispose();
+                }
+                koppelDictionaryRows.Remove(row - 1);
+                row--;
+            }
         }
     }
 }
