@@ -18,34 +18,32 @@ namespace Playground_v3
 {
     public partial class Form1 : Form
     {
-        /*
-         * variabele waarin de huidige rij is opgeslagen. Dit wordt gebruikt bij het genereren van rijen, en de zoekfunctie.
-         */
+        //variabele waarin de huidige rij is opgeslagen. Dit wordt gebruikt bij het genereren van rijen.
         public int row;
-        public int defaultOffset;
         public int regelAfstand; //var die het aantal points (=afstand) tussen twee regels bijhoudt.
 
-        private Dictionary<PictureBox, TextBox> koppelDictionary;
         //veld die helpt bij het koppelen van search icons en tekstvelden.
+        //reden: als er op een search icon wordt geklikt, moet je natuurlijk wel weten bij welke textbox hij het resultaat moet invullen.
+        private Dictionary<PictureBox, TextBox> koppelDictionary;
 
         private Dictionary<ComboBox, NumericUpDown> koppelDictionaryComboBox;
 
         //var die bijhoud hoeveel Radiobuttons er op value staan. Als dit groter is dan 0, moeten bepaalde labels visible zijn.
         private int CountRadioButtonsValue;
 
+        //Als de radiobutton op current value staat, moeten bepaalde controls visible zijn. Deze controls zijn opgeslagen in een IList<Control>.
         private Dictionary<RadioButton, IList<Control>> koppelDictionaryControls;
 
         public Form1()
         {
             InitializeComponent();
-            //formules maken scherm:
+
             //gui init
             labelColumnname2.Visible = false;
             labelData2.Visible = false;
             labelAmountRecords2.Visible = false;
 
             row = 1;
-            defaultOffset = 50;
             regelAfstand = 60;
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
             koppelDictionaryControls = new Dictionary<RadioButton, IList<Control>>();
@@ -62,6 +60,12 @@ namespace Playground_v3
             selectDatabase.Show();
         }
 
+        /// <summary>
+        /// Methode die wordt aangeroepen wanneer er op een radiobutton (absolute value/current value) wordt geklikt.
+        /// Zorgt ervoor dat labels worden geshowd/gehide.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void radioButtonValue_CheckedChanged(object sender, EventArgs e)
         {
             RadioButton radioButton = sender as RadioButton;
@@ -118,6 +122,11 @@ namespace Playground_v3
             }
         }
 
+        /// <summary>
+        /// Methode waarin een searchBox diolog wordt geopend waarin een zoekfunctie komt. Het zoekresultaat kan worden ingevuld in een invoerveld.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void pictureBoxSearch_Click(object sender, EventArgs e)
         {
             searchBox form = new searchBox(koppelDictionary[(PictureBox) sender]);
@@ -142,8 +151,9 @@ namespace Playground_v3
         /// <param name="amount">bij gemiddeld aantal values, is deze "2" als default.</param>
         /// <param name="operatorSoort">de index van het dropdown menu beginnende vanaf 0.</param>
         /// <param name="operatorValue">De waarde: dus een getal.</param>
-        /// <param name="kolomnaam2"></param>
-        /// <param name="amount2"></param>
+        /// <param name="kolomnaam2">bij current value is er een tweede kolomnaam waarmee je de eerste kolomnaam wilt vergelijken.</param>
+        /// <param name="amount2">Het aantal records waarvan het gemiddelde genomen moet worden</param>
+        /// TODO: recent value/ amount 2 standaard enabled.
         public void newLine(string kolomnaam = "", string amount = "", string operatorSoort = "0",
             string operatorValue = "", string kolomnaam2 = "", string amount2 = "")
         {
@@ -182,7 +192,7 @@ namespace Playground_v3
             TextBox columnname = new TextBox();
             columnname.Location = new Point(3, row*regelAfstand);
             columnname.Name = "textBoxColumnname1" + row;
-            columnname.Size = new Size(140, 22);
+            columnname.Size = new Size(135, 22);
             columnname.Text = kolomnaam;
             panelFormulaControls.Controls.Add(columnname);
 
@@ -308,9 +318,9 @@ namespace Playground_v3
 
             //numeric up down records2:
             NumericUpDown numUpDown2 = new NumericUpDown();
-            if (amount == "")
+            if (amount2 == "")
             {
-                numUpDown.Enabled = false;
+                numUpDown2.Enabled = false;
             }
             numUpDown2.Location = new Point(780, row*regelAfstand);
             numUpDown2.Maximum = 250;
@@ -462,10 +472,6 @@ namespace Playground_v3
                     MessageBox.Show("Formula succesfully saved.");
                 }
             }
-            else
-            {
-                MessageBox.Show("You haven't filled in all fields yet...");
-            }
         }
 
         /// <summary>
@@ -475,31 +481,29 @@ namespace Playground_v3
         private bool canSave()
         {
             var canContinue = true;
-            foreach (Control child in this.Controls)
-            {
-                if (child is TextBox)
+
+            for (int i = panelFormulaControls.Controls.Count - 1; i >= 0; i--)
                 {
-                    TextBox textbox = child as TextBox;
+                    Control c = panelFormulaControls.Controls[i];
+
+                    if (c.Visible)
                     {
-                        if (textbox.Enabled)
+                        if (c is TextBox)
                         {
-                            if (true)
+                            if (string.IsNullOrWhiteSpace(c.Text))
                             {
-                                textbox.BackColor = ColorTranslator.FromHtml("#ff3333");
+                                c.BackColor = ColorTranslator.FromHtml("#ff3333");
                                 canContinue = false;
                             }
-                        }
-                        else
-                        {
-                            MessageBox.Show("hij is niet enabled");
+                            else
+                            {
+                                c.BackColor = Color.White;
+                            }
                         }
                     }
+
                 }
-                else
-                {
-                    //   MessageBox.Show("geen textbox");
-                }
-            }
+            
 
             if (!canContinue)
             {
@@ -546,7 +550,7 @@ namespace Playground_v3
                     {
                         string kolomnaam2 = regel.SelectSingleNode("kolomnaam").InnerText;
                         string amount2 = regel.SelectSingleNode("type2").Attributes[0].Value;
-                        newLine(kolomnaam, amount, operatorSoort, "0", kolomnaam2, amount2);
+                        newLine(kolomnaam, amount, operatorSoort, "", kolomnaam2, amount2);
                     }
                 }
             }
@@ -558,18 +562,20 @@ namespace Playground_v3
         }
 
         /// <summary>
-        /// Wanneer een formule wordt geladen, wordt het 
+        /// Wanneer een formule wordt geladen, worden alle behalve de labels elmenenten binnen panelFormulaControls verwijderd.
+        /// Note: code werkt op altanatieve methode
         /// </summary>
         private void clearFormulaScreen()
         {
-            foreach (Control item in panelFormulaControls.Controls.OfType<Control>())
+            for (int i = panelFormulaControls.Controls.Count - 1; i >= 0; i--)
             {
-                if (item.GetType().ToString() != "System.Windows.Forms.Label")
+                Control c = panelFormulaControls.Controls[i];
+                if (!(c is Label))
                 {
-                  //  panelFormulaControls.Controls.Remove(item);
+                    panelFormulaControls.Controls.RemoveAt(i);
                 }
             }
-          //  row = 1;
+            row = 1;
         }
     }
 }
