@@ -46,6 +46,8 @@ namespace Playground_v3
             labelData2.Visible = false;
             labelAmountRecords2.Visible = false;
 
+            Form1_Resize(null,null);
+
             row = 1;
             regelAfstand = 60;
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
@@ -507,7 +509,7 @@ namespace Playground_v3
                 {
                     Control c = panelFormulaControls.Controls[i];
 
-                    if (c.Visible)
+                    if (c.Visible && c.Enabled)
                     {
                         if (c is TextBox)
                         {
@@ -516,13 +518,14 @@ namespace Playground_v3
                                 c.BackColor = ColorTranslator.FromHtml("#ff3333");
                                 canContinue = false;
                             }
-                            else
-                            {
-                                c.BackColor = Color.White;
-                            }
+                          
                         }
                     }
-                }
+                    else
+                    {
+                        c.BackColor = Color.White;
+                    }
+            }
 
             if (!canContinue)
             {
@@ -554,7 +557,8 @@ namespace Playground_v3
 
                 foreach (XmlElement regel in doc.SelectNodes("formule/regel"))
                 {
-                    //TODO: clear alle elementen.
+                    //note: door de volgende regel is het niet mogelijk om 2 bestaande formules te combineren.
+                    koppelDictionaryRows.Clear();
                     //todo: soort van reset methode.
                     string kolomnaam = regel.SelectSingleNode("kolomnaam").InnerText;
                     string amount = regel.SelectSingleNode("type").Attributes[0].Value;
@@ -609,6 +613,15 @@ namespace Playground_v3
                 koppelDictionaryRows.Remove(row - 1);
                 row--;
             }
+        }
+
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            panelFormulaControls.Width = Width - 20;
+            panelFormulaControls.Height = Height - 175;
+            panelButtons.Top = Height - 150;
+            tabControl1.Height = Height - 10;
+            // panelFormulaControls.Height = buttonSaveFormula.Top;
         }
     }
 }

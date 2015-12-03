@@ -45,19 +45,21 @@
             this.labelColumnname2 = new System.Windows.Forms.Label();
             this.labelData2 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.panelButtons = new System.Windows.Forms.Panel();
+            this.buttonSaveFormula = new System.Windows.Forms.Button();
+            this.buttonDeleteRow = new System.Windows.Forms.Button();
+            this.buttonOpenFormula = new System.Windows.Forms.Button();
+            this.buttonNewLine = new System.Windows.Forms.Button();
             this.panelFormulaControls = new System.Windows.Forms.Panel();
             this.labelOperator = new System.Windows.Forms.Label();
             this.labelAmountRecords2 = new System.Windows.Forms.Label();
-            this.buttonNewLine = new System.Windows.Forms.Button();
-            this.buttonOpenFormula = new System.Windows.Forms.Button();
-            this.btnSaveFormula = new System.Windows.Forms.Button();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.buttonDeleteRow = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.panelButtons.SuspendLayout();
             this.panelFormulaControls.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +72,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(1272, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(1285, 28);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -85,7 +87,7 @@
             // databaseToolStripMenuItem
             // 
             this.databaseToolStripMenuItem.Name = "databaseToolStripMenuItem";
-            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
+            this.databaseToolStripMenuItem.Size = new System.Drawing.Size(350, 26);
             this.databaseToolStripMenuItem.Text = "Database";
             this.databaseToolStripMenuItem.Click += new System.EventHandler(this.databaseToolStripMenuItem_Click);
             // 
@@ -205,11 +207,8 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
-            this.tabPage1.Controls.Add(this.buttonDeleteRow);
+            this.tabPage1.Controls.Add(this.panelButtons);
             this.tabPage1.Controls.Add(this.panelFormulaControls);
-            this.tabPage1.Controls.Add(this.buttonNewLine);
-            this.tabPage1.Controls.Add(this.buttonOpenFormula);
-            this.tabPage1.Controls.Add(this.btnSaveFormula);
             this.tabPage1.Controls.Add(this.lblUitleg);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
             this.tabPage1.Name = "tabPage1";
@@ -218,6 +217,57 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Create formulas";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // panelButtons
+            // 
+            this.panelButtons.Controls.Add(this.buttonSaveFormula);
+            this.panelButtons.Controls.Add(this.buttonDeleteRow);
+            this.panelButtons.Controls.Add(this.buttonOpenFormula);
+            this.panelButtons.Controls.Add(this.buttonNewLine);
+            this.panelButtons.Location = new System.Drawing.Point(3, 237);
+            this.panelButtons.Name = "panelButtons";
+            this.panelButtons.Size = new System.Drawing.Size(378, 67);
+            this.panelButtons.TabIndex = 99;
+            // 
+            // buttonSaveFormula
+            // 
+            this.buttonSaveFormula.Location = new System.Drawing.Point(4, 3);
+            this.buttonSaveFormula.Name = "buttonSaveFormula";
+            this.buttonSaveFormula.Size = new System.Drawing.Size(187, 27);
+            this.buttonSaveFormula.TabIndex = 95;
+            this.buttonSaveFormula.Text = "Save formula";
+            this.buttonSaveFormula.UseVisualStyleBackColor = true;
+            this.buttonSaveFormula.Click += new System.EventHandler(this.btnSaveFormula_Click);
+            // 
+            // buttonDeleteRow
+            // 
+            this.buttonDeleteRow.Location = new System.Drawing.Point(197, 36);
+            this.buttonDeleteRow.Name = "buttonDeleteRow";
+            this.buttonDeleteRow.Size = new System.Drawing.Size(175, 27);
+            this.buttonDeleteRow.TabIndex = 98;
+            this.buttonDeleteRow.Text = "Delete row";
+            this.buttonDeleteRow.UseVisualStyleBackColor = true;
+            this.buttonDeleteRow.Click += new System.EventHandler(this.buttonDeleteRow_Click);
+            // 
+            // buttonOpenFormula
+            // 
+            this.buttonOpenFormula.Location = new System.Drawing.Point(4, 36);
+            this.buttonOpenFormula.Name = "buttonOpenFormula";
+            this.buttonOpenFormula.Size = new System.Drawing.Size(187, 27);
+            this.buttonOpenFormula.TabIndex = 96;
+            this.buttonOpenFormula.Text = "Open formula";
+            this.buttonOpenFormula.UseVisualStyleBackColor = true;
+            this.buttonOpenFormula.Click += new System.EventHandler(this.buttonOpenFormula_Click);
+            // 
+            // buttonNewLine
+            // 
+            this.buttonNewLine.Location = new System.Drawing.Point(197, 3);
+            this.buttonNewLine.Name = "buttonNewLine";
+            this.buttonNewLine.Size = new System.Drawing.Size(175, 27);
+            this.buttonNewLine.TabIndex = 97;
+            this.buttonNewLine.Text = "New Line";
+            this.buttonNewLine.UseVisualStyleBackColor = true;
+            this.buttonNewLine.Click += new System.EventHandler(this.buttonNewLine_Click);
             // 
             // panelFormulaControls
             // 
@@ -232,7 +282,7 @@
             this.panelFormulaControls.Controls.Add(this.labelData2);
             this.panelFormulaControls.Location = new System.Drawing.Point(3, 23);
             this.panelFormulaControls.Name = "panelFormulaControls";
-            this.panelFormulaControls.Size = new System.Drawing.Size(1265, 176);
+            this.panelFormulaControls.Size = new System.Drawing.Size(1265, 208);
             this.panelFormulaControls.TabIndex = 95;
             // 
             // labelOperator
@@ -252,36 +302,6 @@
             this.labelAmountRecords2.Size = new System.Drawing.Size(112, 17);
             this.labelAmountRecords2.TabIndex = 32;
             this.labelAmountRecords2.Text = "Amount records:";
-            // 
-            // buttonNewLine
-            // 
-            this.buttonNewLine.Location = new System.Drawing.Point(202, 205);
-            this.buttonNewLine.Name = "buttonNewLine";
-            this.buttonNewLine.Size = new System.Drawing.Size(175, 27);
-            this.buttonNewLine.TabIndex = 97;
-            this.buttonNewLine.Text = "New Line";
-            this.buttonNewLine.UseVisualStyleBackColor = true;
-            this.buttonNewLine.Click += new System.EventHandler(this.buttonNewLine_Click);
-            // 
-            // buttonOpenFormula
-            // 
-            this.buttonOpenFormula.Location = new System.Drawing.Point(9, 238);
-            this.buttonOpenFormula.Name = "buttonOpenFormula";
-            this.buttonOpenFormula.Size = new System.Drawing.Size(187, 27);
-            this.buttonOpenFormula.TabIndex = 96;
-            this.buttonOpenFormula.Text = "Open formula";
-            this.buttonOpenFormula.UseVisualStyleBackColor = true;
-            this.buttonOpenFormula.Click += new System.EventHandler(this.buttonOpenFormula_Click);
-            // 
-            // btnSaveFormula
-            // 
-            this.btnSaveFormula.Location = new System.Drawing.Point(9, 205);
-            this.btnSaveFormula.Name = "btnSaveFormula";
-            this.btnSaveFormula.Size = new System.Drawing.Size(187, 27);
-            this.btnSaveFormula.TabIndex = 95;
-            this.btnSaveFormula.Text = "Save formula";
-            this.btnSaveFormula.UseVisualStyleBackColor = true;
-            this.btnSaveFormula.Click += new System.EventHandler(this.btnSaveFormula_Click);
             // 
             // tabPage3
             // 
@@ -305,28 +325,21 @@
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.FillToRight;
             this.tabControl1.TabIndex = 94;
             // 
-            // buttonDeleteRow
-            // 
-            this.buttonDeleteRow.Location = new System.Drawing.Point(202, 238);
-            this.buttonDeleteRow.Name = "buttonDeleteRow";
-            this.buttonDeleteRow.Size = new System.Drawing.Size(175, 27);
-            this.buttonDeleteRow.TabIndex = 98;
-            this.buttonDeleteRow.Text = "Delete row";
-            this.buttonDeleteRow.UseVisualStyleBackColor = true;
-            this.buttonDeleteRow.Click += new System.EventHandler(this.buttonDeleteRow_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1272, 439);
+            this.ClientSize = new System.Drawing.Size(1285, 413);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(850, 362);
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Playground (v3)";
+            this.Resize += new System.EventHandler(this.Form1_Resize);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -334,6 +347,7 @@
             this.tabPage2.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.panelButtons.ResumeLayout(false);
             this.panelFormulaControls.ResumeLayout(false);
             this.panelFormulaControls.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -364,11 +378,12 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Label labelOperator;
-        private System.Windows.Forms.Button btnSaveFormula;
+        private System.Windows.Forms.Button buttonSaveFormula;
         private System.Windows.Forms.Button buttonOpenFormula;
         private System.Windows.Forms.Button buttonNewLine;
         private System.Windows.Forms.Panel panelFormulaControls;
         private System.Windows.Forms.Button buttonDeleteRow;
+        private System.Windows.Forms.Panel panelButtons;
     }
 }
 

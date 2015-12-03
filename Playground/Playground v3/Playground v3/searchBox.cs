@@ -13,7 +13,7 @@ namespace Playground_v3
     public partial class searchBox : Form
     {
         public TextBox txtBox;
-        public bool demoData = false;
+        public bool demoData;
 
         public searchBox(TextBox txtBox)
         {
