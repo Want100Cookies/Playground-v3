@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Odbc;
+using System.Windows.Forms;
 
 namespace DatabaseAbstraction
 {
@@ -137,9 +138,13 @@ namespace DatabaseAbstraction
                 // Close the reader.
                 reader.Close();
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException e) // Connection error (connection closed while trying to read).
             {
                 this._showConnectErrorMsg("SELECT", e);
+            }
+            catch (OdbcException e) // Invalid query.
+            {
+                MessageBox.Show("Invalid query given! Exception: " + e.Message);
             }
             finally
             {

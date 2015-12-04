@@ -52,20 +52,20 @@ namespace DatabaseAbstraction
             MessageBox.Show(aTech.ConnectionString);
 
             DbODBC db = new DbODBC(aTech.ConnectionString);
-            //DataTable data = db.select("NAME FROM IP_PVDEF");
 
-            OdbcConnection cn = new OdbcConnection(aTech.ConnectionString);
-            cn.Open();
-
-            //DataTable tableschema = cn.GetSchema("TABLES");
-            DataTable tableschema = db.select("* FROM IP_PVDEF");
-            foreach (DataRow row in tableschema.Rows)
+            DataTable data = db.select(@"MAX(1) * FROM IP_PVDEF");
+            /*DataTable data = db.select(@"t1.*
+                                        FROM (
+                                            SELECT ROW_NUMBER OVER(ORDER BY id) AS row, t1.*
+                                            FROM (SELECT * FROM IP_PVDEF) t1
+                                        ) t2
+                                        WHERE t2.row BETWEEN 1+1 AND 1+20;");*/
+            DataColumnCollection cols = data.Columns;
+            
+            foreach (DataColumn col in cols)
             {
-                MessageBox.Show(row["COLUMN_NAME"].ToString());
+                MessageBox.Show("Col name: " + col.ColumnName);
             }
-
-            cn.Close();
-            cn.Dispose();
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -81,15 +81,21 @@ namespace DatabaseAbstraction
                 // Loop through every table name...
                 foreach(Object tableName in tableNames.ItemArray)
                 {
-                    MessageBox.Show(null, "BEGIN SHOWING COLUMN HEADS FOR TABLE: " + tableName.ToString(), "INFO!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBox.Show(
+                        null, 
+                        "BEGIN SHOWING COLUMN HEADS FOR TABLE: " + tableName.ToString(), 
+                        "INFO!", 
+                        MessageBoxButtons.OK, 
+                        MessageBoxIcon.Exclamation
+                    );
 
-                    DataTable columns = db.select("COLUMN_NAME FROM MESDB.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=N'" + tableName.ToString() + "'");
-                    foreach (DataRow column in columns.Rows)
+                    //DataTable columns = db.select("COLUMN_NAME FROM MESDB.INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME=N'" + tableName.ToString() + "'");
+                    DataTable tableData = db.select("* FROM " + tableName.ToString());
+                    DataColumnCollection cols = tableData.Columns;
+                    
+                    foreach (DataColumn col in cols)
                     {
-                        foreach (Object columnName in column.ItemArray)
-                        {
-                            MessageBox.Show("COLUMN NAME: " + columnName.ToString());
-                        } // End foreach
+                        MessageBox.Show("COLUMN NAME: " + col.ColumnName);
                     } // End foreach
                 } // End foreach
             } //End foreach
