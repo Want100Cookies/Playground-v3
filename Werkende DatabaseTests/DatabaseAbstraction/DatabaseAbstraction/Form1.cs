@@ -54,7 +54,8 @@ namespace DatabaseAbstraction
             DbODBC db = new DbODBC(aTech.ConnectionString);
 
 
-            DataTable data = db.select("SET MAX_ROWS 10; SELECT NAME FROM IP_PVDEF;");
+            DataTable data = db.select("SET MAX_ROWS = 10; SELECT NAME FROM IP_PVDEF;");
+            //DataTable data = db.select(@"SELECT NAME FROM IP_PVDEF;");
             MessageBox.Show(data.Rows.Count.ToString());
             foreach (DataRow row in data.Rows)
             {
