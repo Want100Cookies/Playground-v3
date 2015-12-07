@@ -53,18 +53,12 @@ namespace DatabaseAbstraction
 
             DbODBC db = new DbODBC(aTech.ConnectionString);
 
-            DataTable data = db.select(@"MAX(1) * FROM IP_PVDEF");
-            /*DataTable data = db.select(@"t1.*
-                                        FROM (
-                                            SELECT ROW_NUMBER OVER(ORDER BY id) AS row, t1.*
-                                            FROM (SELECT * FROM IP_PVDEF) t1
-                                        ) t2
-                                        WHERE t2.row BETWEEN 1+1 AND 1+20;");*/
-            DataColumnCollection cols = data.Columns;
-            
-            foreach (DataColumn col in cols)
+
+            DataTable data = db.select("SET MAX_ROWS 10; SELECT NAME FROM IP_PVDEF;");
+            MessageBox.Show(data.Rows.Count.ToString());
+            foreach (DataRow row in data.Rows)
             {
-                MessageBox.Show("Col name: " + col.ColumnName);
+                MessageBox.Show("Name is: " + row["NAME"].ToString());
             }
         }
 
