@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using Playground_v3.Properties;
 
 namespace Playground_v3
@@ -30,6 +31,9 @@ namespace Playground_v3
 
         //Dictionary met welke rij bij welke controls horen.
         private Dictionary<int, IList<Control>> koppelDictionaryRows;
+
+        //Dictionary die het label met live waarde koppelt met een bepaalde TextBox.
+        private Dictionary<TextBox, Label> koppelDictionaryLabels;
 
         //var die bijhoud hoeveel Radiobuttons er op value staan. Als dit groter is dan 0, moeten bepaalde labels visible zijn.
         private int CountRadioButtonsValue;
@@ -54,6 +58,7 @@ namespace Playground_v3
             koppelDictionaryControls = new Dictionary<RadioButton, IList<Control>>();
             koppelDictionaryComboBox = new Dictionary<ComboBox, NumericUpDown>();
             koppelDictionaryRows=new Dictionary<int, IList<Control>>();
+            koppelDictionaryLabels=new Dictionary<TextBox, Label>();
 
             CountRadioButtonsValue = 0;
 
@@ -103,6 +108,27 @@ namespace Playground_v3
                 labelAmountRecords2.Visible = true;
             }
         }
+
+        /// <summary>
+        /// Methode die communiceert met een live label.
+        /// </summary>
+        /// <param name="txtBoxSender"></param>
+        public void AppendLiveLable(TextBox txtBoxSender)
+        {
+            Label lblToWrite = koppelDictionaryLabels[txtBoxSender];
+
+            //get value form database.
+            //dit invullen en opslaan in value.
+            string value = "NaN";
+            if (InvokeRequired)
+            {
+                lblToWrite.BeginInvoke(new Action(() =>
+                {
+                    lblToWrite.Text = "Live waarde: " + value;
+                }));
+            }
+        }
+
 
         /// <summary>
         /// methode om bepaalde componenten (gedefiniëerd in een IList (parameter van koppelDictionaryControls)) te showen/hiden.
@@ -200,7 +226,16 @@ namespace Playground_v3
             columnname.Name = "textBoxColumnname1" + row;
             columnname.Size = new Size(135, 22);
             columnname.Text = kolomnaam;
+            columnname.TextChanged += columnnameTextChange;
             panelFormulaControls.Controls.Add(columnname);
+
+            //labelCurrentValue:
+            Label labelcurrentValue = new Label();
+            labelcurrentValue.Location=new Point(3, row*regelAfstand + 20);
+            labelcurrentValue.Name = "LabelCurrentValue1" + row;
+            labelcurrentValue.Text = "Live waarde: ";
+            labelcurrentValue.BackColor = Color.Transparent;
+            panelFormulaControls.Controls.Add(labelcurrentValue);
 
             //picturebox:
             PictureBox picSearch1 = new PictureBox();
@@ -286,7 +321,16 @@ namespace Playground_v3
             textBoxCol2.Name = "textBoxColumnname2" + row;
             textBoxCol2.Size = new Size(140, 22);
             textBoxCol2.Text = kolomnaam2;
+            textBoxCol2.TextChanged += columnnameTextChange;
             panelFormulaControls.Controls.Add(textBoxCol2);
+
+            //labelCurrentValue2:
+            Label labelcurrentValue2 = new Label();
+            labelcurrentValue2.Location = new Point(500, row * regelAfstand + 20);
+            labelcurrentValue2.Name = "LabelCurrentValue2" + row;
+            labelcurrentValue2.Text = "Live waarde: ";
+            labelcurrentValue2.BackColor = Color.Transparent;
+            panelFormulaControls.Controls.Add(labelcurrentValue2);
 
             //pictureboxSearch2:
             PictureBox pictureBox2 = new PictureBox();
@@ -353,6 +397,7 @@ namespace Playground_v3
             controls.Add(pictureBox2);
             controls.Add(comboB3);
             controls.Add(numUpDown2);
+            controls.Add(labelcurrentValue2);
             controls.Add(textBoxVal); //deze moet worden enabled
 
             radioButtonVal.CheckedChanged += radioButtonValue_CheckedChanged;
@@ -369,6 +414,10 @@ namespace Playground_v3
             koppelDictionaryComboBox.Add(comboB1, numUpDown);
             koppelDictionaryComboBox.Add(comboB3, numUpDown2);
 
+            //welk collumnName invoerveld hoort bij welke label?
+            koppelDictionaryLabels.Add(columnname, labelcurrentValue);
+            koppelDictionaryLabels.Add(textBoxCol2, labelcurrentValue2);
+
             //koppelDictionaryRows
             //note: er moet een nieuwe IList<Control> worden aangemaakt omdat er niet voortgeborduurd kan worden op de IList controls.
             IList<Control> controls2 = new List<Control>();
@@ -377,6 +426,7 @@ namespace Playground_v3
             controls2.Add(comboB3);
             controls2.Add(numUpDown2);
             controls2.Add(textBoxVal);
+            controls2.Add(labelcurrentValue);
             controls2.Add(radioPanel);
             controls2.Add(columnname);
             controls2.Add(picSearch1);
@@ -384,10 +434,30 @@ namespace Playground_v3
             controls2.Add(numUpDown);
             controls2.Add(comboB2);
             controls2.Add(textBoxVal);
+            controls2.Add(labelcurrentValue2);
 
             koppelDictionaryRows.Add(row, controls2);
 
             row++;
+        }
+
+        /// <summary>
+        /// Event dat wordt getriggert als de tekst in één van de invoervelden veranderd.
+        /// Hierna wordt bepaald welk label voor een live waarde daar gekoppeld aan is.
+        /// Ten slotte wordt een thread aangemaakt die de meeste recente (live) waarde uit de database haalt.
+        /// Wanneer dit is gelukt, wordt dit ingevuld in de label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void columnnameTextChange(object sender, EventArgs e)
+        {
+            TextBox sndr = sender as TextBox;
+            //Thread updateThread = new Thread(new ParameterizedThreadStart(AppendLiveLable));
+            Thread updateThread = new Thread(() => AppendLiveLable(sndr));
+            updateThread.Start();
+            //nu thread maken (met argument)
+
+
         }
 
         /// <summary>
@@ -406,7 +476,6 @@ namespace Playground_v3
         * sla de formule op.
         * vraag: hoe wordt ervoor gezorgd dat er meerdere formule nodes komen?
         */
-
         private void btnSaveFormula_Click(object sender, EventArgs e)
         {
             if (canSave())
