@@ -52,8 +52,7 @@ namespace DatabaseAbstraction
             MessageBox.Show(aTech.ConnectionString);
 
             DbODBC db = new DbODBC(aTech.ConnectionString);
-
-
+            
             DataTable data = db.select("SET MAX_ROWS 10; SELECT NAME FROM IP_PVDEF;");
             MessageBox.Show(data.Rows.Count.ToString());
             foreach (DataRow row in data.Rows)
@@ -93,6 +92,23 @@ namespace DatabaseAbstraction
                     } // End foreach
                 } // End foreach
             } //End foreach
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ConnectionStringSettings aTech = ConfigurationManager.ConnectionStrings["Aspen tech"];
+
+            MessageBox.Show(aTech.ConnectionString);
+
+            DbODBC db = new DbODBC(aTech.ConnectionString);
+            DataTable data = db.select(sqlTxt.Text);
+
+            MessageBox.Show(data.Rows.Count.ToString());
+
+            foreach (DataRow row in data.Rows)
+            {
+                MessageBox.Show("Name is: " + row["NAME"].ToString());
+            }
         }
     }
 }
