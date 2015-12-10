@@ -70,14 +70,14 @@ namespace DatabaseAbstraction
                         MessageBoxIcon.Exclamation
                     );
 
-                    DataTable columns = db.select("* FROM Tag");
+                    DataTable columns = db.select("TABLE_NAME FROM DEP_EMMEN_SPC.INFORMATION_SCHEMA.Tables");
                     //DataTable tableData = db.select("* FROM " + tableName.ToString());
 
                     MessageBox.Show(columns.Rows.Count.ToString());
 
                     foreach (DataRow tblName in columns.Rows)
                     {
-                        MessageBox.Show("TABLE NAME: " + tblName["NAME"]);
+                        MessageBox.Show("TABLE NAME: " + tblName["TABLE_NAME"]);
                     } // End foreach
                 } // End foreach
             } //End foreach
