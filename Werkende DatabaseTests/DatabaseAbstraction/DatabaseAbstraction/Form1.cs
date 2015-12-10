@@ -47,25 +47,40 @@ namespace DatabaseAbstraction
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ConnectionStringSettings aTech = ConfigurationManager.ConnectionStrings["Aspen tech"];
+            ConnectionStringSettings aTech = ConfigurationManager.ConnectionStrings["Aspen tech 2"];
 
             MessageBox.Show(aTech.ConnectionString);
 
-            DbODBC db = new DbODBC(aTech.ConnectionString);
+            DbSql db = new DbSql(aTech.ConnectionString);
+            DataTable data = db.select("name FROM master.dbo.sysdatabases");
 
-                                       
-            DataTable data1 = db.select(@"SELECT NAME FROM IP_PVDEF ");
-            //DataTable data = db.select(@"SET MAX_ROWS 10;");
+            MessageBox.Show(data.Rows.Count.ToString());
 
-           // MessageBox.Show(data.Rows.Count.ToString());
-            MessageBox.Show(data1.Rows.Count.ToString());
+            // Get all tables present in the database.
+            foreach (DataRow dbNames in data.Rows)
+            {
+                // Loop through every database name...
+                foreach (Object dbName in dbNames.ItemArray)
+                {
+                    MessageBox.Show(
+                        null,
+                        "DB NAME: " + dbName.ToString(),
+                        "INFO!",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation
+                    );
 
+                    DataTable columns = db.select("* FROM Tag");
+                    //DataTable tableData = db.select("* FROM " + tableName.ToString());
 
+                    MessageBox.Show(columns.Rows.Count.ToString());
 
-            //foreach (DataRow row in data.Rows)
-            //{
-            //    MessageBox.Show("Name is: " + row["NAME"].ToString());
-            //}
+                    foreach (DataRow tblName in columns.Rows)
+                    {
+                        MessageBox.Show("TABLE NAME: " + tblName["NAME"]);
+                    } // End foreach
+                } // End foreach
+            } //End foreach
         }
 
         private void button3_Click(object sender, EventArgs e)
