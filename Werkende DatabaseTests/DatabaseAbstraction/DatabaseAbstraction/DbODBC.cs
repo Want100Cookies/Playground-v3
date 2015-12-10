@@ -107,6 +107,15 @@ namespace DatabaseAbstraction
         }
 
         /// <summary>
+        /// Returns the connection object.
+        /// </summary>
+        /// <returns>OdbcConnection</returns>
+        public OdbcConnection getConnection()
+        {
+            return this.__conn;
+        }
+
+        /// <summary>
         /// This method provides a SELECT command.
         /// </summary>
         /// <param name="query">The query string with named placeholders.</param>
