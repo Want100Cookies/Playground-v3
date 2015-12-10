@@ -53,15 +53,19 @@ namespace DatabaseAbstraction
 
             DbODBC db = new DbODBC(aTech.ConnectionString);
 
-            //DataTable data = db.select("SET MAX_ROWS = 10; SELECT NAME FROM IP_PVDEF;");
-            //DataTable data = db.select(@"SELECT NAME FROM IP_PVDEF;");
-            
-            DataTable data = db.select("SET MAX_ROWS 10; SELECT NAME FROM IP_PVDEF;");
-            MessageBox.Show(data.Rows.Count.ToString());
-            foreach (DataRow row in data.Rows)
-            {
-                MessageBox.Show("Name is: " + row["NAME"].ToString());
-            }
+                                       
+            DataTable data1 = db.select(@"SELECT NAME FROM IP_PVDEF ");
+            //DataTable data = db.select(@"SET MAX_ROWS 10;");
+
+           // MessageBox.Show(data.Rows.Count.ToString());
+            MessageBox.Show(data1.Rows.Count.ToString());
+
+
+
+            //foreach (DataRow row in data.Rows)
+            //{
+            //    MessageBox.Show("Name is: " + row["NAME"].ToString());
+            //}
         }
 
         private void button3_Click(object sender, EventArgs e)
