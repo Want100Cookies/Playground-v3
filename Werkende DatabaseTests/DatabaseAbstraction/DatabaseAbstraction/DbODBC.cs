@@ -114,6 +114,8 @@ namespace DatabaseAbstraction
         /// <returns>DataTable</returns>
         public DataTable select(string query, Dictionary<string, dynamic> qParams = null)
         {
+            // Prepend select query with SELECT.
+            query = "SELECT " + query;
 
             // Create datatable.
             DataTable dt = new DataTable();
