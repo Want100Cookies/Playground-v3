@@ -96,6 +96,15 @@ namespace DatabaseAbstraction
         }
 
         /// <summary>
+        /// Returns the connection object.
+        /// </summary>
+        /// <returns>SqlConnection</returns>
+        public SqlConnection getConnection()
+        {
+            return this.__conn;
+        }
+
+        /// <summary>
         /// This method provides a SELECT command.
         /// </summary>
         /// <param name="query">The query string with named placeholders.</param>

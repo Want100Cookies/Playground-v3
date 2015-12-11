@@ -107,6 +107,15 @@ namespace DatabaseAbstraction
         }
 
         /// <summary>
+        /// Returns the connection object.
+        /// </summary>
+        /// <returns>OdbcConnection</returns>
+        public OdbcConnection getConnection()
+        {
+            return this.__conn;
+        }
+
+        /// <summary>
         /// This method provides a SELECT command.
         /// </summary>
         /// <param name="query">The query string with named placeholders.</param>
@@ -114,7 +123,7 @@ namespace DatabaseAbstraction
         /// <returns>DataTable</returns>
         public DataTable select(string query, Dictionary<string, dynamic> qParams = null)
         {
-            // Prepend select statement (saves some typing).
+            // Prepend select query with SELECT.
             query = "SELECT " + query;
 
             // Create datatable.

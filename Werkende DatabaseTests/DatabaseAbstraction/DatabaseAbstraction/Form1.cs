@@ -47,25 +47,40 @@ namespace DatabaseAbstraction
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ConnectionStringSettings aTech = ConfigurationManager.ConnectionStrings["Aspen tech"];
+            ConnectionStringSettings aTech = ConfigurationManager.ConnectionStrings["Aspen tech 2"];
 
             MessageBox.Show(aTech.ConnectionString);
 
-            DbODBC db = new DbODBC(aTech.ConnectionString);
+            DbSql db = new DbSql(aTech.ConnectionString);
+            DataTable data = db.select("name FROM master.dbo.sysdatabases");
 
-            DataTable data = db.select(@"MAX(1) * FROM IP_PVDEF");
-            /*DataTable data = db.select(@"t1.*
-                                        FROM (
-                                            SELECT ROW_NUMBER OVER(ORDER BY id) AS row, t1.*
-                                            FROM (SELECT * FROM IP_PVDEF) t1
-                                        ) t2
-                                        WHERE t2.row BETWEEN 1+1 AND 1+20;");*/
-            DataColumnCollection cols = data.Columns;
-            
-            foreach (DataColumn col in cols)
+            MessageBox.Show(data.Rows.Count.ToString());
+
+            // Get all tables present in the database.
+            foreach (DataRow dbNames in data.Rows)
             {
-                MessageBox.Show("Col name: " + col.ColumnName);
-            }
+                // Loop through every database name...
+                foreach (Object dbName in dbNames.ItemArray)
+                {
+                    MessageBox.Show(
+                        null,
+                        "DB NAME: " + dbName.ToString(),
+                        "INFO!",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Exclamation
+                    );
+
+                    DataTable columns = db.select("TABLE_NAME FROM DEP_EMMEN_SPC.INFORMATION_SCHEMA.Tables");
+                    //DataTable tableData = db.select("* FROM " + tableName.ToString());
+
+                    MessageBox.Show(columns.Rows.Count.ToString());
+
+                    foreach (DataRow tblName in columns.Rows)
+                    {
+                        MessageBox.Show("TABLE NAME: " + tblName["TABLE_NAME"]);
+                    } // End foreach
+                } // End foreach
+            } //End foreach
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -99,6 +114,23 @@ namespace DatabaseAbstraction
                     } // End foreach
                 } // End foreach
             } //End foreach
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            ConnectionStringSettings aTech = ConfigurationManager.ConnectionStrings["Aspen tech"];
+
+            MessageBox.Show(aTech.ConnectionString);
+
+            DbODBC db = new DbODBC(aTech.ConnectionString);
+            DataTable data = db.select(sqlTxt.Text);
+
+            MessageBox.Show(data.Rows.Count.ToString());
+
+            foreach (DataRow row in data.Rows)
+            {
+                MessageBox.Show("Name is: " + row["NAME"].ToString());
+            }
         }
     }
 }
