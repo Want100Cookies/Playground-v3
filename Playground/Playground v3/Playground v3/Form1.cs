@@ -53,7 +53,7 @@ namespace Playground_v3
             Form1_Resize(null,null);
 
             row = 1;
-            regelAfstand = 60;
+            regelAfstand = 80;
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
             koppelDictionaryControls = new Dictionary<RadioButton, IList<Control>>();
             koppelDictionaryComboBox = new Dictionary<ComboBox, NumericUpDown>();
@@ -456,9 +456,7 @@ namespace Playground_v3
             Thread updateThread = new Thread(() => AppendLiveLable(sndr));
             updateThread.Start();
             //nu thread maken (met argument)
-
-
-        }
+         }
 
         /// <summary>
         /// Methode om via de koppelDictionaryComboBox te bepalen welke numericUpDownRecords mag geënabled/disabled worden.
@@ -472,10 +470,11 @@ namespace Playground_v3
             numUpDown.Enabled = sndr.SelectedIndex == 1;
         }
 
-        /**
-        * sla de formule op.
-        * vraag: hoe wordt ervoor gezorgd dat er meerdere formule nodes komen?
-        */
+        /// <summary>
+        /// sla de formule (dus het gehele scherm) op in een xml bestand.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSaveFormula_Click(object sender, EventArgs e)
         {
             if (canSave())
@@ -547,7 +546,6 @@ namespace Playground_v3
                     {
                         regel.AppendChild(type2);
                     }
-
 
                     doc.AppendChild(formule);
                 }
@@ -684,6 +682,11 @@ namespace Playground_v3
             }
         }
 
+        /// <summary>
+        /// stukje responsiveness toegevoegd.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Resize(object sender, EventArgs e)
         {
             panelFormulaControls.Width = Width - 20;
