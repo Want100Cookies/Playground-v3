@@ -57,14 +57,19 @@ namespace Playground_v3
             koppelDictionary = new Dictionary<PictureBox, TextBox>();
             koppelDictionaryControls = new Dictionary<RadioButton, IList<Control>>();
             koppelDictionaryComboBox = new Dictionary<ComboBox, NumericUpDown>();
-            koppelDictionaryRows=new Dictionary<int, IList<Control>>();
-            koppelDictionaryLabels=new Dictionary<TextBox, Label>();
+            koppelDictionaryRows = new Dictionary<int, IList<Control>>();
+            koppelDictionaryLabels = new Dictionary<TextBox, Label>();
 
             CountRadioButtonsValue = 0;
 
             newLine();
         }
 
+        /// <summary>
+        /// Er wordt op een menuitem geklikt..66
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void databaseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SelectDatabase selectDatabase = new SelectDatabase();
@@ -119,7 +124,9 @@ namespace Playground_v3
 
             //get value form database.
             //dit invullen en opslaan in value.
-            string value = "NaN";
+            Random rand = new Random();
+           // string value = "NaN";
+            string value = rand.Next(500).ToString();
             if (InvokeRequired)
             {
                 lblToWrite.BeginInvoke(new Action(() =>
@@ -185,7 +192,6 @@ namespace Playground_v3
         /// <param name="operatorValue">De waarde: dus een getal.</param>
         /// <param name="kolomnaam2">bij current value is er een tweede kolomnaam waarmee je de eerste kolomnaam wilt vergelijken.</param>
         /// <param name="amount2">Het aantal records waarvan het gemiddelde genomen moet worden</param>
-        /// TODO: recent value/ amount 2 standaard enabled.
         public void newLine(string kolomnaam = "", string amount = "", string operatorSoort = "0",
             string operatorValue = "", string kolomnaam2 = "", string amount2 = "")
         {
@@ -330,6 +336,7 @@ namespace Playground_v3
             labelcurrentValue2.Name = "LabelCurrentValue2" + row;
             labelcurrentValue2.Text = "Live waarde: ";
             labelcurrentValue2.BackColor = Color.Transparent;
+            labelcurrentValue2.Visible = false;
             panelFormulaControls.Controls.Add(labelcurrentValue2);
 
             //pictureboxSearch2:
@@ -451,6 +458,7 @@ namespace Playground_v3
         /// <param name="e"></param>
         private void columnnameTextChange(object sender, EventArgs e)
         {
+            timerDemo.Enabled = true;
             TextBox sndr = sender as TextBox;
             //Thread updateThread = new Thread(new ParameterizedThreadStart(AppendLiveLable));
             Thread updateThread = new Thread(() => AppendLiveLable(sndr));
@@ -694,6 +702,23 @@ namespace Playground_v3
             panelButtons.Top = Height - 150;
             tabControl1.Height = Height - 10;
             // panelFormulaControls.Height = buttonSaveFormula.Top;
+        }
+
+        /// <summary>
+        /// Deze timer wordt gebruikt om een demonstratie te geven hoe het programma eruit moet gaan zien:
+        /// De opdrachtgever wenste graag 'live' waardes te zien bij elke tag (kolomkop).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void timerDemo_Tick(object sender, EventArgs e)
+        {
+            //ga elke label bij langs, opgeslagen in de dictionary 'koppelDictionaryLabels'.
+            var arrayOfAllKeys = koppelDictionaryLabels.Keys.ToArray();
+            foreach (TextBox tBox in arrayOfAllKeys)
+            {
+                Thread updateThread = new Thread(() => AppendLiveLable(tBox));
+                updateThread.Start();
+            }
         }
     }
 }
