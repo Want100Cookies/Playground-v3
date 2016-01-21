@@ -43,10 +43,10 @@
             // 
             this.buttonCancel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(223, 240);
-            this.buttonCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonCancel.Location = new System.Drawing.Point(297, 295);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(119, 38);
+            this.buttonCancel.Size = new System.Drawing.Size(159, 47);
             this.buttonCancel.TabIndex = 18;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
@@ -55,10 +55,10 @@
             // 
             this.buttonOk.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(11, 240);
-            this.buttonOk.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonOk.Location = new System.Drawing.Point(15, 295);
+            this.buttonOk.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.buttonOk.Name = "buttonOk";
-            this.buttonOk.Size = new System.Drawing.Size(119, 38);
+            this.buttonOk.Size = new System.Drawing.Size(159, 47);
             this.buttonOk.TabIndex = 19;
             this.buttonOk.Text = "Ok";
             this.buttonOk.UseVisualStyleBackColor = true;
@@ -66,10 +66,10 @@
             // checkedListBoxResultaten
             // 
             this.checkedListBoxResultaten.FormattingEnabled = true;
-            this.checkedListBoxResultaten.Location = new System.Drawing.Point(11, 93);
-            this.checkedListBoxResultaten.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkedListBoxResultaten.Location = new System.Drawing.Point(15, 114);
+            this.checkedListBoxResultaten.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.checkedListBoxResultaten.Name = "checkedListBoxResultaten";
-            this.checkedListBoxResultaten.Size = new System.Drawing.Size(332, 139);
+            this.checkedListBoxResultaten.Size = new System.Drawing.Size(441, 157);
             this.checkedListBoxResultaten.TabIndex = 17;
             this.checkedListBoxResultaten.SelectedIndexChanged += new System.EventHandler(this.checkedListBoxResultaten_SelectedIndexChanged);
             // 
@@ -77,10 +77,10 @@
             // 
             this.pictureBoxSearch.BackColor = System.Drawing.Color.White;
             this.pictureBoxSearch.Image = ((System.Drawing.Image)(resources.GetObject("pictureBoxSearch.Image")));
-            this.pictureBoxSearch.Location = new System.Drawing.Point(312, 70);
-            this.pictureBoxSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBoxSearch.Location = new System.Drawing.Point(416, 86);
+            this.pictureBoxSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBoxSearch.Name = "pictureBoxSearch";
-            this.pictureBoxSearch.Size = new System.Drawing.Size(29, 18);
+            this.pictureBoxSearch.Size = new System.Drawing.Size(39, 22);
             this.pictureBoxSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxSearch.TabIndex = 16;
             this.pictureBoxSearch.TabStop = false;
@@ -88,22 +88,23 @@
             // lstBoxDatabases
             // 
             this.lstBoxDatabases.FormattingEnabled = true;
+            this.lstBoxDatabases.ItemHeight = 16;
             this.lstBoxDatabases.Items.AddRange(new object[] {
-            "Aspentec",
+            "Aspentech",
             "Wonderware"});
-            this.lstBoxDatabases.Location = new System.Drawing.Point(11, 23);
-            this.lstBoxDatabases.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lstBoxDatabases.Location = new System.Drawing.Point(15, 28);
+            this.lstBoxDatabases.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.lstBoxDatabases.Name = "lstBoxDatabases";
-            this.lstBoxDatabases.Size = new System.Drawing.Size(332, 43);
+            this.lstBoxDatabases.Size = new System.Drawing.Size(441, 52);
             this.lstBoxDatabases.TabIndex = 15;
             this.lstBoxDatabases.SelectedIndexChanged += new System.EventHandler(this.lstBoxDatabases_SelectedIndexChanged);
             // 
             // txtBoxSearch
             // 
-            this.txtBoxSearch.Location = new System.Drawing.Point(11, 70);
-            this.txtBoxSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtBoxSearch.Location = new System.Drawing.Point(15, 86);
+            this.txtBoxSearch.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtBoxSearch.Name = "txtBoxSearch";
-            this.txtBoxSearch.Size = new System.Drawing.Size(297, 20);
+            this.txtBoxSearch.Size = new System.Drawing.Size(395, 22);
             this.txtBoxSearch.TabIndex = 14;
             this.txtBoxSearch.Text = "Search here";
             this.txtBoxSearch.TextChanged += new System.EventHandler(this.txtBoxSearch_TextChanged);
@@ -112,18 +113,17 @@
             // lableGuide
             // 
             this.lableGuide.AutoSize = true;
-            this.lableGuide.Location = new System.Drawing.Point(9, 7);
-            this.lableGuide.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lableGuide.Location = new System.Drawing.Point(12, 9);
             this.lableGuide.Name = "lableGuide";
-            this.lableGuide.Size = new System.Drawing.Size(119, 13);
+            this.lableGuide.Size = new System.Drawing.Size(159, 17);
             this.lableGuide.TabIndex = 20;
             this.lableGuide.Text = "First, select a database:";
             // 
             // searchBox
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(350, 285);
+            this.ClientSize = new System.Drawing.Size(467, 351);
             this.Controls.Add(this.lableGuide);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
@@ -131,7 +131,8 @@
             this.Controls.Add(this.pictureBoxSearch);
             this.Controls.Add(this.lstBoxDatabases);
             this.Controls.Add(this.txtBoxSearch);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "searchBox";
             this.Text = "Search";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxSearch)).EndInit();
